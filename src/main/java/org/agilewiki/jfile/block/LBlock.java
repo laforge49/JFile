@@ -1,0 +1,98 @@
+package org.agilewiki.jfile.block;
+
+import org.agilewiki.jactor.Actor;
+import org.agilewiki.jactor.Mailbox;
+import org.agilewiki.jid.AppendableBytes;
+import org.agilewiki.jid.ReadableBytes;
+import org.agilewiki.jid.Util;
+import org.agilewiki.jid._Jid;
+import org.agilewiki.jid.scalar.vlens.actor.RootJid;
+
+/**
+ * A block with a length in the header.
+ * --A minimal block implementation.
+ */
+public class LBlock implements Block {
+    ReadableBytes rb;
+    int l;
+    
+    /**
+     * Convert a RootJid to a byte array that is prefaced by a header.
+     *
+     * @param rootJid The RootJid to be serialized.
+     * @return A byte array containing both a header and the serialized RootJid.
+     */
+    @Override
+    public byte[] serialize(RootJid rootJid) 
+            throws Exception {
+        int l = rootJid.getSerializedLength();
+        byte[] bytes = new byte[headerLength() + l];
+        AppendableBytes ab = new AppendableBytes(bytes, 0);
+        saveHeader(ab, l);
+        rootJid.save(ab);
+        return bytes;
+    }
+
+    /**
+     * Serialize the header.
+     * @param ab Append the data to this.
+     * @param l The length of the data.
+     */
+    protected void saveHeader(AppendableBytes ab, int l) {
+        ab.writeInt(l);
+    }
+
+    /**
+     * The length of the header which prefaces the actual data on disk.
+     *
+     * @return The header length.
+     */
+    @Override
+    public int headerLength() {
+        return Util.INT_LENGTH;
+    }
+
+    /**
+     * Provides the raw header information.
+     *
+     * @param bytes The header bytes read from disk.
+     * @return The length of the data following the header on disk.
+     */
+    @Override
+    public int setHeader(byte[] bytes) {
+        rb = new ReadableBytes(bytes, 0);
+        l = rb.readInt();
+        return l;
+    }
+
+    /**
+     * Deserialize the data following the header on disk.
+     * @param mailbox The mailbox.
+     * @param parent The parent.
+     * @param bytes The data following the header on disk.
+     * @return The deserialized RootJid.
+     */
+    @Override
+    public RootJid deserialize(Mailbox mailbox, Actor parent, byte[] bytes)
+            throws Exception {
+        validate(bytes);
+        rb = null;
+        RootJid rootJid = new RootJid(mailbox);
+        rootJid.setParent(parent);
+        rootJid.load(new ReadableBytes(bytes, 0));
+        return rootJid;
+    }
+
+    /**
+     * Validate the data.
+     *
+     * @param bytes The data following the header on disk.
+     */
+    protected void validate(byte[] bytes)
+            throws Exception {
+        if (rb == null)
+            throw new Exception("setHeader must be called before deserialize");
+        if (l != bytes.length)
+            throw new Exception("bytes.length is not " + l);
+    }
+}

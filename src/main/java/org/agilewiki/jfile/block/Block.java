@@ -1,5 +1,8 @@
 package org.agilewiki.jfile.block;
 
+import org.agilewiki.jactor.Actor;
+import org.agilewiki.jactor.Mailbox;
+import org.agilewiki.jid._Jid;
 import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 
 /**
@@ -13,7 +16,8 @@ public interface Block {
      * @param rootJid The RootJid to be serialized.
      * @return A byte array containing both a header and the serialized RootJid.
      */
-    public byte[] serialize(RootJid rootJid);
+    public byte[] serialize(RootJid rootJid) 
+            throws Exception;
     
     /**
      * The length of the header which prefaces the actual data on disk.
@@ -31,8 +35,11 @@ public interface Block {
 
     /**
      * Deserialize the data following the header on disk.
+     * @param mailbox The mailbox.
+     * @param parent The parent.
      * @param bytes The data following the header on disk.
      * @return The deserialized RootJid.
      */
-    public RootJid deserialize(byte[] bytes) throws Exception;
+    public RootJid deserialize(Mailbox mailbox, Actor parent, byte[] bytes)
+            throws Exception;
 }
