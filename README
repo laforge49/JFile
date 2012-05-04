@@ -19,5 +19,5 @@ Issues:        https://github.com/laforge49/JID/issues/
 Google groups: http://groups.google.com/group/agilewikidevelopers/
 
 Dependencies
-    https://github.com/laforge49/JActor
-    https://github.com/laforge49/JID
+ - JActor         https://github.com/laforge49/JActor
+ - JID            https://github.com/laforge49/JID
