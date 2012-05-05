@@ -43,4 +43,3 @@ public class JFileTest extends TestCase {
         mailboxFactory.close();
     }
 }
-
