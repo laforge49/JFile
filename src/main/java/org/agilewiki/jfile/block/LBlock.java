@@ -28,7 +28,6 @@ import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jid.AppendableBytes;
 import org.agilewiki.jid.ReadableBytes;
 import org.agilewiki.jid.Util;
-import org.agilewiki.jid._Jid;
 import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 
 /**
