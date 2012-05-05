@@ -97,7 +97,7 @@
         <dependency>
             <groupId>org.agilewiki.jid</groupId>
             <artifactId>jid</artifactId>
-            <version>1.0.2-SNAPSHOT</version>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
