@@ -25,12 +25,13 @@ package org.agilewiki.jfile;
 
 import org.agilewiki.jactor.Actor;
 import org.agilewiki.jactor.lpc.Request;
+import org.agilewiki.jfile.block.Block;
 import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 
 /**
  * Write the contents of a RootJid an then performs a force (flush) operation.
  */
-public class WriteRootJid extends Request<Long, JFile> {
+public class WriteRootJid extends Request<Block, JFile> {
     public final RootJid rootJid;
     public final long position;
 

@@ -50,6 +50,12 @@ public interface Block {
     public int headerLength();
 
     /**
+     * Returns the headerLength() + the length of the serialized rootJid.
+     * @return The headerLength() + the length of the serialized rootJid.
+     */
+    public int totalLength();
+
+    /**
      * Provides the raw header information.
      *
      * @param bytes The header bytes read from disk.

@@ -47,22 +47,12 @@ public class LBlock implements Block {
     @Override
     public byte[] serialize(RootJid rootJid)
             throws Exception {
-        int l = rootJid.getSerializedLength();
+        l = rootJid.getSerializedLength();
         byte[] bytes = new byte[headerLength() + l];
         AppendableBytes ab = new AppendableBytes(bytes, 0);
         saveHeader(ab, l);
         rootJid.save(ab);
         return bytes;
-    }
-
-    /**
-     * Serialize the header.
-     *
-     * @param ab Append the data to this.
-     * @param l  The length of the data.
-     */
-    protected void saveHeader(AppendableBytes ab, int l) {
-        ab.writeInt(l);
     }
 
     /**
@@ -73,6 +63,24 @@ public class LBlock implements Block {
     @Override
     public int headerLength() {
         return Util.INT_LENGTH;
+    }
+
+    /**
+     * Returns the headerLength() + the length of the serialized rootJid.
+     * @return The headerLength() + the length of the serialized rootJid.
+     */
+    public int totalLength() {
+        return headerLength() + l;
+    }
+
+    /**
+     * Serialize the header.
+     *
+     * @param ab Append the data to this.
+     * @param l  The length of the data.
+     */
+    protected void saveHeader(AppendableBytes ab, int l) {
+        ab.writeInt(l);
     }
 
     /**

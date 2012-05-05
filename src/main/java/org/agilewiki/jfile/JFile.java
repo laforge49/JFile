@@ -41,17 +41,9 @@ import java.nio.channels.FileChannel;
 public class JFile extends JLPCActor {
     public FileChannel fileChannel;
     public boolean metaData;
-    protected long position = 0;
-    private Block block;
 
     protected Block createBlock() {
         return new LBlock();
-    }
-
-    final protected Block getBlock() {
-        if (block == null)
-            block = createBlock();
-        return block;
     }
 
     /**
@@ -95,38 +87,37 @@ public class JFile extends JLPCActor {
         throw new UnsupportedOperationException(reqClass.getName());
     }
 
-    protected long writeRootJid(RootJid rootJid, long position)
+    protected Block writeRootJid(RootJid rootJid, long position)
             throws Exception {
-        byte[] bytes = getBlock().serialize(rootJid);
+        Block block = createBlock();
+        byte[] bytes = block.serialize(rootJid);
         ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
         int rem = bytes.length;
         if (position > -1) {
-            this.position = position;
             rem -= fileChannel.write(byteBuffer, position);
         } else
             rem -= fileChannel.write(byteBuffer);
         while (rem > 0) {
             rem -= fileChannel.write(byteBuffer);
         }
-        this.position += bytes.length;
-        return this.position;
+        return block;
     }
 
-    protected long forcedWriteRootJid(RootJid rootJid, long position)
+    protected Block forcedWriteRootJid(RootJid rootJid, long position)
             throws Exception {
-        writeRootJid(rootJid, position);
+        Block block = writeRootJid(rootJid, position);
         fileChannel.force(metaData);
-        return this.position;
+        return block;
     }
 
     protected RootJid readRootJid(Mailbox mailbox, Actor parent, long position)
             throws Exception {
-        int rem = getBlock().headerLength();
+        Block block = createBlock();
+        int rem = block.headerLength();
         byte[] hdr = new byte[rem];
         ByteBuffer hbb = ByteBuffer.wrap(hdr);
         int r;
         if (position > -1) {
-            this.position = position;
             r = fileChannel.read(hbb, position);
         } else
             r = fileChannel.read(hbb);
@@ -139,7 +130,6 @@ public class JFile extends JLPCActor {
                 throw new IOException("reached eof");
             rem -= r;
         }
-        this.position += hdr.length;
         rem = block.setHeader(hdr);
         byte[] rjb = new byte[rem];
         if (rem > 0) {
@@ -151,7 +141,6 @@ public class JFile extends JLPCActor {
                 rem -= r;
             }
         }
-        this.position += rjb.length;
         RootJid rootJid = block.deserialize(mailbox, parent, rjb);
         return rootJid;
     }

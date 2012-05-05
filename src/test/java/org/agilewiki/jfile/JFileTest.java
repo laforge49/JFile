@@ -6,6 +6,7 @@ import org.agilewiki.jactor.JAMailboxFactory;
 import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.factory.JAFactory;
+import org.agilewiki.jfile.block.Block;
 import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 
 import java.nio.channels.FileChannel;
@@ -33,8 +34,8 @@ public class JFileTest extends TestCase {
 
         RootJid rj = new RootJid(mailbox);
         rj.setParent(factory);
-        long pos = (new ForcedWriteRootJid(rj, 0L)).send(future, jFile);
-        assertEquals(4, pos);
+        Block block = (new ForcedWriteRootJid(rj, 0L)).send(future, jFile);
+        assertEquals(4, block.totalLength());
 
         RootJid rj2 = (new ReadRootJid(mailbox, factory, 0L)).send(future, jFile);
         assertNotNull(rj2);
