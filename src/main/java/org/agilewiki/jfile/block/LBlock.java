@@ -37,7 +37,7 @@ import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 public class LBlock implements Block {
     ReadableBytes rb;
     int l;
-    
+
     /**
      * Convert a RootJid to a byte array that is prefaced by a header.
      *
@@ -45,7 +45,7 @@ public class LBlock implements Block {
      * @return A byte array containing both a header and the serialized RootJid.
      */
     @Override
-    public byte[] serialize(RootJid rootJid) 
+    public byte[] serialize(RootJid rootJid)
             throws Exception {
         int l = rootJid.getSerializedLength();
         byte[] bytes = new byte[headerLength() + l];
@@ -57,8 +57,9 @@ public class LBlock implements Block {
 
     /**
      * Serialize the header.
+     *
      * @param ab Append the data to this.
-     * @param l The length of the data.
+     * @param l  The length of the data.
      */
     protected void saveHeader(AppendableBytes ab, int l) {
         ab.writeInt(l);
@@ -89,9 +90,10 @@ public class LBlock implements Block {
 
     /**
      * Deserialize the data following the header on disk.
+     *
      * @param mailbox The mailbox.
-     * @param parent The parent.
-     * @param bytes The data following the header on disk.
+     * @param parent  The parent.
+     * @param bytes   The data following the header on disk.
      * @return The deserialized RootJid.
      */
     @Override

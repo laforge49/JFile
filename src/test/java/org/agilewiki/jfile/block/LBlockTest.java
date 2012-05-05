@@ -22,7 +22,7 @@ public class LBlockTest extends TestCase {
         int hl = lb1.headerLength();
         int rjl = rj.getSerializedLength();
         assertEquals(bs.length, hl + rjl);
-        
+
         byte[] h = new byte[hl];
         System.arraycopy(bs, 0, h, 0, hl);
         byte[] sd = new byte[rjl];

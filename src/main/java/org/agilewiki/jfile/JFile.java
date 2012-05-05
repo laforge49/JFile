@@ -43,11 +43,11 @@ public class JFile extends JLPCActor {
     public boolean metaData;
     protected long position = 0;
     private Block block;
-    
+
     protected Block createBlock() {
         return new LBlock();
     }
-    
+
     final protected Block getBlock() {
         if (block == null)
             block = createBlock();
