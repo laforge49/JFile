@@ -24,27 +24,20 @@
 package org.agilewiki.jfile;
 
 import org.agilewiki.jactor.Actor;
-import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.lpc.Request;
-import org.agilewiki.jid.scalar.vlens.actor.RootJid;
+import org.agilewiki.jfile.block.Block;
 
 /**
  * Read a RootJid.
  */
-public class ReadRootJid extends Request<RootJid, JFile> {
-    public final Mailbox mailbox;
-    public final Actor parent;
+public class ReadRootJid extends Request<Block, JFile> {
     public final long position;
 
-    public ReadRootJid(Mailbox mailbox, Actor parent) {
-        this.mailbox = mailbox;
-        this.parent = parent;
+    public ReadRootJid() {
         this.position = -1;
     }
 
-    public ReadRootJid(Mailbox mailbox, Actor parent, long position) {
-        this.mailbox = mailbox;
-        this.parent = parent;
+    public ReadRootJid(long position) {
         this.position = position;
     }
 

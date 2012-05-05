@@ -23,7 +23,6 @@
  */
 package org.agilewiki.jfile;
 
-import org.agilewiki.jactor.Actor;
 import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
@@ -68,7 +67,7 @@ public class JFile extends JLPCActor {
 
         if (reqClass == ReadRootJid.class) {
             ReadRootJid req = (ReadRootJid) request;
-            rp.processResponse(readRootJid(req.mailbox, req.parent, req.position));
+            rp.processResponse(readRootJid(req.position));
             return;
         }
 
@@ -110,7 +109,7 @@ public class JFile extends JLPCActor {
         return block;
     }
 
-    protected RootJid readRootJid(Mailbox mailbox, Actor parent, long position)
+    protected Block readRootJid(long position)
             throws Exception {
         Block block = createBlock();
         int rem = block.headerLength();
@@ -141,7 +140,7 @@ public class JFile extends JLPCActor {
                 rem -= r;
             }
         }
-        RootJid rootJid = block.deserialize(mailbox, parent, rjb);
-        return rootJid;
+        block.setRootJidBytes(rjb);
+        return block;
     }
 }

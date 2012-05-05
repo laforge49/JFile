@@ -51,6 +51,7 @@ public interface Block {
 
     /**
      * Returns the headerLength() + the length of the serialized rootJid.
+     *
      * @return The headerLength() + the length of the serialized rootJid.
      */
     public int totalLength();
@@ -64,13 +65,20 @@ public interface Block {
     public int setHeader(byte[] bytes);
 
     /**
-     * Deserialize the data following the header on disk.
+     * Provides the data following the header on disk.
+     *
+     * @param bytes The data following the header on disk.
+     */
+    public void setRootJidBytes(byte[] bytes)
+            throws Exception;
+
+    /**
+     * Deserialize the RootJid.
      *
      * @param mailbox The mailbox.
      * @param parent  The parent.
-     * @param bytes   The data following the header on disk.
      * @return The deserialized RootJid.
      */
-    public RootJid deserialize(Mailbox mailbox, Actor parent, byte[] bytes)
+    public RootJid rootJid(Mailbox mailbox, Actor parent)
             throws Exception;
 }

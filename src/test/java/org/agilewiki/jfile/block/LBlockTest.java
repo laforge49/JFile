@@ -31,7 +31,8 @@ public class LBlockTest extends TestCase {
 
         LBlock lb2 = new LBlock();
         int rjl2 = lb2.setHeader(h);
-        RootJid rj2 = lb2.deserialize(mailbox, factory, sd);
+        lb2.setRootJidBytes(sd);
+        RootJid rj2 = lb2.rootJid(mailbox, factory);
 
         mailboxFactory.close();
     }

@@ -35,8 +35,9 @@ import org.agilewiki.jid.scalar.vlens.actor.RootJid;
  * --A minimal block implementation.
  */
 public class LBlock implements Block {
-    ReadableBytes rb;
+    protected ReadableBytes rb;
     int l;
+    protected byte[] bytes;
 
     /**
      * Convert a RootJid to a byte array that is prefaced by a header.
@@ -67,6 +68,7 @@ public class LBlock implements Block {
 
     /**
      * Returns the headerLength() + the length of the serialized rootJid.
+     *
      * @return The headerLength() + the length of the serialized rootJid.
      */
     public int totalLength() {
@@ -97,34 +99,32 @@ public class LBlock implements Block {
     }
 
     /**
-     * Deserialize the data following the header on disk.
+     * Provides the data following the header on disk.
+     *
+     * @param bytes The data following the header on disk.
+     */
+    public void setRootJidBytes(byte[] bytes)
+            throws Exception {
+        this.bytes = bytes;
+        if (rb == null)
+            throw new Exception("setHeader must be called before deserialize");
+        if (l != bytes.length)
+            throw new Exception("bytes.length is not " + l);
+    }
+
+    /**
+     * Deserialize the RootJid.
      *
      * @param mailbox The mailbox.
      * @param parent  The parent.
-     * @param bytes   The data following the header on disk.
      * @return The deserialized RootJid.
      */
-    @Override
-    public RootJid deserialize(Mailbox mailbox, Actor parent, byte[] bytes)
+    public RootJid rootJid(Mailbox mailbox, Actor parent)
             throws Exception {
-        validate(bytes);
         rb = null;
         RootJid rootJid = new RootJid(mailbox);
         rootJid.setParent(parent);
         rootJid.load(new ReadableBytes(bytes, 0));
         return rootJid;
-    }
-
-    /**
-     * Validate the data.
-     *
-     * @param bytes The data following the header on disk.
-     */
-    protected void validate(byte[] bytes)
-            throws Exception {
-        if (rb == null)
-            throw new Exception("setHeader must be called before deserialize");
-        if (l != bytes.length)
-            throw new Exception("bytes.length is not " + l);
     }
 }
