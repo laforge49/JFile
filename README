@@ -1,4 +1,4 @@
-File Persistence and High Throughput Logging
+File Persistence and High Throughput Reliable Logging
 
 ACID is a common claim, but the D in ACID stands for durable. Durable means
 that once committed, a transaction will persist even if the system crashes.
