@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.agilewiki.jfile</groupId>
     <artifactId>jfile</artifactId>
-    <version>1.0.0-RC1</version>
+    <version>1.0.0-RC1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>JFile</name>
     <description>File Persistence</description>
@@ -25,9 +26,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git@github.com:laforge49/JID.git</connection>
-        <developerConnection>scm:git:git@github.com:laforge49/JID.git</developerConnection>
-        <url>git@github.com:laforge49/JID.git</url>
+        <connection>scm:git:git@github.com:laforge49/JFile.git</connection>
+        <developerConnection>scm:git:git@github.com:laforge49/JFile.git</developerConnection>
+        <url>git@github.com:laforge49/JFile.git</url>
     </scm>
 
     <developers>
