@@ -125,6 +125,7 @@ public class LBlock implements Block {
         RootJid rootJid = new RootJid(mailbox);
         rootJid.setParent(parent);
         rootJid.load(new ReadableBytes(bytes, 0));
+        bytes = null;
         return rootJid;
     }
 }
