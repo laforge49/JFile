@@ -29,6 +29,7 @@ import org.agilewiki.jfile.block.Block;
 
 /**
  * Read a RootJid.
+ * The returned result is null if there was an error.
  */
 public class ReadRootJid extends Request<Block, JFile> {
     public final long position;

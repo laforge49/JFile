@@ -109,38 +109,42 @@ public class JFile extends JLPCActor {
         return block;
     }
 
-    protected Block readRootJid(long position)
-            throws Exception {
-        Block block = createBlock();
-        int rem = block.headerLength();
-        byte[] hdr = new byte[rem];
-        ByteBuffer hbb = ByteBuffer.wrap(hdr);
-        int r;
-        if (position > -1) {
-            r = fileChannel.read(hbb, position);
-        } else
-            r = fileChannel.read(hbb);
-        if (r == -1)
-            throw new IOException("reached eof");
-        rem -= r;
-        while (rem > 0) {
-            r = fileChannel.read(hbb);
+    protected Block readRootJid(long position) {
+        try {
+            Block block = createBlock();
+            int rem = block.headerLength();
+            byte[] hdr = new byte[rem];
+            ByteBuffer hbb = ByteBuffer.wrap(hdr);
+            int r;
+            if (position > -1) {
+                r = fileChannel.read(hbb, position);
+            } else
+                r = fileChannel.read(hbb);
             if (r == -1)
-                throw new IOException("reached eof");
+                return null;
             rem -= r;
-        }
-        rem = block.setHeader(hdr);
-        byte[] rjb = new byte[rem];
-        if (rem > 0) {
-            ByteBuffer rjbb = ByteBuffer.wrap(rjb);
             while (rem > 0) {
-                r = fileChannel.read(rjbb);
+                r = fileChannel.read(hbb);
                 if (r == -1)
-                    throw new IOException("reached eof");
+                    return null;
                 rem -= r;
             }
+            rem = block.setHeader(hdr);
+            byte[] rjb = new byte[rem];
+            if (rem > 0) {
+                ByteBuffer rjbb = ByteBuffer.wrap(rjb);
+                while (rem > 0) {
+                    r = fileChannel.read(rjbb);
+                    if (r == -1)
+                        throw new IOException("reached eof");
+                    rem -= r;
+                }
+            }
+            if (block.setRootJidBytes(rjb))
+                return block;
+        } catch (Exception ex) {
+            return null;
         }
-        block.setRootJidBytes(rjb);
-        return block;
+        return null;
     }
 }

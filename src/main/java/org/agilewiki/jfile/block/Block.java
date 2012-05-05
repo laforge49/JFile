@@ -68,9 +68,9 @@ public interface Block {
      * Provides the data following the header on disk.
      *
      * @param bytes The data following the header on disk.
+     * @return True when the data is valid.
      */
-    public void setRootJidBytes(byte[] bytes)
-            throws Exception;
+    public boolean setRootJidBytes(byte[] bytes);
 
     /**
      * Deserialize the RootJid.
