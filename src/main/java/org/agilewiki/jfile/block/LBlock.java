@@ -44,16 +44,23 @@ public class LBlock implements Block {
      * Convert a RootJid to a byte array that is prefaced by a header.
      *
      * @param rootJid The RootJid to be serialized.
-     * @return A byte array containing both a header and the serialized RootJid.
      */
     @Override
-    public byte[] serialize(RootJid rootJid)
+    public void serialize(RootJid rootJid)
             throws Exception {
         l = rootJid.getSerializedLength();
-        byte[] bytes = new byte[headerLength() + l];
+        bytes = new byte[headerLength() + l];
         AppendableBytes ab = new AppendableBytes(bytes, 0);
         saveHeader(ab, l);
         rootJid.save(ab);
+    }
+
+    /**
+     * Returns the header and serialized RootJid.
+     *
+     * @return The header and serialized RootJid.
+     */
+    public byte[] getBytes() {
         return bytes;
     }
 
@@ -109,13 +116,13 @@ public class LBlock implements Block {
     /**
      * Provides the data read from disk after the header.
      *
-     * @param bytes The data following the header on disk.
+     * @param bytesRead The data following the header on disk.
      * @return True when the data is valid.
      */
-    public boolean setRootJidBytes(byte[] bytes) {
-        this.bytes = bytes;
-        if (l != bytes.length)
+    public boolean setRootJidBytes(byte[] bytesRead) {
+        if (l != bytesRead.length)
             return false;
+        this.bytes = bytesRead;
         return true;
     }
 
@@ -124,11 +131,13 @@ public class LBlock implements Block {
      *
      * @param mailbox The mailbox.
      * @param parent  The parent.
-     * @return The deserialized RootJid.
+     * @return The deserialized RootJid, or null.
      */
     public RootJid rootJid(Mailbox mailbox, Actor parent)
             throws Exception {
         rb = null;
+        if (bytes == null)
+            return null;
         RootJid rootJid = new RootJid(mailbox);
         rootJid.setParent(parent);
         rootJid.load(new ReadableBytes(bytes, 0));

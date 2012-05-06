@@ -31,15 +31,16 @@ import org.agilewiki.jfile.block.Block;
  * Read a RootJid.
  * The returned result is null if there was an error.
  */
-public class ReadRootJid extends Request<Block, LFile> {
-    public final long position;
+public class ReadRootJid extends Request<Object, JFile> {
+    public final Block block;
 
-    public ReadRootJid() {
-        this.position = -1;
-    }
-
-    public ReadRootJid(long position) {
-        this.position = position;
+    /**
+     * Read a RootJid.
+     *
+     * @param block The Block used to manage the operation.
+     */
+    public ReadRootJid(Block block) {
+        this.block = block;
     }
 
     /**
@@ -50,6 +51,6 @@ public class ReadRootJid extends Request<Block, LFile> {
      */
     @Override
     public boolean isTargetType(Actor targetActor) {
-        return targetActor instanceof LFile;
+        return targetActor instanceof JFile;
     }
 }

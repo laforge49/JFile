@@ -26,36 +26,21 @@ package org.agilewiki.jfile;
 import org.agilewiki.jactor.Actor;
 import org.agilewiki.jactor.lpc.Request;
 import org.agilewiki.jfile.block.Block;
-import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 
 /**
  * Write the contents of a RootJid an then performs a force (flush) operation.
  */
-public class WriteRootJid extends Request<Block, LFile> {
-    public final RootJid rootJid;
-    public final long position;
+public class WriteRootJid extends Request<Object, JFile> {
+    public final Block block;
     public final int maxSize;
 
     /**
      * Write a RootJid and its header to the current position.
      *
-     * @param rootJid The RootJid to be written.
+     * @param block The Block used to manage the operation.
      */
-    public WriteRootJid(RootJid rootJid) {
-        this.rootJid = rootJid;
-        this.position = -1;
-        maxSize = -1;
-    }
-
-    /**
-     * Write a RootJid and its header.
-     *
-     * @param rootJid  The RootJid to be written.
-     * @param position The location on disk where the RootJid and its header are to be written.
-     */
-    public WriteRootJid(RootJid rootJid, long position) {
-        this.rootJid = rootJid;
-        this.position = position;
+    public WriteRootJid(Block block) {
+        this.block = block;
         maxSize = -1;
     }
 
@@ -63,13 +48,11 @@ public class WriteRootJid extends Request<Block, LFile> {
      * Write a RootJid and its header.
      * An exception is thrown if the total length of the data to be written exceeds maxSize.
      *
-     * @param rootJid  The RootJid to be written.
-     * @param position The location on disk where the RootJid and its header are to be written.
-     * @param maxSize  The maximum length to be written.
+     * @param block   The Block used to manage the operation.
+     * @param maxSize The maximum length to be written.
      */
-    public WriteRootJid(RootJid rootJid, long position, int maxSize) {
-        this.rootJid = rootJid;
-        this.position = position;
+    public WriteRootJid(Block block, int maxSize) {
+        this.block = block;
         this.maxSize = maxSize;
     }
 
@@ -81,6 +64,6 @@ public class WriteRootJid extends Request<Block, LFile> {
      */
     @Override
     public boolean isTargetType(Actor targetActor) {
-        return targetActor instanceof LFile;
+        return targetActor instanceof JFile;
     }
 }

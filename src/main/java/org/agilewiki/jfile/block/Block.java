@@ -37,10 +37,16 @@ public interface Block {
      * Convert a RootJid to a byte array that is prefaced by a header.
      *
      * @param rootJid The RootJid to be serialized.
-     * @return A byte array containing both a header and the serialized RootJid.
      */
-    public byte[] serialize(RootJid rootJid)
+    public void serialize(RootJid rootJid)
             throws Exception;
+
+    /**
+     * Returns the header and serialized RootJid.
+     *
+     * @return The header and serialized RootJid.
+     */
+    public byte[] getBytes();
 
     /**
      * The length of the header which prefaces the actual data on disk.
@@ -82,7 +88,7 @@ public interface Block {
      *
      * @param mailbox The mailbox.
      * @param parent  The parent.
-     * @return The deserialized RootJid.
+     * @return The deserialized RootJid, or null.
      */
     public RootJid rootJid(Mailbox mailbox, Actor parent)
             throws Exception;

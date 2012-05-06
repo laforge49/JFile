@@ -27,8 +27,6 @@ import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.block.Block;
-import org.agilewiki.jfile.block.LBlock;
-import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -36,26 +34,16 @@ import java.nio.channels.FileChannel;
 /**
  * Reads or writes a RootJid with just the length for a header.
  */
-public class LFile extends JLPCActor {
+public class JFile extends JLPCActor {
     public FileChannel fileChannel;
     public boolean metaData;
-    protected long currentPosition;
-
-    /**
-     * Create a Block.
-     *
-     * @return A new Block.
-     */
-    protected LBlock createBlock() {
-        return new LBlock();
-    }
 
     /**
      * Create a LiteActor
      *
      * @param mailbox A mailbox which may be shared with other actors.
      */
-    public LFile(Mailbox mailbox) {
+    public JFile(Mailbox mailbox) {
         super(mailbox);
     }
 
@@ -72,68 +60,65 @@ public class LFile extends JLPCActor {
 
         if (reqClass == ReadRootJid.class) {
             ReadRootJid req = (ReadRootJid) request;
-            rp.processResponse(readRootJid(req.position));
+            readRootJid(req.block);
+            rp.processResponse(null);
             return;
         }
 
         if (reqClass == ForcedWriteRootJid.class) {
             ForcedWriteRootJid req = (ForcedWriteRootJid) request;
-            rp.processResponse(forcedWriteRootJid(req.rootJid, req.position, req.maxSize));
+            forcedWriteRootJid(req.block, req.maxSize);
+            rp.processResponse(null);
             return;
         }
 
         if (reqClass == WriteRootJid.class) {
             WriteRootJid req = (WriteRootJid) request;
-            rp.processResponse(writeRootJid(req.rootJid, req.position, req.maxSize));
+            writeRootJid(req.block, req.maxSize);
+            rp.processResponse(null);
             return;
         }
 
         throw new UnsupportedOperationException(reqClass.getName());
     }
 
-    protected Block writeRootJid(RootJid rootJid, long position, int maxSize)
+    protected void writeRootJid(Block block, int maxSize)
             throws Exception {
-        Block block = createBlock();
-        byte[] bytes = block.serialize(rootJid);
+        byte[] bytes = block.getBytes();
         if (maxSize > -1 && bytes.length > maxSize)
             throw new Exception("" + bytes.length + " exceeds the maxSize of " + maxSize);
         ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
         int rem = bytes.length;
-        if (position > -1)
-            currentPosition = position;
+        long currentPosition = block.getCurrentPosition();
         while (rem > 0) {
             int wl = fileChannel.write(byteBuffer, currentPosition);
             currentPosition += wl;
             rem -= wl;
         }
         block.setCurrentPosition(currentPosition);
-        return block;
     }
 
-    protected Block forcedWriteRootJid(RootJid rootJid, long position, int maxSize)
+    protected void forcedWriteRootJid(Block block, int maxSize)
             throws Exception {
-        Block block = writeRootJid(rootJid, position, maxSize);
+        writeRootJid(block, maxSize);
         fileChannel.force(metaData);
-        return block;
     }
 
-    protected Block readRootJid(long position) {
+    protected void readRootJid(Block block) {
         try {
-            Block block = createBlock();
             int rem = block.headerLength();
             byte[] hdr = new byte[rem];
             ByteBuffer hbb = ByteBuffer.wrap(hdr);
-            if (position > -1)
-                currentPosition = position;
+            long currentPosition = block.getCurrentPosition();
             int rl = fileChannel.read(hbb, currentPosition);
             if (rl == -1)
-                return null;
+                return;
             currentPosition += rl;
             rem -= rl;
             while (rem > 0) {
                 rl = fileChannel.read(hbb, currentPosition);
                 if (rl == -1)
-                    return null;
+                    return;
                 currentPosition += rl;
                 rem -= rl;
             }
@@ -144,18 +129,17 @@ public class LFile extends JLPCActor {
                 while (rem > 0) {
                     rl = fileChannel.read(rjbb, currentPosition);
                     if (rl == -1)
-                        return null;
+                        return;
                     currentPosition += rl;
                     rem -= rl;
                 }
             }
             if (block.setRootJidBytes(rjb)) {
                 block.setCurrentPosition(currentPosition);
-                return block;
             }
         } catch (Exception ex) {
-            return null;
+            return;
         }
-        return null;
+        return;
     }
 }
