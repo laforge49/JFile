@@ -34,19 +34,19 @@ import org.agilewiki.jid.scalar.vlens.actor.RootJid;
  */
 public interface Block {
     /**
-     * Convert a RootJid to a byte array that is prefaced by a header.
+     * Assign the RootJid to be serialized.
      *
      * @param rootJid The RootJid to be serialized.
      */
-    public void serialize(RootJid rootJid)
-            throws Exception;
+    public void setRootJid(RootJid rootJid);
 
     /**
-     * Returns the header and serialized RootJid.
+     * Serializes the header and RootJid.
      *
      * @return The header and serialized RootJid.
      */
-    public byte[] getBytes();
+    public byte[] serialize()
+            throws Exception;
 
     /**
      * The length of the header which prefaces the actual data on disk.

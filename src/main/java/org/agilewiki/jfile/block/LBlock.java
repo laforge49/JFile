@@ -39,28 +39,31 @@ public class LBlock implements Block {
     protected ReadableBytes rb;
     int l;
     protected byte[] bytes;
+    private RootJid rootJid;
 
     /**
-     * Convert a RootJid to a byte array that is prefaced by a header.
+     * Assign the RootJid to be serialized.
      *
      * @param rootJid The RootJid to be serialized.
      */
     @Override
-    public void serialize(RootJid rootJid)
+    public void setRootJid(RootJid rootJid) {
+        this.rootJid = rootJid;
+    }
+
+    /**
+     * Serializes the header and RootJid.
+     *
+     * @return The header and serialized RootJid.
+     */
+    public byte[] serialize()
             throws Exception {
         l = rootJid.getSerializedLength();
         bytes = new byte[headerLength() + l];
         AppendableBytes ab = new AppendableBytes(bytes, 0);
         saveHeader(ab, l);
         rootJid.save(ab);
-    }
-
-    /**
-     * Returns the header and serialized RootJid.
-     *
-     * @return The header and serialized RootJid.
-     */
-    public byte[] getBytes() {
+        rootJid = null;
         return bytes;
     }
 

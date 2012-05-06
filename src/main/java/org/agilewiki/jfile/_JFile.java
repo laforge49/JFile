@@ -34,7 +34,7 @@ import java.nio.channels.FileChannel;
 /**
  * Reads or writes a RootJid with just the length for a header.
  */
-public class JFile extends JLPCActor {
+public class _JFile extends JLPCActor {
     public FileChannel fileChannel;
     public boolean metaData;
 
@@ -43,7 +43,7 @@ public class JFile extends JLPCActor {
      *
      * @param mailbox A mailbox which may be shared with other actors.
      */
-    public JFile(Mailbox mailbox) {
+    public _JFile(Mailbox mailbox) {
         super(mailbox);
     }
 
@@ -84,7 +84,7 @@ public class JFile extends JLPCActor {
 
     protected void writeRootJid(Block block, int maxSize)
             throws Exception {
-        byte[] bytes = block.getBytes();
+        byte[] bytes = block.serialize();
         if (maxSize > -1 && bytes.length > maxSize)
             throw new Exception("" + bytes.length + " exceeds the maxSize of " + maxSize);
         ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);

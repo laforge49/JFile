@@ -23,7 +23,7 @@ public class LTFileTest extends TestCase {
         JAFactory factory = new JAFactory(mailbox);
         JAFuture future = new JAFuture();
 
-        JFile jFile = new JFile(mailbox);
+        _JFile jFile = new _JFile(mailbox);
         jFile.setParent(factory);
         Path path = FileSystems.getDefault().getPath("JFileTest.jf");
         System.out.println(path.toAbsolutePath());
@@ -38,7 +38,7 @@ public class LTFileTest extends TestCase {
         Block block = new LTBlock();
         long timestamp = System.currentTimeMillis();
         block.setTimestamp(timestamp);
-        block.serialize(rj);
+        block.setRootJid(rj);
         (new ForcedWriteRootJid(block)).send(future, jFile);
         assertEquals(12L, block.getCurrentPosition());
 

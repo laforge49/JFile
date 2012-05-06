@@ -17,8 +17,8 @@ public class LBlockTest extends TestCase {
         RootJid rj = new RootJid(mailbox);
         rj.setParent(factory);
         LBlock lb1 = new LBlock();
-        lb1.serialize(rj);
-        byte[] bs = lb1.getBytes();
+        lb1.setRootJid(rj);
+        byte[] bs = lb1.serialize();
 
         int hl = lb1.headerLength();
         int rjl = rj.getSerializedLength();
