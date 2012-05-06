@@ -48,9 +48,9 @@ public class LTBlock extends LBlock {
      * @param ab Append the data to this.
      * @param l  The length of the data.
      */
-    protected void saveHeader(AppendableBytes ab, int l) {
+    protected void saveHeader(AppendableBytes ab, int l)
+            throws Exception {
         super.saveHeader(ab, l);
-        timestamp = System.currentTimeMillis();
         ab.writeLong(timestamp);
     }
 
@@ -68,11 +68,20 @@ public class LTBlock extends LBlock {
     }
 
     /**
-     * Returns the timestamp assigned when the RootJid was written.
+     * Returns the timestamp.
      *
-     * @return The timestamp assigned when the RootJid was written.
+     * @return The timestamp.
      */
     public long getTimestamp() {
         return timestamp;
+    }
+
+    /**
+     * Assigns the timestamp.
+     *
+     * @param timestamp The timestamp.
+     */
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 }

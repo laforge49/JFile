@@ -36,11 +36,11 @@ public class LTFileTest extends TestCase {
         RootJid rj = new RootJid(mailbox);
         rj.setParent(factory);
         Block block = new LTBlock();
+        long timestamp = System.currentTimeMillis();
+        block.setTimestamp(timestamp);
         block.serialize(rj);
         (new ForcedWriteRootJid(block)).send(future, jFile);
         assertEquals(12L, block.getCurrentPosition());
-        long timestamp = block.getTimestamp();
-        System.out.println(timestamp);
 
         Block block2 = new LTBlock();
         (new ReadRootJid(block2)).send(future, jFile);

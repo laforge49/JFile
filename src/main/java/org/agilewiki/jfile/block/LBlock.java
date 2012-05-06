@@ -70,7 +70,8 @@ public class LBlock implements Block {
      * @param ab Append the data to this.
      * @param l  The length of the data.
      */
-    protected void saveHeader(AppendableBytes ab, int l) {
+    protected void saveHeader(AppendableBytes ab, int l)
+            throws Exception {
         ab.writeInt(l);
     }
 
@@ -146,11 +147,20 @@ public class LBlock implements Block {
     }
 
     /**
-     * Returns the timestamp assigned when the RootJid was written.
+     * Returns the timestamp.
      *
-     * @return The timestamp assigned when the RootJid was written.
+     * @return The timestamp.
      */
     public long getTimestamp() {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * Assigns the timestamp.
+     *
+     * @param timestamp The timestamp.
+     */
+    public void setTimestamp(long timestamp) {
         throw new UnsupportedOperationException();
     }
 }

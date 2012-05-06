@@ -94,9 +94,16 @@ public interface Block {
             throws Exception;
 
     /**
-     * Returns the timestamp assigned when the RootJid was written.
+     * Returns the timestamp.
      *
-     * @return The timestamp assigned when the RootJid was written.
+     * @return The timestamp.
      */
     public long getTimestamp();
+
+    /**
+     * Assigns the timestamp.
+     *
+     * @param timestamp The timestamp.
+     */
+    public void setTimestamp(long timestamp);
 }
