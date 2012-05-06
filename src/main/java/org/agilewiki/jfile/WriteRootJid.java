@@ -31,7 +31,7 @@ import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 /**
  * Write the contents of a RootJid an then performs a force (flush) operation.
  */
-public class WriteRootJid extends Request<Block, JFile> {
+public class WriteRootJid extends Request<Block, LFile> {
     public final RootJid rootJid;
     public final long position;
     public final int maxSize;
@@ -81,6 +81,6 @@ public class WriteRootJid extends Request<Block, JFile> {
      */
     @Override
     public boolean isTargetType(Actor targetActor) {
-        return targetActor instanceof JFile;
+        return targetActor instanceof LFile;
     }
 }

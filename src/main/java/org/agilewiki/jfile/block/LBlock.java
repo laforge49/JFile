@@ -139,7 +139,7 @@ public class LBlock implements Block {
     /**
      * Returns the timestamp assigned when the RootJid was written.
      *
-     * @return
+     * @return The timestamp assigned when the RootJid was written.
      */
     public long getTimestamp() {
         throw new UnsupportedOperationException();

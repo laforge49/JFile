@@ -34,14 +34,19 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 /**
- * Reads or writes a RootJid.
+ * Reads or writes a RootJid with just the length for a header.
  */
-public class JFile extends JLPCActor {
+public class LFile extends JLPCActor {
     public FileChannel fileChannel;
     public boolean metaData;
     protected long currentPosition;
 
-    protected Block createBlock() {
+    /**
+     * Create a Block.
+     *
+     * @return A new Block.
+     */
+    protected LBlock createBlock() {
         return new LBlock();
     }
 
@@ -50,7 +55,7 @@ public class JFile extends JLPCActor {
      *
      * @param mailbox A mailbox which may be shared with other actors.
      */
-    public JFile(Mailbox mailbox) {
+    public LFile(Mailbox mailbox) {
         super(mailbox);
     }
 

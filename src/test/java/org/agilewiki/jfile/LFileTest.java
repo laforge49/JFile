@@ -14,7 +14,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
-public class JFileTest extends TestCase {
+public class LFileTest extends TestCase {
     public void test()
             throws Exception {
         MailboxFactory mailboxFactory = JAMailboxFactory.newMailboxFactory(1);
@@ -22,7 +22,7 @@ public class JFileTest extends TestCase {
         JAFactory factory = new JAFactory(mailbox);
         JAFuture future = new JAFuture();
 
-        JFile jFile = new JFile(mailbox);
+        LFile jFile = new LFile(mailbox);
         jFile.setParent(factory);
         Path path = FileSystems.getDefault().getPath("JFileTest.jf");
         System.out.println(path.toAbsolutePath());

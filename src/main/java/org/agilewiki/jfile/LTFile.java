@@ -23,33 +23,29 @@
  */
 package org.agilewiki.jfile;
 
-import org.agilewiki.jactor.Actor;
-import org.agilewiki.jactor.lpc.Request;
-import org.agilewiki.jfile.block.Block;
+import org.agilewiki.jactor.Mailbox;
+import org.agilewiki.jfile.block.LTBlock;
 
 /**
- * Read a RootJid.
- * The returned result is null if there was an error.
+ * Reads or writes a RootJid with the length and a timestamp for a header.
  */
-public class ReadRootJid extends Request<Block, LFile> {
-    public final long position;
-
-    public ReadRootJid() {
-        this.position = -1;
-    }
-
-    public ReadRootJid(long position) {
-        this.position = position;
+public class LTFile extends LFile {
+    /**
+     * Create a Block.
+     *
+     * @return A new Block.
+     */
+    @Override
+    protected LTBlock createBlock() {
+        return new LTBlock();
     }
 
     /**
-     * Returns true when targetActor is an instanceof TARGET_TYPE
+     * Create a LiteActor
      *
-     * @param targetActor The actor to be called.
-     * @return True when targetActor is an instanceof TARGET_TYPE.
+     * @param mailbox A mailbox which may be shared with other actors.
      */
-    @Override
-    public boolean isTargetType(Actor targetActor) {
-        return targetActor instanceof LFile;
+    public LTFile(Mailbox mailbox) {
+        super(mailbox);
     }
 }

@@ -23,43 +23,36 @@
  */
 package org.agilewiki.jfile.block;
 
-import org.agilewiki.jactor.Actor;
-import org.agilewiki.jactor.Mailbox;
-import org.agilewiki.jid.scalar.vlens.actor.RootJid;
+import org.agilewiki.jid.AppendableBytes;
+import org.agilewiki.jid.Util;
 
 /**
- * A wrapper for data to be read from or written to disk.
- * The header added to the serialized data contains the length of the serialized
- * data and, optionally, a timestamp and checksum.
+ * A block with a length and a timestamp in the header.
  */
-public interface Block {
-    /**
-     * Convert a RootJid to a byte array that is prefaced by a header.
-     *
-     * @param rootJid The RootJid to be serialized.
-     * @return A byte array containing both a header and the serialized RootJid.
-     */
-    public byte[] serialize(RootJid rootJid)
-            throws Exception;
+public class LTBlock extends LBlock {
+    long timestamp;
 
     /**
      * The length of the header which prefaces the actual data on disk.
      *
      * @return The header length.
      */
-    public int headerLength();
+    @Override
+    public int headerLength() {
+        return super.headerLength() + Util.LONG_LENGTH;
+    }
 
     /**
-     * Returns the file position.
+     * Provides the raw header information to be written to disk.
      *
-     * @return The file position.
+     * @param ab Append the data to this.
+     * @param l  The length of the data.
      */
-    public long getCurrentPosition();
-
-    /**
-     * Assigns the files current position.
-     */
-    public void setCurrentPosition(long position);
+    protected void saveHeader(AppendableBytes ab, int l) {
+        super.saveHeader(ab, l);
+        timestamp = System.currentTimeMillis();
+        ab.writeLong(timestamp);
+    }
 
     /**
      * Provides the raw header information read from disk.
@@ -67,30 +60,19 @@ public interface Block {
      * @param bytes The header bytes read from disk.
      * @return The length of the data following the header on disk.
      */
-    public int setHeader(byte[] bytes);
-
-    /**
-     * Provides the data read from disk after the header.
-     *
-     * @param bytes The data following the header on disk.
-     * @return True when the data is valid.
-     */
-    public boolean setRootJidBytes(byte[] bytes);
-
-    /**
-     * Deserialize the RootJid.
-     *
-     * @param mailbox The mailbox.
-     * @param parent  The parent.
-     * @return The deserialized RootJid.
-     */
-    public RootJid rootJid(Mailbox mailbox, Actor parent)
-            throws Exception;
+    @Override
+    public int setHeader(byte[] bytes) {
+        int l = super.setHeader(bytes);
+        timestamp = rb.readLong();
+        return l;
+    }
 
     /**
      * Returns the timestamp assigned when the RootJid was written.
      *
      * @return The timestamp assigned when the RootJid was written.
      */
-    public long getTimestamp();
+    public long getTimestamp() {
+        return timestamp;
+    }
 }
