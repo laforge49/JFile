@@ -37,7 +37,7 @@ public class JFileTest extends TestCase {
         Block block = (new ForcedWriteRootJid(rj, 0L)).send(future, jFile);
         assertEquals(4L, block.getCurrentPosition());
 
-        Block block2 = (new ReadRootJid(4L)).send(future, jFile);
+        Block block2 = (new ReadRootJid()).send(future, jFile);
         assertNull(block2);
 
         block2 = (new ReadRootJid(0L)).send(future, jFile);

@@ -73,23 +73,25 @@ public class JFile extends JLPCActor {
 
         if (reqClass == ForcedWriteRootJid.class) {
             ForcedWriteRootJid req = (ForcedWriteRootJid) request;
-            rp.processResponse(forcedWriteRootJid(req.rootJid, req.position));
+            rp.processResponse(forcedWriteRootJid(req.rootJid, req.position, req.maxSize));
             return;
         }
 
         if (reqClass == WriteRootJid.class) {
             WriteRootJid req = (WriteRootJid) request;
-            rp.processResponse(writeRootJid(req.rootJid, req.position));
+            rp.processResponse(writeRootJid(req.rootJid, req.position, req.maxSize));
             return;
         }
 
         throw new UnsupportedOperationException(reqClass.getName());
     }
 
-    protected Block writeRootJid(RootJid rootJid, long position)
+    protected Block writeRootJid(RootJid rootJid, long position, int maxSize)
             throws Exception {
         Block block = createBlock();
         byte[] bytes = block.serialize(rootJid);
+        if (maxSize > -1 && bytes.length > maxSize)
+            throw new Exception("" + bytes.length + " exceeds the maxSize of " + maxSize);
         ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
         int rem = bytes.length;
         if (position > -1)
@@ -103,9 +105,9 @@ public class JFile extends JLPCActor {
         return block;
     }
 
-    protected Block forcedWriteRootJid(RootJid rootJid, long position)
+    protected Block forcedWriteRootJid(RootJid rootJid, long position, int maxSize)
             throws Exception {
-        Block block = writeRootJid(rootJid, position);
+        Block block = writeRootJid(rootJid, position, maxSize);
         fileChannel.force(metaData);
         return block;
     }

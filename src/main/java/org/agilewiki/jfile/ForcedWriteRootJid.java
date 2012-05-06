@@ -29,11 +29,37 @@ import org.agilewiki.jid.scalar.vlens.actor.RootJid;
  * Write the contents of a RootJid an then performs a force (flush) operation.
  */
 public class ForcedWriteRootJid extends WriteRootJid {
+    /**
+     * Write a RootJid and its header to the current position,
+     * and then force the operation to complete.
+     *
+     * @param rootJid The RootJid to be written.
+     */
     public ForcedWriteRootJid(RootJid rootJid) {
         super(rootJid);
     }
 
+    /**
+     * Write a RootJid and its header,
+     * and then force the operation to complete.
+     *
+     * @param rootJid  The RootJid to be written.
+     * @param position The location on disk where the RootJid and its header are to be written.
+     */
     public ForcedWriteRootJid(RootJid rootJid, long position) {
         super(rootJid, position);
+    }
+
+    /**
+     * Write a RootJid and its header,
+     * and then force the operation to complete.
+     * An exception is thrown if the total length of the data to be written exceeds maxSize.
+     *
+     * @param rootJid  The RootJid to be written.
+     * @param position The location on disk where the RootJid and its header are to be written.
+     * @param maxSize  The maximum length to be written.
+     */
+    public ForcedWriteRootJid(RootJid rootJid, long position, int maxSize) {
+        super(rootJid, position, maxSize);
     }
 }

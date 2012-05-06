@@ -135,4 +135,13 @@ public class LBlock implements Block {
         bytes = null;
         return rootJid;
     }
+
+    /**
+     * Returns the timestamp assigned when the RootJid was written.
+     *
+     * @return
+     */
+    public long getTimestamp() {
+        throw new UnsupportedOperationException();
+    }
 }

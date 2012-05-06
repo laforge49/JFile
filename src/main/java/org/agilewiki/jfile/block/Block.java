@@ -86,4 +86,11 @@ public interface Block {
      */
     public RootJid rootJid(Mailbox mailbox, Actor parent)
             throws Exception;
+
+    /**
+     * Returns the timestamp assigned when the RootJid was written.
+     *
+     * @return
+     */
+    public long getTimestamp();
 }

@@ -34,15 +34,43 @@ import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 public class WriteRootJid extends Request<Block, JFile> {
     public final RootJid rootJid;
     public final long position;
+    public final int maxSize;
 
+    /**
+     * Write a RootJid and its header to the current position.
+     *
+     * @param rootJid The RootJid to be written.
+     */
     public WriteRootJid(RootJid rootJid) {
         this.rootJid = rootJid;
         this.position = -1;
+        maxSize = -1;
     }
 
+    /**
+     * Write a RootJid and its header.
+     *
+     * @param rootJid  The RootJid to be written.
+     * @param position The location on disk where the RootJid and its header are to be written.
+     */
     public WriteRootJid(RootJid rootJid, long position) {
         this.rootJid = rootJid;
         this.position = position;
+        maxSize = -1;
+    }
+
+    /**
+     * Write a RootJid and its header.
+     * An exception is thrown if the total length of the data to be written exceeds maxSize.
+     *
+     * @param rootJid  The RootJid to be written.
+     * @param position The location on disk where the RootJid and its header are to be written.
+     * @param maxSize  The maximum length to be written.
+     */
+    public WriteRootJid(RootJid rootJid, long position, int maxSize) {
+        this.rootJid = rootJid;
+        this.position = position;
+        this.maxSize = maxSize;
     }
 
     /**
