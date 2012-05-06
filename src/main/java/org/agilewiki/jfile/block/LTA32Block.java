@@ -26,11 +26,14 @@ package org.agilewiki.jfile.block;
 import org.agilewiki.jid.AppendableBytes;
 import org.agilewiki.jid.Util;
 
+import java.util.zip.Adler32;
+
 /**
- * A block with a length and a timestamp in the header.
+ * A block with a length, timestamp and Adler32 checksum in the header.
  */
-public class LTBlock extends LBlock {
-    long timestamp;
+public class LTA32Block extends LTBlock {
+    Adler32 a32 = new Adler32();
+    long checksum;
 
     /**
      * The length of the header which prefaces the actual data on disk.
@@ -51,11 +54,10 @@ public class LTBlock extends LBlock {
     @Override
     protected void saveHeader(AppendableBytes ab, int l)
             throws Exception {
-        if (timestamp == 0)
-            throw new IllegalStateException("timestamp is 0");
         super.saveHeader(ab, l);
-        ab.writeLong(timestamp);
-        timestamp = 0;
+        a32.reset();
+        a32.update(bytes, headerLength(), bytes.length - headerLength());
+        ab.writeLong(a32.getValue());
     }
 
     /**
@@ -67,27 +69,26 @@ public class LTBlock extends LBlock {
     @Override
     public int setHeader(byte[] bytes) {
         int l = super.setHeader(bytes);
-        timestamp = rb.readLong();
+        checksum = rb.readLong();
         return l;
     }
 
     /**
-     * Returns the timestamp.
+     * Provides the data read from disk after the header.
      *
-     * @return The timestamp.
+     * @param bytesRead The data following the header on disk.
+     * @return True when the data is valid.
      */
     @Override
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    /**
-     * Assigns the timestamp.
-     *
-     * @param timestamp The timestamp.
-     */
-    @Override
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
+    public boolean setRootJidBytes(byte[] bytesRead) {
+        if (!super.setRootJidBytes(bytesRead))
+            return false;
+        a32.reset();
+        a32.update(bytesRead);
+        boolean match = checksum == a32.getValue();
+        if (match)
+            return true;
+        bytes = null;
+        return false;
     }
 }

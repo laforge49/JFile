@@ -7,7 +7,7 @@ import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.block.Block;
-import org.agilewiki.jfile.block.LTBlock;
+import org.agilewiki.jfile.block.LTA32Block;
 import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 
 import java.nio.channels.FileChannel;
@@ -15,7 +15,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
-public class LTFileTest extends TestCase {
+public class LTA32FileTest extends TestCase {
     public void test()
             throws Exception {
         MailboxFactory mailboxFactory = JAMailboxFactory.newMailboxFactory(1);
@@ -25,7 +25,7 @@ public class LTFileTest extends TestCase {
 
         JFile jFile = new JFile(mailbox);
         jFile.setParent(factory);
-        Path path = FileSystems.getDefault().getPath("LTFileTest.jf");
+        Path path = FileSystems.getDefault().getPath("LT32FileTest.jf");
         System.out.println(path.toAbsolutePath());
         jFile.fileChannel = FileChannel.open(
                 path,
@@ -35,14 +35,14 @@ public class LTFileTest extends TestCase {
 
         RootJid rj = new RootJid(mailbox);
         rj.setParent(factory);
-        Block block = new LTBlock();
+        Block block = new LTA32Block();
         long timestamp = System.currentTimeMillis();
         block.setTimestamp(timestamp);
         block.setRootJid(rj);
         (new ForcedWriteRootJid(block)).send(future, jFile);
-        assertEquals(12L, block.getCurrentPosition());
+        assertEquals(20L, block.getCurrentPosition());
 
-        Block block2 = new LTBlock();
+        Block block2 = new LTA32Block();
         (new ReadRootJid(block2)).send(future, jFile);
         RootJid rj2 = block2.rootJid(mailbox, factory);
         assertNotNull(rj2);

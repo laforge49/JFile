@@ -56,6 +56,7 @@ public class LBlock implements Block {
      *
      * @return The header and serialized RootJid.
      */
+    @Override
     public byte[] serialize()
             throws Exception {
         l = rootJid.getSerializedLength();
@@ -93,6 +94,7 @@ public class LBlock implements Block {
      *
      * @return The file position.
      */
+    @Override
     public long getCurrentPosition() {
         return currentPosition;
     }
@@ -100,6 +102,7 @@ public class LBlock implements Block {
     /**
      * Assigns the files current position.
      */
+    @Override
     public void setCurrentPosition(long position) {
         currentPosition = position;
     }
@@ -123,6 +126,7 @@ public class LBlock implements Block {
      * @param bytesRead The data following the header on disk.
      * @return True when the data is valid.
      */
+    @Override
     public boolean setRootJidBytes(byte[] bytesRead) {
         if (l != bytesRead.length)
             return false;
@@ -137,6 +141,7 @@ public class LBlock implements Block {
      * @param parent  The parent.
      * @return The deserialized RootJid, or null.
      */
+    @Override
     public RootJid rootJid(Mailbox mailbox, Actor parent)
             throws Exception {
         rb = null;
@@ -154,6 +159,7 @@ public class LBlock implements Block {
      *
      * @return The timestamp.
      */
+    @Override
     public long getTimestamp() {
         throw new UnsupportedOperationException();
     }
@@ -163,6 +169,7 @@ public class LBlock implements Block {
      *
      * @param timestamp The timestamp.
      */
+    @Override
     public void setTimestamp(long timestamp) {
         throw new UnsupportedOperationException();
     }
