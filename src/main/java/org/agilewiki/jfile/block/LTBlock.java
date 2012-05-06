@@ -50,8 +50,11 @@ public class LTBlock extends LBlock {
      */
     protected void saveHeader(AppendableBytes ab, int l)
             throws Exception {
+        if (timestamp == 0)
+            throw new IllegalStateException("timestamp is 0");
         super.saveHeader(ab, l);
         ab.writeLong(timestamp);
+        timestamp = 0;
     }
 
     /**
