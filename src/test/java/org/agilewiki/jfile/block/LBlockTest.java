@@ -18,7 +18,6 @@ public class LBlockTest extends TestCase {
         rj.setParent(factory);
         LBlock lb1 = new LBlock();
         byte[] bs = lb1.serialize(rj);
-        assertEquals(4, lb1.totalLength());
 
         int hl = lb1.headerLength();
         int rjl = rj.getSerializedLength();

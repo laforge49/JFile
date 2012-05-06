@@ -35,6 +35,7 @@ import org.agilewiki.jid.scalar.vlens.actor.RootJid;
  * --A minimal block implementation.
  */
 public class LBlock implements Block {
+    private long currentPosition;
     protected ReadableBytes rb;
     int l;
     protected byte[] bytes;
@@ -57,6 +58,16 @@ public class LBlock implements Block {
     }
 
     /**
+     * Provides the raw header information to be written to disk.
+     *
+     * @param ab Append the data to this.
+     * @param l  The length of the data.
+     */
+    protected void saveHeader(AppendableBytes ab, int l) {
+        ab.writeInt(l);
+    }
+
+    /**
      * The length of the header which prefaces the actual data on disk.
      *
      * @return The header length.
@@ -67,26 +78,23 @@ public class LBlock implements Block {
     }
 
     /**
-     * Returns the headerLength() + the length of the serialized rootJid.
+     * Returns the file position.
      *
-     * @return The headerLength() + the length of the serialized rootJid.
+     * @return The file position.
      */
-    public int totalLength() {
-        return headerLength() + l;
+    public long getCurrentPosition() {
+        return currentPosition;
     }
 
     /**
-     * Serialize the header.
-     *
-     * @param ab Append the data to this.
-     * @param l  The length of the data.
+     * Assigns the files current position.
      */
-    protected void saveHeader(AppendableBytes ab, int l) {
-        ab.writeInt(l);
+    public void setCurrentPosition(long position) {
+        currentPosition = position;
     }
 
     /**
-     * Provides the raw header information.
+     * Provides the raw header information read from disk.
      *
      * @param bytes The header bytes read from disk.
      * @return The length of the data following the header on disk.
@@ -99,7 +107,7 @@ public class LBlock implements Block {
     }
 
     /**
-     * Provides the data following the header on disk.
+     * Provides the data read from disk after the header.
      *
      * @param bytes The data following the header on disk.
      * @return True when the data is valid.

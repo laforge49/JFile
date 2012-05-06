@@ -35,7 +35,7 @@ public class JFileTest extends TestCase {
         RootJid rj = new RootJid(mailbox);
         rj.setParent(factory);
         Block block = (new ForcedWriteRootJid(rj, 0L)).send(future, jFile);
-        assertEquals(4, block.totalLength());
+        assertEquals(4L, block.getCurrentPosition());
 
         Block block2 = (new ReadRootJid(4L)).send(future, jFile);
         assertNull(block2);

@@ -30,7 +30,6 @@ import org.agilewiki.jfile.block.Block;
 import org.agilewiki.jfile.block.LBlock;
 import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
@@ -40,6 +39,7 @@ import java.nio.channels.FileChannel;
 public class JFile extends JLPCActor {
     public FileChannel fileChannel;
     public boolean metaData;
+    protected long currentPosition;
 
     protected Block createBlock() {
         return new LBlock();
@@ -92,13 +92,14 @@ public class JFile extends JLPCActor {
         byte[] bytes = block.serialize(rootJid);
         ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
         int rem = bytes.length;
-        if (position > -1) {
-            rem -= fileChannel.write(byteBuffer, position);
-        } else
-            rem -= fileChannel.write(byteBuffer);
+        if (position > -1)
+            currentPosition = position;
         while (rem > 0) {
-            rem -= fileChannel.write(byteBuffer);
+            int wl = fileChannel.write(byteBuffer, currentPosition);
+            currentPosition += wl;
+            rem -= wl;
         }
+        block.setCurrentPosition(currentPosition);
         return block;
     }
 
@@ -115,33 +116,36 @@ public class JFile extends JLPCActor {
             int rem = block.headerLength();
             byte[] hdr = new byte[rem];
             ByteBuffer hbb = ByteBuffer.wrap(hdr);
-            int r;
-            if (position > -1) {
-                r = fileChannel.read(hbb, position);
-            } else
-                r = fileChannel.read(hbb);
-            if (r == -1)
+            if (position > -1)
+                currentPosition = position;
+            int rl = fileChannel.read(hbb, currentPosition);
+            if (rl == -1)
                 return null;
-            rem -= r;
+            currentPosition += rl;
+            rem -= rl;
             while (rem > 0) {
-                r = fileChannel.read(hbb);
-                if (r == -1)
+                rl = fileChannel.read(hbb, currentPosition);
+                if (rl == -1)
                     return null;
-                rem -= r;
+                currentPosition += rl;
+                rem -= rl;
             }
             rem = block.setHeader(hdr);
             byte[] rjb = new byte[rem];
             if (rem > 0) {
                 ByteBuffer rjbb = ByteBuffer.wrap(rjb);
                 while (rem > 0) {
-                    r = fileChannel.read(rjbb);
-                    if (r == -1)
-                        throw new IOException("reached eof");
-                    rem -= r;
+                    rl = fileChannel.read(rjbb, currentPosition);
+                    if (rl == -1)
+                        return null;
+                    currentPosition += rl;
+                    rem -= rl;
                 }
             }
-            if (block.setRootJidBytes(rjb))
+            if (block.setRootJidBytes(rjb)) {
+                block.setCurrentPosition(currentPosition);
                 return block;
+            }
         } catch (Exception ex) {
             return null;
         }

@@ -50,14 +50,19 @@ public interface Block {
     public int headerLength();
 
     /**
-     * Returns the headerLength() + the length of the serialized rootJid.
+     * Returns the file position.
      *
-     * @return The headerLength() + the length of the serialized rootJid.
+     * @return The file position.
      */
-    public int totalLength();
+    public long getCurrentPosition();
 
     /**
-     * Provides the raw header information.
+     * Assigns the files current position.
+     */
+    public void setCurrentPosition(long position);
+
+    /**
+     * Provides the raw header information read from disk.
      *
      * @param bytes The header bytes read from disk.
      * @return The length of the data following the header on disk.
@@ -65,7 +70,7 @@ public interface Block {
     public int setHeader(byte[] bytes);
 
     /**
-     * Provides the data following the header on disk.
+     * Provides the data read from disk after the header.
      *
      * @param bytes The data following the header on disk.
      * @return True when the data is valid.
