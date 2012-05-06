@@ -31,7 +31,7 @@ import org.agilewiki.jfile.block.Block;
  * Read a RootJid.
  * The returned result is null if there was an error.
  */
-public class ReadRootJid extends Request<Object, _JFile> {
+public class ReadRootJid extends Request<Object, JFile> {
     public final Block block;
 
     /**
@@ -51,6 +51,6 @@ public class ReadRootJid extends Request<Object, _JFile> {
      */
     @Override
     public boolean isTargetType(Actor targetActor) {
-        return targetActor instanceof _JFile;
+        return targetActor instanceof JFile;
     }
 }

@@ -34,7 +34,7 @@ import java.nio.channels.FileChannel;
 /**
  * Reads or writes a RootJid with just the length for a header.
  */
-public class _JFile extends JLPCActor {
+public class JFile extends JLPCActor {
     public FileChannel fileChannel;
     public boolean metaData;
 
@@ -43,7 +43,7 @@ public class _JFile extends JLPCActor {
      *
      * @param mailbox A mailbox which may be shared with other actors.
      */
-    public _JFile(Mailbox mailbox) {
+    public JFile(Mailbox mailbox) {
         super(mailbox);
     }
 

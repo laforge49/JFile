@@ -30,7 +30,7 @@ import org.agilewiki.jfile.block.Block;
 /**
  * Write the contents of a RootJid an then performs a force (flush) operation.
  */
-public class WriteRootJid extends Request<Object, _JFile> {
+public class WriteRootJid extends Request<Object, JFile> {
     public final Block block;
     public final int maxSize;
 
@@ -64,6 +64,6 @@ public class WriteRootJid extends Request<Object, _JFile> {
      */
     @Override
     public boolean isTargetType(Actor targetActor) {
-        return targetActor instanceof _JFile;
+        return targetActor instanceof JFile;
     }
 }

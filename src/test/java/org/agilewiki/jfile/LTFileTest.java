@@ -23,7 +23,7 @@ public class LTFileTest extends TestCase {
         JAFactory factory = new JAFactory(mailbox);
         JAFuture future = new JAFuture();
 
-        _JFile jFile = new _JFile(mailbox);
+        JFile jFile = new JFile(mailbox);
         jFile.setParent(factory);
         Path path = FileSystems.getDefault().getPath("JFileTest.jf");
         System.out.println(path.toAbsolutePath());
