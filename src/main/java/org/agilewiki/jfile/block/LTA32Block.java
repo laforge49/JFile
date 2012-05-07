@@ -67,8 +67,8 @@ public class LTA32Block extends LTBlock {
      * @return The length of the data following the header on disk.
      */
     @Override
-    public int setHeader(byte[] bytes) {
-        int l = super.setHeader(bytes);
+    public int setHeaderBytes(byte[] bytes) {
+        int l = super.setHeaderBytes(bytes);
         checksum = rb.readLong();
         return l;
     }

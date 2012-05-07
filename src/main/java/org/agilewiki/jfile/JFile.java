@@ -106,6 +106,7 @@ public class JFile extends JLPCActor {
 
     protected void readRootJid(Block block) {
         try {
+            block.setRootJid(null);
             int rem = block.headerLength();
             byte[] hdr = new byte[rem];
             ByteBuffer hbb = ByteBuffer.wrap(hdr);
@@ -122,7 +123,7 @@ public class JFile extends JLPCActor {
                 currentPosition += rl;
                 rem -= rl;
             }
-            rem = block.setHeader(hdr);
+            rem = block.setHeaderBytes(hdr);
             byte[] rjb = new byte[rem];
             if (rem > 0) {
                 ByteBuffer rjbb = ByteBuffer.wrap(rjb);

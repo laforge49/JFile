@@ -30,9 +30,9 @@ public class LBlockTest extends TestCase {
         System.arraycopy(bs, hl, sd, 0, rjl);
 
         LBlock lb2 = new LBlock();
-        int rjl2 = lb2.setHeader(h);
+        int rjl2 = lb2.setHeaderBytes(h);
         lb2.setRootJidBytes(sd);
-        RootJid rj2 = lb2.rootJid(mailbox, factory);
+        RootJid rj2 = lb2.getRootJid(mailbox, factory);
 
         mailboxFactory.close();
     }

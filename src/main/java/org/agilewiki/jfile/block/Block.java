@@ -34,16 +34,16 @@ import org.agilewiki.jid.scalar.vlens.actor.RootJid;
  */
 public interface Block {
     /**
-     * Assign the RootJid to be serialized.
+     * Assign the RootJid to the block.
      *
-     * @param rootJid The RootJid to be serialized.
+     * @param rootJid The RootJid to be assigned.
      */
     public void setRootJid(RootJid rootJid);
 
     /**
-     * Serializes the header and RootJid.
+     * Serializes the header and the assigned RootJid.
      *
-     * @return The header and serialized RootJid.
+     * @return The bytes of the header and serialized RootJid.
      */
     public byte[] serialize()
             throws Exception;
@@ -73,7 +73,7 @@ public interface Block {
      * @param bytes The header bytes read from disk.
      * @return The length of the data following the header on disk.
      */
-    public int setHeader(byte[] bytes);
+    public int setHeaderBytes(byte[] bytes);
 
     /**
      * Provides the data read from disk after the header.
@@ -84,13 +84,13 @@ public interface Block {
     public boolean setRootJidBytes(byte[] bytes);
 
     /**
-     * Deserialize the RootJid.
+     * Return the RootJid, deserializing it as needed..
      *
      * @param mailbox The mailbox.
      * @param parent  The parent.
      * @return The deserialized RootJid, or null.
      */
-    public RootJid rootJid(Mailbox mailbox, Actor parent)
+    public RootJid getRootJid(Mailbox mailbox, Actor parent)
             throws Exception;
 
     /**

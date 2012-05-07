@@ -42,19 +42,20 @@ public class LBlock implements Block {
     private RootJid rootJid;
 
     /**
-     * Assign the RootJid to be serialized.
+     * Assign the RootJid to the block.
      *
-     * @param rootJid The RootJid to be serialized.
+     * @param rootJid The RootJid to be assigned.
      */
     @Override
     public void setRootJid(RootJid rootJid) {
+        bytes = null;
         this.rootJid = rootJid;
     }
 
     /**
-     * Serializes the header and RootJid.
+     * Serializes the header and the assigned RootJid.
      *
-     * @return The header and serialized RootJid.
+     * @return The bytes of the header and serialized RootJid.
      */
     @Override
     public byte[] serialize()
@@ -114,7 +115,7 @@ public class LBlock implements Block {
      * @return The length of the data following the header on disk.
      */
     @Override
-    public int setHeader(byte[] bytes) {
+    public int setHeaderBytes(byte[] bytes) {
         rb = new ReadableBytes(bytes, 0);
         l = rb.readInt();
         return l;
@@ -128,29 +129,31 @@ public class LBlock implements Block {
      */
     @Override
     public boolean setRootJidBytes(byte[] bytesRead) {
-        if (l != bytesRead.length)
+        if (l != bytesRead.length) {
             return false;
+        }
         this.bytes = bytesRead;
         return true;
     }
 
     /**
-     * Deserialize the RootJid.
+     * Return the RootJid, deserializing it as needed..
      *
      * @param mailbox The mailbox.
      * @param parent  The parent.
      * @return The deserialized RootJid, or null.
      */
     @Override
-    public RootJid rootJid(Mailbox mailbox, Actor parent)
+    public RootJid getRootJid(Mailbox mailbox, Actor parent)
             throws Exception {
+        if (rootJid != null)
+            return rootJid;
         rb = null;
         if (bytes == null)
             return null;
         RootJid rootJid = new RootJid(mailbox);
         rootJid.setParent(parent);
         rootJid.load(new ReadableBytes(bytes, 0));
-        bytes = null;
         return rootJid;
     }
 

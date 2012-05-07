@@ -42,11 +42,11 @@ public class LFileTest extends TestCase {
 
         Block block2 = new LBlock();
         (new ReadRootJid(block2)).send(future, jFile);
-        RootJid rj2 = block2.rootJid(mailbox, factory);
+        RootJid rj2 = block2.getRootJid(mailbox, factory);
         assertNotNull(rj2);
 
         (new ReadRootJid(block2)).send(future, jFile);
-        rj2 = block2.rootJid(mailbox, factory);
+        rj2 = block2.getRootJid(mailbox, factory);
         assertNull(rj2);
 
         jFile.fileChannel.close();
