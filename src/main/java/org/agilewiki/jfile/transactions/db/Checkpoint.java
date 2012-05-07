@@ -30,7 +30,19 @@ import org.agilewiki.jactor.lpc.Request;
  * A checkpoint request is sent to a database to write all state to disk.
  */
 public class Checkpoint extends Request<Object, DB> {
-    public final static Checkpoint req = new Checkpoint();
+    public final long timestamp;
+    public final long logPosition;
+
+    /**
+     * Create a Checkpoint request.
+     *
+     * @param logPosition Current position of the log file.
+     * @param timestamp   Timestamp of the last batch of transactions.
+     */
+    public Checkpoint(long logPosition, long timestamp) {
+        this.logPosition = logPosition;
+        this.timestamp = timestamp;
+    }
 
     /**
      * Returns true when targetActor is an instanceof TARGET_TYPE
