@@ -21,16 +21,26 @@
  * A copy of this license is also included and can be
  * found as well at http://www.opensource.org/licenses/cpl1.0.txt
  */
-package org.agilewiki.jfile.transactions;
+package org.agilewiki.jfile.transactions.transactionProcessor;
 
 import org.agilewiki.jactor.Actor;
 import org.agilewiki.jactor.lpc.Request;
+import org.agilewiki.jfile.block.Block;
 
 /**
- * An Eval request is used to execute a transaction.
+ * A ProcessBlock is sent with a list of transactions to be processed.
  */
-public class Eval extends Request<Object, Transaction> {
-    public static final Eval req = new Eval();
+public class ProcessBlock extends Request<Object, TransactionProcessor> {
+    public final Block block;
+
+    /**
+     * Create a request.
+     *
+     * @param block A block holding a list of transactions to be processed.
+     */
+    public ProcessBlock(Block block) {
+        this.block = block;
+    }
 
     /**
      * Returns true when targetActor is an instanceof TARGET_TYPE
@@ -40,6 +50,6 @@ public class Eval extends Request<Object, Transaction> {
      */
     @Override
     public boolean isTargetType(Actor targetActor) {
-        return targetActor instanceof Transaction;
+        return targetActor instanceof TransactionProcessor;
     }
 }
