@@ -30,7 +30,7 @@ import org.agilewiki.jfile.block.Block;
 /**
  * A ProcessBlock is sent with a list of transactions to be processed.
  */
-public class ProcessBlock extends Request<Object, TransactionProcessor> {
+public class ProcessBlock extends Request<Object, _TransactionProcessor> {
     public final Block block;
 
     /**
@@ -50,6 +50,6 @@ public class ProcessBlock extends Request<Object, TransactionProcessor> {
      */
     @Override
     public boolean isTargetType(Actor targetActor) {
-        return targetActor instanceof TransactionProcessor;
+        return targetActor instanceof _TransactionProcessor;
     }
 }

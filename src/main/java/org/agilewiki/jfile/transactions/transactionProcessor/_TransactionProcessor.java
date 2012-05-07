@@ -28,5 +28,5 @@ import org.agilewiki.jactor.lpc.TargetActor;
 /**
  * A transaction processor must handle ProcessBlock requests.
  */
-public interface TransactionProcessor extends TargetActor {
+public interface _TransactionProcessor extends TargetActor {
 }
