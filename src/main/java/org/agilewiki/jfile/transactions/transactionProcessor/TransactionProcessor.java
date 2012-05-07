@@ -27,6 +27,8 @@ import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.block.Block;
+import org.agilewiki.jfile.transactions.db.Checkpoint;
+import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 
 /**
  * On receipt of a ProcessBlock request, the transaction processor
@@ -62,7 +64,16 @@ final public class TransactionProcessor extends JLPCActor implements _Transactio
     }
 
     private void processBlock(Block block, RP rp) throws Exception {
+        RootJid rootJid = block.getRootJid();
+        long logPosition = block.getCurrentPosition();
+        long timestamp = block.getTimestamp();
         //todo
-        rp.processResponse(null);
+        sendCheckpoint(logPosition, timestamp, rp);
+    }
+
+    private void sendCheckpoint(long logPosition, long timestamp, RP rp)
+            throws Exception {
+        Checkpoint checkpoint = new Checkpoint(logPosition, timestamp);
+        checkpoint.send(this, getParent(), rp);
     }
 }

@@ -84,11 +84,20 @@ public interface Block {
     public boolean setRootJidBytes(byte[] bytes);
 
     /**
+     * Get an existing RootJid.
+     *
+     * @return The RootJid.
+     * @throws Exception An exception is thrown when there is no RootJid.
+     */
+    public RootJid getRootJid()
+            throws Exception;
+
+    /**
      * Return the RootJid, deserializing it as needed..
      *
      * @param mailbox The mailbox.
      * @param parent  The parent.
-     * @return The deserialized RootJid, or null.
+     * @return The RootJid, or null.
      */
     public RootJid getRootJid(Mailbox mailbox, Actor parent)
             throws Exception;

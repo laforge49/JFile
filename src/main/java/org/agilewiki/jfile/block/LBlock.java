@@ -137,6 +137,20 @@ public class LBlock implements Block {
     }
 
     /**
+     * Get an existing RootJid.
+     *
+     * @return The RootJid.
+     * @throws Exception An exception is thrown when there is no RootJid.
+     */
+    public RootJid getRootJid()
+            throws Exception {
+        if (rootJid == null) {
+            throw new IllegalStateException("there is no RootJid");
+        }
+        return rootJid;
+    }
+
+    /**
      * Return the RootJid, deserializing it as needed..
      *
      * @param mailbox The mailbox.
