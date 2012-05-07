@@ -55,6 +55,7 @@ final public class TransactionProcessor extends JLPCActor implements _Transactio
         if (request.getClass() == ProcessBlock.class) {
             ProcessBlock req = (ProcessBlock) request;
             processBlock(req.block);
+            rp.processResponse(null);
         }
 
         throw new UnsupportedOperationException(request.getClass().getName());
