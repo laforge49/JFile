@@ -23,11 +23,14 @@
  */
 package org.agilewiki.jfile.transactions.transactionProcessor;
 
+import org.agilewiki.jactor.Actor;
 import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.block.Block;
 import org.agilewiki.jfile.transactions.db.Checkpoint;
+import org.agilewiki.jid.collection.vlenc.ListJid;
+import org.agilewiki.jid.scalar.vlens.actor.GetActor;
 import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 
 /**
@@ -63,10 +66,47 @@ final public class TransactionProcessor extends JLPCActor implements _Transactio
         throw new UnsupportedOperationException(request.getClass().getName());
     }
 
+    /**
+     * Process the transactions and then send a Checkpoint request.
+     *
+     * @param block The block holding the list of transactions.
+     * @param rp    The RP used to signal completion.
+     */
     private void processBlock(Block block, RP rp) throws Exception {
         RootJid rootJid = block.getRootJid();
-        //todo
-        sendCheckpoint(block, rp);
+        GetActor.req.send(this, rootJid, new GotActor(block, rp));
+    }
+
+    /**
+     * Handle a response from the GetActor sent to the RootJid holding the list of transactions.
+     */
+    private class GotActor extends RP<Actor> {
+        private Block block;
+        private RP rp;
+
+        /**
+         * Create the RP for GetActor.
+         *
+         * @param block The block holding the list of transactions.
+         * @param rp    The RP used to signal completion.
+         */
+        private GotActor(Block block, RP rp) {
+            this.block = block;
+            this.rp = rp;
+        }
+
+        /**
+         * Receives and processes a response.
+         *
+         * @param response The response.
+         * @throws Exception Any uncaught exceptions raised when processing the response.
+         */
+        @Override
+        public void processResponse(Actor response) throws Exception {
+            ListJid listJid = (ListJid) response;
+            //todo
+            sendCheckpoint(block, rp);
+        }
     }
 
     private void sendCheckpoint(Block block, RP rp)
