@@ -36,9 +36,9 @@ public class LTA32FileTest extends TestCase {
         RootJid rj = new RootJid(mailbox);
         rj.setParent(factory);
         Block block = new LTA32Block();
+        block.setRootJid(rj);
         long timestamp = System.currentTimeMillis();
         block.setTimestamp(timestamp);
-        block.setRootJid(rj);
         (new ForcedWriteRootJid(block)).send(future, jFile);
         assertEquals(20L, block.getCurrentPosition());
 

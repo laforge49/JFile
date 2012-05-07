@@ -42,7 +42,7 @@ public class LBlock implements Block {
     private RootJid rootJid;
 
     /**
-     * Assign the RootJid to the block.
+     * Reset the block and assign the RootJid.
      *
      * @param rootJid The RootJid to be assigned.
      */

@@ -25,12 +25,24 @@ package org.agilewiki.jfile.block;
 
 import org.agilewiki.jid.AppendableBytes;
 import org.agilewiki.jid.Util;
+import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 
 /**
  * A block with a length and a timestamp in the header.
  */
 public class LTBlock extends LBlock {
     long timestamp;
+
+    /**
+     * Reset the block and assign the RootJid.
+     *
+     * @param rootJid The RootJid to be assigned.
+     */
+    @Override
+    public void setRootJid(RootJid rootJid) {
+        super.setRootJid(rootJid);
+        timestamp = 0L;
+    }
 
     /**
      * The length of the header which prefaces the actual data on disk.
@@ -51,6 +63,8 @@ public class LTBlock extends LBlock {
     @Override
     protected void saveHeader(AppendableBytes ab, int l)
             throws Exception {
+        if (timestamp == 0)
+            throw new IllegalStateException("timestamp not set");
         super.saveHeader(ab, l);
         ab.writeLong(timestamp);
     }
