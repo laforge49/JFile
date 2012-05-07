@@ -65,15 +65,13 @@ final public class TransactionProcessor extends JLPCActor implements _Transactio
 
     private void processBlock(Block block, RP rp) throws Exception {
         RootJid rootJid = block.getRootJid();
-        long logPosition = block.getCurrentPosition();
-        long timestamp = block.getTimestamp();
         //todo
-        sendCheckpoint(logPosition, timestamp, rp);
+        sendCheckpoint(block, rp);
     }
 
-    private void sendCheckpoint(long logPosition, long timestamp, RP rp)
+    private void sendCheckpoint(Block block, RP rp)
             throws Exception {
-        Checkpoint checkpoint = new Checkpoint(logPosition, timestamp);
+        Checkpoint checkpoint = new Checkpoint(block.getCurrentPosition(), block.getTimestamp());
         checkpoint.send(this, getParent(), rp);
     }
 }
