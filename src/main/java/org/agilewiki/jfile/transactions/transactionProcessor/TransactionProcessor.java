@@ -109,6 +109,12 @@ final public class TransactionProcessor extends JLPCActor implements _Transactio
         }
     }
 
+    /**
+     * Send a Checkpoint request.
+     *
+     * @param block The block holding the list of transactions.
+     * @param rp    The RP used to signal completion.
+     */
     private void sendCheckpoint(Block block, RP rp)
             throws Exception {
         Checkpoint checkpoint = new Checkpoint(block.getCurrentPosition(), block.getTimestamp());
