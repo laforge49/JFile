@@ -23,6 +23,7 @@
  */
 package org.agilewiki.jfile.transactions;
 
+import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jid.collection.vlenc.ListJidFactory;
 
 /**
@@ -47,5 +48,18 @@ public class TransactionListJidFactory extends ListJidFactory {
      */
     public TransactionListJidFactory(String actorType) {
         super(actorType, TransactionActorJidFactory.fac);
+    }
+
+    /**
+     * Create a JLPCActor.
+     *
+     * @param mailbox The mailbox of the new actor.
+     * @return The new actor.
+     */
+    @Override
+    protected TransactionListJid instantiateActor(Mailbox mailbox) throws Exception {
+        TransactionListJid transactionListJid = new TransactionListJid(mailbox);
+        assignElementsFactory(transactionListJid);
+        return transactionListJid;
     }
 }
