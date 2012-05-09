@@ -31,13 +31,16 @@ import org.agilewiki.jactor.lpc.Request;
  */
 public class Eval extends Request<Object, Transaction> {
     public final boolean isRestart;
+    public final long blockTimestamp;
 
     /**
      * Create the Eval request.
      *
-     * @param isRestart True if not online.
+     * @param blockTimestamp When the block of transactions was logged.
+     * @param isRestart      True if not online.
      */
-    public Eval(boolean isRestart) {
+    public Eval(boolean isRestart, long blockTimestamp) {
+        this.blockTimestamp = blockTimestamp;
         this.isRestart = isRestart;
     }
 
