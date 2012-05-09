@@ -40,7 +40,7 @@ public class TransactionListJidTest extends TestCase {
 
         JFile jFile = new JFile(mailbox);
         jFile.setParent(factory);
-        Path path = FileSystems.getDefault().getPath("TransactionProcessorTest.jf");
+        Path path = FileSystems.getDefault().getPath("TransactionListJidTest.jf");
         System.out.println(path.toAbsolutePath());
         jFile.fileChannel = FileChannel.open(
                 path,
