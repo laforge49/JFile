@@ -50,8 +50,9 @@ public class TransactionActorJid extends ActorJid implements Transaction {
     @Override
     protected void processRequest(Object request, RP rp) throws Exception {
         if (request.getClass() == Eval.class) {
+            Eval req = (Eval) request;
             Transaction transaction = (Transaction) getValue();
-            Eval.req.send(this, transaction, rp);
+            req.send(this, transaction, rp);
             return;
         }
 

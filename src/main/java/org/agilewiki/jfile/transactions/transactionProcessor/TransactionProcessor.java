@@ -28,15 +28,18 @@ import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.block.Block;
+import org.agilewiki.jfile.transactions.Eval;
+import org.agilewiki.jfile.transactions.Transaction;
 import org.agilewiki.jfile.transactions.db.Checkpoint;
-import org.agilewiki.jid.collection.vlenc.ListJid;
 import org.agilewiki.jid.scalar.vlens.actor.GetActor;
 import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 
 /**
  * On receipt of a ProcessBlock request, the transaction processor
- * first sends an Eval request to each transaction and then sends
+ * first sends an Eval request to the contents of the block and then sends
  * a Checkpoint request to the database.
+ * <p/>
+ * ProcessBlock requests should only be sent on completion of the previous ProcessBlock request.
  */
 final public class TransactionProcessor extends JLPCActor implements _TransactionProcessor {
     /**
@@ -67,57 +70,25 @@ final public class TransactionProcessor extends JLPCActor implements _Transactio
     }
 
     /**
-     * Process the transactions and then send a Checkpoint request.
+     * Process the contents of the block and then send a Checkpoint request.
      *
      * @param block The block holding the list of transactions.
      * @param rp    The RP used to signal completion.
      */
-    private void processBlock(Block block, RP rp) throws Exception {
+    private void processBlock(final Block block, final RP rp) throws Exception {
         RootJid rootJid = block.getRootJid();
-        GetActor.req.send(this, rootJid, new GotActor(block, rp));
-    }
-
-    /**
-     * Handle a response from the GetActor sent to the RootJid holding the list of transactions.
-     */
-    private class GotActor extends RP<Actor> {
-        private Block block;
-        private RP rp;
-
-        /**
-         * Create the RP for GetActor.
-         *
-         * @param block The block holding the list of transactions.
-         * @param rp    The RP used to signal completion.
-         */
-        private GotActor(Block block, RP rp) {
-            this.block = block;
-            this.rp = rp;
-        }
-
-        /**
-         * Receives and processes a response.
-         *
-         * @param response The response.
-         * @throws Exception Any uncaught exceptions raised when processing the response.
-         */
-        @Override
-        public void processResponse(Actor response) throws Exception {
-            ListJid listJid = (ListJid) response;
-            //todo
-            sendCheckpoint(block, rp);
-        }
-    }
-
-    /**
-     * Send a Checkpoint request.
-     *
-     * @param block The block holding the list of transactions.
-     * @param rp    The RP used to signal completion.
-     */
-    private void sendCheckpoint(Block block, RP rp)
-            throws Exception {
-        Checkpoint checkpoint = new Checkpoint(block.getCurrentPosition(), block.getTimestamp());
-        checkpoint.send(this, getParent(), rp);
+        GetActor.req.send(this, rootJid, new RP<Actor>() {
+            @Override
+            public void processResponse(Actor response) throws Exception {
+                Transaction transaction = (Transaction) response;
+                Eval.online.send(TransactionProcessor.this, transaction, new RP<Object>() {
+                    @Override
+                    public void processResponse(Object response) throws Exception {
+                        Checkpoint checkpoint = new Checkpoint(block.getCurrentPosition(), block.getTimestamp());
+                        checkpoint.send(TransactionProcessor.this, getParent(), rp);
+                    }
+                });
+            }
+        });
     }
 }
