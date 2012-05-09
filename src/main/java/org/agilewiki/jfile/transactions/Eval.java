@@ -30,10 +30,13 @@ import org.agilewiki.jactor.lpc.Request;
  * An Eval request is used to execute a transaction.
  */
 public class Eval extends Request<Object, Transaction> {
-    public static final Eval online = new Eval(false);
-    public static final Eval restart = new Eval(true);
     public final boolean isRestart;
 
+    /**
+     * Create the Eval request.
+     *
+     * @param isRestart True if not online.
+     */
     public Eval(boolean isRestart) {
         this.isRestart = isRestart;
     }
