@@ -4,7 +4,7 @@ import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
 
-public class StatelessDB extends JLPCActor {
+public class StatelessDB extends JLPCActor implements DB {
     public StatelessDB(Mailbox mailbox) {
         super(mailbox);
     }

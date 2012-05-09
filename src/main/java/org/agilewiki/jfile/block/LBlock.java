@@ -65,7 +65,6 @@ public class LBlock implements Block {
         AppendableBytes ab = new AppendableBytes(bytes, 0);
         saveHeader(ab, l);
         rootJid.save(ab);
-        rootJid = null;
         return bytes;
     }
 
