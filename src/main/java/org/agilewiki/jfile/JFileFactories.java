@@ -32,16 +32,15 @@ import org.agilewiki.jactor.factory.NewActor;
 import org.agilewiki.jactor.factory.Requirement;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.transactions.TransactionActorJidFactory;
+import org.agilewiki.jfile.transactions.TransactionListJidFactory;
 
 /**
  * Defines JFactory actor types and registers the factories.
  */
 public class JFileFactories extends JLPCActor {
 
-    /**
-     * The name of the JidJid actor.
-     */
     public final static String TRANSACTION_ACTOR_JID_TYPE = "TRANSACTION_ACTOR_JID";
+    public final static String TRANSACTION_LIST_JID_TYPE = "TRANSACTION_LIST_JID";
 
     /**
      * Create a LiteActor
@@ -84,6 +83,7 @@ public class JFileFactories extends JLPCActor {
         JAFactory factory = (JAFactory) f;
 
         factory.registerActorFactory(TransactionActorJidFactory.fac);
+        factory.registerActorFactory(new TransactionListJidFactory(TRANSACTION_LIST_JID_TYPE));
     }
 
     /**

@@ -26,7 +26,7 @@ public class TransactionProcessorTest extends TestCase {
         MailboxFactory mailboxFactory = JAMailboxFactory.newMailboxFactory(1);
         Mailbox mailbox = mailboxFactory.createMailbox();
         JAFactory factory = new JAFactory(mailbox);
-        factory.defineActorType("nullTransaction", HelloWorldTransaction.class);
+        factory.defineActorType("helloWorldTransaction", HelloWorldTransaction.class);
         JAFuture future = new JAFuture();
         StatelessDB db = new StatelessDB(mailbox);
         db.setParent(factory);
@@ -45,7 +45,7 @@ public class TransactionProcessorTest extends TestCase {
 
         RootJid rj = new RootJid(mailbox);
         rj.setParent(db);
-        (new SetActor("nullTransaction")).send(future, rj);
+        (new SetActor("helloWorldTransaction")).send(future, rj);
         Block block = new LTBlock();
         block.setRootJid(rj);
         long timestamp = System.currentTimeMillis();
