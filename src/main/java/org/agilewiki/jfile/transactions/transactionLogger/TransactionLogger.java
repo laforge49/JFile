@@ -30,9 +30,13 @@ import org.agilewiki.jactor.factory.JAFactoryFactory;
 import org.agilewiki.jactor.factory.NewActor;
 import org.agilewiki.jactor.factory.Requirement;
 import org.agilewiki.jactor.lpc.JLPCActor;
+import org.agilewiki.jfile.ForcedWriteRootJid;
 import org.agilewiki.jfile.JFileFactories;
+import org.agilewiki.jfile.block.Block;
+import org.agilewiki.jfile.block.LTA32Block;
 import org.agilewiki.jfile.transactions.TransactionActorJid;
 import org.agilewiki.jfile.transactions.TransactionListJid;
+import org.agilewiki.jfile.transactions.transactionProcessor.ProcessBlock;
 import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 
 /**
@@ -42,6 +46,8 @@ public class TransactionLogger extends JLPCActor implements _TransactionLogger {
     private RootJid rootJid;
     private TransactionListJid transactionListJid;
     public int initialCapacity = 10;
+    private boolean writePending;
+    private Block processPending;
 
     /**
      * Create a LiteActor
@@ -50,6 +56,14 @@ public class TransactionLogger extends JLPCActor implements _TransactionLogger {
      */
     public TransactionLogger(Mailbox mailbox) {
         super(mailbox);
+    }
+
+    protected Block newBlock() {
+        return new LTA32Block();
+    }
+
+    protected long newTimestamp() {
+        return System.currentTimeMillis();
     }
 
     /**
@@ -103,6 +117,9 @@ public class TransactionLogger extends JLPCActor implements _TransactionLogger {
             }
         }
         rp.processResponse(null);
+        if (!writePending && getMailbox().isEmpty()) {
+            writeBlock();
+        }
     }
 
     private void initialize()
@@ -113,5 +130,39 @@ public class TransactionLogger extends JLPCActor implements _TransactionLogger {
         rootJid.setValue(JFileFactories.TRANSACTION_LIST_JID_TYPE);
         transactionListJid = (TransactionListJid) rootJid.getValue();
         transactionListJid.initialCapacity = initialCapacity;
+    }
+
+    private void writeBlock()
+            throws Exception {
+        final Block block = newBlock();
+        block.setRootJid(rootJid);
+        rootJid = null;
+        block.setTimestamp(newTimestamp());
+        writePending = true;
+        (new ForcedWriteRootJid(block)).send(this, this, new RP<Object>() {
+            @Override
+            public void processResponse(Object response)
+                    throws Exception {
+                if (processPending == null) {
+                    writePending = false;
+                    processPending = block;
+                    processBlock();
+                }
+            }
+        });
+    }
+
+    private void processBlock()
+            throws Exception {
+        (new ProcessBlock(false, processPending)).
+                send(TransactionLogger.this, TransactionLogger.this, new RP<Object>() {
+                    @Override
+                    public void processResponse(Object response)
+                            throws Exception {
+                        processPending = null;
+                        if (rootJid != null)
+                            writeBlock();
+                    }
+                });
     }
 }
