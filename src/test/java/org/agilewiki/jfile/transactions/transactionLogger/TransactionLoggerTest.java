@@ -20,18 +20,19 @@ import java.nio.file.StandardOpenOption;
 public class TransactionLoggerTest extends TestCase {
     public void test()
             throws Exception {
-        MailboxFactory mailboxFactory = JAMailboxFactory.newMailboxFactory(1);
-        Mailbox mailbox = mailboxFactory.createMailbox();
-        JAFactory factory = new JAFactory(mailbox);
-        (new JFileFactories(mailbox)).setParent(factory);
+        MailboxFactory mailboxFactory = JAMailboxFactory.newMailboxFactory(10);
+        Mailbox factoryMailbox = mailboxFactory.createMailbox();
+        JAFactory factory = new JAFactory(factoryMailbox);
+        (new JFileFactories(factoryMailbox)).setParent(factory);
         factory.defineActorType("helloWorldTransaction", HelloWorldTransaction.class);
         JAFuture future = new JAFuture();
-        StatelessDB db = new StatelessDB(mailbox);
+        Mailbox dbMailbox = mailboxFactory.createAsyncMailbox();
+        StatelessDB db = new StatelessDB(dbMailbox);
         db.setParent(factory);
-        TransactionProcessor transactionProcessor = new TransactionProcessor(mailbox);
+        TransactionProcessor transactionProcessor = new TransactionProcessor(dbMailbox);
         transactionProcessor.setParent(db);
 
-        JFile jFile = new JFile(mailbox);
+        JFile jFile = new JFile(mailboxFactory.createAsyncMailbox());
         jFile.setParent(transactionProcessor);
         Path path = FileSystems.getDefault().getPath("TransactionLoggerTest.jf");
         System.out.println(path.toAbsolutePath());
@@ -41,13 +42,16 @@ public class TransactionLoggerTest extends TestCase {
                 StandardOpenOption.WRITE,
                 StandardOpenOption.CREATE);
 
-        TransactionLogger transactionLogger = new TransactionLogger(mailbox);
+        TransactionLogger transactionLogger =
+                new TransactionLogger(mailboxFactory.createAsyncMailbox());
         transactionLogger.setParent(jFile);
 
         (new ProcessTransaction("helloWorldTransaction")).send(future, transactionLogger);
         (new ProcessTransaction("helloWorldTransaction")).send(future, transactionLogger);
         (new ProcessTransaction("helloWorldTransaction")).send(future, transactionLogger);
 
+        Thread.sleep(100);
+        
         jFile.fileChannel.close();
         mailboxFactory.close();
     }
