@@ -127,6 +127,7 @@ public class TransactionLogger extends JLPCActor implements _TransactionLogger {
         if (rootJid != null)
             return;
         rootJid = new RootJid(getMailboxFactory().createMailbox());
+        rootJid.setParent(getParent());
         rootJid.setValue(JFileFactories.TRANSACTION_LIST_JID_TYPE);
         transactionListJid = (TransactionListJid) rootJid.getValue();
         transactionListJid.initialCapacity = initialCapacity;
