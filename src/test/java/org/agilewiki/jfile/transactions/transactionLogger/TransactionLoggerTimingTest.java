@@ -46,9 +46,17 @@ public class TransactionLoggerTimingTest extends TestCase {
         TransactionLogger transactionLogger =
                 new TransactionLogger(mailboxFactory.createAsyncMailbox());
         transactionLogger.setParent(jFile);
+        transactionLogger.initialCapacity = 2000;    //1000 => 2385ms
+
+        int i = 0;
+        while (i < 999999) {
+            (new ProcessTransaction(ntf)).sendEvent(transactionLogger);
+            i += 1;
+        }
+        (new ProcessTransaction(ntf)).send(future, transactionLogger);
 
         long t0 = System.currentTimeMillis();
-        int i = 0;
+        i = 0;
         while (i < 999999) {
             (new ProcessTransaction(ntf)).sendEvent(transactionLogger);
             i += 1;
