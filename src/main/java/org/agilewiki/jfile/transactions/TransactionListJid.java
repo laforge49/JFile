@@ -72,7 +72,7 @@ public class TransactionListJid extends ListJid implements Transaction {
             Transaction transaction = (Transaction) iGet(ndx);
             ndx += 1;
             sync = false;
-            async = true;
+            async = false;
             req.send(this, transaction, new RP<Object>() {
                 @Override
                 public void processResponse(Object response) throws Exception {

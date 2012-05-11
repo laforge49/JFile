@@ -49,7 +49,7 @@ public class TransactionLoggerTimingTest extends TestCase {
 
         long t0 = System.currentTimeMillis();
         int i = 0;
-        while (i < 99) {
+        while (i < 999999) {
             (new ProcessTransaction(ntf)).sendEvent(transactionLogger);
             i += 1;
         }
