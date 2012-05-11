@@ -28,7 +28,7 @@ import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.block.Block;
-import org.agilewiki.jfile.transactions.Eval;
+import org.agilewiki.jfile.transactions.TransactionEval;
 import org.agilewiki.jfile.transactions.Transaction;
 import org.agilewiki.jfile.transactions.db.Checkpoint;
 import org.agilewiki.jid.scalar.vlens.actor.GetActor;
@@ -81,7 +81,7 @@ final public class TransactionProcessor extends JLPCActor implements _Transactio
             @Override
             public void processResponse(Actor response) throws Exception {
                 Transaction transaction = (Transaction) response;
-                Eval eval = new Eval(isRestart, block.getTimestamp());
+                TransactionEval eval = new TransactionEval(isRestart, block.getTimestamp());
                 eval.send(TransactionProcessor.this, transaction, new RP<Object>() {
                     @Override
                     public void processResponse(Object response) throws Exception {

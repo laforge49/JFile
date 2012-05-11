@@ -53,16 +53,16 @@ public class TransactionListJid extends ListJid implements Transaction {
      */
     @Override
     protected void processRequest(Object request, RP rp) throws Exception {
-        if (request.getClass() == Eval.class) {
+        if (request.getClass() == TransactionEval.class) {
             ndx = 0;
-            eval((Eval) request, rp);
+            eval((TransactionEval) request, rp);
             return;
         }
 
         super.processRequest(request, rp);
     }
 
-    private void eval(final Eval req, final RP rp)
+    private void eval(final TransactionEval req, final RP rp)
             throws Exception {
         while (true) {
             if (ndx == size()) {

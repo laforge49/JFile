@@ -23,10 +23,23 @@
  */
 package org.agilewiki.jfile.transactions;
 
-import org.agilewiki.jactor.lpc.TargetActor;
+import org.agilewiki.jactor.Actor;
+import org.agilewiki.jactor.lpc.Request;
 
 /**
- * A transaction must support TransactionEval and TransactionResult requests.
+ * A transaction result request is used to request the results of a transaction.
  */
-public interface Transaction extends TargetActor {
+public class TransactionResult extends Request<Object, Transaction> {
+    public final static TransactionResult req = new TransactionResult();
+
+    /**
+     * Returns true when targetActor is an instanceof TARGET_TYPE
+     *
+     * @param targetActor The actor to be called.
+     * @return True when targetActor is an instanceof TARGET_TYPE.
+     */
+    @Override
+    public boolean isTargetType(Actor targetActor) {
+        return targetActor instanceof Transaction;
+    }
 }
