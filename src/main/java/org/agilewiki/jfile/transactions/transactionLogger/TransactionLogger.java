@@ -120,7 +120,7 @@ public class TransactionLogger extends JLPCActor implements _TransactionLogger {
         if (!rp.isEvent()) {
             TransactionResult.req.send(this, transactionActorJid.getValue(), rp);
         }
-        if (!writePending && getMailbox().isEmpty()) {
+        if (!writePending) {
             writeBlock();
         }
     }
