@@ -36,6 +36,7 @@ import org.agilewiki.jfile.block.Block;
 import org.agilewiki.jfile.block.LTA32Block;
 import org.agilewiki.jfile.transactions.TransactionActorJid;
 import org.agilewiki.jfile.transactions.TransactionListJid;
+import org.agilewiki.jfile.transactions.TransactionResult;
 import org.agilewiki.jfile.transactions.transactionProcessor.ProcessBlock;
 import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 
@@ -100,7 +101,7 @@ public class TransactionLogger extends JLPCActor implements _TransactionLogger {
 
     private void processTransaction(String actorType, ActorFactory actorFactory, byte[] bytes, final RP rp)
             throws Exception {
-        initialize();
+        makeRootJid();
         transactionListJid.iAdd(-1);
         TransactionActorJid transactionActorJid = (TransactionActorJid) transactionListJid.iGet(-1);
         if (actorType != null) {
@@ -116,13 +117,15 @@ public class TransactionLogger extends JLPCActor implements _TransactionLogger {
                 transactionActorJid.setJidBytes(actorFactory, bytes);
             }
         }
-        rp.processResponse(null);
+        if (!rp.isEvent()) {
+            TransactionResult.req.send(this, transactionActorJid.getValue(), rp);
+        }
         if (!writePending && getMailbox().isEmpty()) {
             writeBlock();
         }
     }
 
-    private void initialize()
+    private void makeRootJid()
             throws Exception {
         if (rootJid != null)
             return;
