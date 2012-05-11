@@ -31,7 +31,7 @@ import org.agilewiki.jactor.lpc.Request;
  * Log and then process the transaction.
  * The returned result is from when the transaction processes the TransactionEval request.
  */
-public class ProcessTransaction extends Request<Object, _TransactionLogger> {
+final public class ProcessTransaction extends Request<Object, _TransactionLogger> {
     public final String actorType;
     public final ActorFactory actorFactory;
     public final byte[] bytes;

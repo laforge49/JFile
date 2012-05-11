@@ -73,7 +73,7 @@ public class TransactionLogger extends JLPCActor implements _TransactionLogger {
      * @return The actor's requirents.
      */
     @Override
-    protected Requirement[] requirements() throws Exception {
+    final protected Requirement[] requirements() throws Exception {
         Requirement[] requirements = new Requirement[1];
         requirements[0] = new Requirement(
                 new NewActor(""),
@@ -89,7 +89,7 @@ public class TransactionLogger extends JLPCActor implements _TransactionLogger {
      * @throws Exception Any uncaught exceptions raised while processing the request.
      */
     @Override
-    protected void processRequest(Object request, RP rp) throws Exception {
+    final protected void processRequest(Object request, RP rp) throws Exception {
         if (request.getClass() == ProcessTransaction.class) {
             ProcessTransaction req = (ProcessTransaction) request;
             processTransaction(req.actorType, req.actorFactory, req.bytes, rp);
