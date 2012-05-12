@@ -52,6 +52,8 @@ public class TransactionLoggerTimingTest extends TestCase {
         while (i < 999999) {
             (new ProcessTransaction(ntf)).sendEvent(transactionLogger);
             i += 1;
+            if (i % 2000 == 0)
+                Thread.sleep(1);
         }
         (new ProcessTransaction(ntf)).send(future, transactionLogger);
 
@@ -60,6 +62,8 @@ public class TransactionLoggerTimingTest extends TestCase {
         while (i < 999999) {
             (new ProcessTransaction(ntf)).sendEvent(transactionLogger);
             i += 1;
+            if (i % 2000 == 0)
+                Thread.sleep(1);
         }
         (new ProcessTransaction(ntf)).send(future, transactionLogger);
         long t1 = System.currentTimeMillis();
