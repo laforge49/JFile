@@ -66,7 +66,7 @@ public class TransactionLoggerTimingTest extends TestCase {
         System.out.println("transactions: " + (transactionLoggerDriver.batch * transactionLoggerDriver.count));
 
         //latency = 2 ms
-        //throughput = 1,000,000 tps
+        //throughput = 500,000 tps
 
         jFile.fileChannel.close();
         mailboxFactory.close();

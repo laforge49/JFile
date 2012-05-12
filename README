@@ -9,7 +9,7 @@ One approach to improve throughput while still flushing data to disk is to
     (1) group transactions into batches on one thread,
     (2) log and fsync each batch of transactions to disk on a second thread and
     (3) update the database with the logged transactions on a third thread.
-Using this approach, we can log and process up to 1 million durable transactions
+Using this approach, we can log and process up to 500,000 durable transactions
 per second.
 
 Downloads:     https://sourceforge.net/projects/jactor/files/
