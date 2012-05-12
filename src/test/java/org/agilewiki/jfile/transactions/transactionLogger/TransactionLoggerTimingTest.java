@@ -17,7 +17,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
-public class SimplisticTransactionLoggerTimingTest extends TestCase {
+public class TransactionLoggerTimingTest extends TestCase {
     public void test()
             throws Exception {
         MailboxFactory mailboxFactory = JAMailboxFactory.newMailboxFactory(10);
@@ -35,7 +35,7 @@ public class SimplisticTransactionLoggerTimingTest extends TestCase {
 
         JFile jFile = new JFile(mailboxFactory.createAsyncMailbox());
         jFile.setParent(transactionProcessor);
-        Path path = FileSystems.getDefault().getPath("SimplisticTransactionLoggerTimingTest.jf");
+        Path path = FileSystems.getDefault().getPath("TransactionLoggerTimingTest.jf");
         System.out.println(path.toAbsolutePath());
         jFile.fileChannel = FileChannel.open(
                 path,
@@ -43,27 +43,21 @@ public class SimplisticTransactionLoggerTimingTest extends TestCase {
                 StandardOpenOption.WRITE,
                 StandardOpenOption.CREATE);
 
+        Mailbox transactionLoggerMailbox = mailboxFactory.createAsyncMailbox();
         TransactionLogger transactionLogger =
-                new TransactionLogger(mailboxFactory.createAsyncMailbox());
+                new TransactionLogger(transactionLoggerMailbox);
         transactionLogger.setParent(jFile);
         transactionLogger.initialCapacity = 2000;
-
-        int i = 0;
-        //  while (i < 999999) {
-        while (i < 10) {
-            (new ProcessTransaction(ntf)).sendEvent(transactionLogger);
-            i += 1;
-        }
-        (new ProcessTransaction(ntf)).send(future, transactionLogger);
+        
+        TransactionLoggerDriver transactionLoggerDriver =
+                new TransactionLoggerDriver(mailboxFactory.createAsyncMailbox());
+        transactionLoggerDriver.setParent(transactionLogger);
+        transactionLoggerDriver.batch = 2000;
+        transactionLoggerDriver.count = 50000;
+        transactionLoggerDriver.win = 5;
 
         long t0 = System.currentTimeMillis();
-        i = 0;
-        //while (i < 999999) {
-        while (i < 10) {
-            (new ProcessTransaction(ntf)).sendEvent(transactionLogger);
-            i += 1;
-        }
-        (new ProcessTransaction(ntf)).send(future, transactionLogger);
+        Go.req.send(future, transactionLoggerDriver);
         long t1 = System.currentTimeMillis();
 
         System.out.println("milliseconds: " + (t1 - t0));

@@ -119,6 +119,7 @@ public class TransactionLogger extends JLPCActor implements _TransactionLogger {
         }
         if (!rp.isEvent()) {
             TransactionResult.req.send(this, transactionActorJid.getValue(), rp);
+            getMailbox().sendPendingMessages();
         }
         if (!writePending) {
             writeBlock();
@@ -154,6 +155,7 @@ public class TransactionLogger extends JLPCActor implements _TransactionLogger {
                 }
             }
         });
+        getMailbox().sendPendingMessages();
     }
 
     private void processBlock()
@@ -168,5 +170,6 @@ public class TransactionLogger extends JLPCActor implements _TransactionLogger {
                             writeBlock();
                     }
                 });
+        getMailbox().sendPendingMessages();
     }
 }
