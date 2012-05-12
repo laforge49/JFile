@@ -38,7 +38,8 @@ public class LBlock implements Block {
     private long currentPosition;
     protected ReadableBytes rb;
     int l;
-    protected byte[] bytes;
+    protected byte[] blockBytes;
+    protected byte[] rootJidBytes;
     private RootJid rootJid;
 
     /**
@@ -48,7 +49,8 @@ public class LBlock implements Block {
      */
     @Override
     public void setRootJid(RootJid rootJid) {
-        bytes = null;
+        blockBytes = null;
+        rootJidBytes = null;
         this.rootJid = rootJid;
     }
 
@@ -60,12 +62,14 @@ public class LBlock implements Block {
     @Override
     public byte[] serialize()
             throws Exception {
+        if (blockBytes != null)
+            return blockBytes;
         l = rootJid.getSerializedLength();
-        bytes = new byte[headerLength() + l];
-        AppendableBytes ab = new AppendableBytes(bytes, 0);
+        blockBytes = new byte[headerLength() + l];
+        AppendableBytes ab = new AppendableBytes(blockBytes, 0);
         saveHeader(ab, l);
         rootJid.save(ab);
-        return bytes;
+        return blockBytes;
     }
 
     /**
@@ -123,15 +127,15 @@ public class LBlock implements Block {
     /**
      * Provides the data read from disk after the header.
      *
-     * @param bytesRead The data following the header on disk.
+     * @param rootJidBytes The data following the header on disk.
      * @return True when the data is valid.
      */
     @Override
-    public boolean setRootJidBytes(byte[] bytesRead) {
-        if (l != bytesRead.length) {
+    public boolean setRootJidBytes(byte[] rootJidBytes) {
+        if (l != rootJidBytes.length) {
             return false;
         }
-        this.bytes = bytesRead;
+        this.rootJidBytes = rootJidBytes;
         return true;
     }
 
@@ -162,11 +166,11 @@ public class LBlock implements Block {
         if (rootJid != null)
             return rootJid;
         rb = null;
-        if (bytes == null)
+        if (rootJidBytes == null)
             return null;
         RootJid rootJid = new RootJid(mailbox);
         rootJid.setParent(parent);
-        rootJid.load(new ReadableBytes(bytes, 0));
+        rootJid.load(new ReadableBytes(rootJidBytes, 0));
         return rootJid;
     }
 

@@ -56,7 +56,7 @@ public class LTA32Block extends LTBlock {
             throws Exception {
         super.saveHeader(ab, l);
         a32.reset();
-        a32.update(bytes, headerLength(), bytes.length - headerLength());
+        a32.update(blockBytes, headerLength(), blockBytes.length - headerLength());
         ab.writeLong(a32.getValue());
     }
 
@@ -88,7 +88,7 @@ public class LTA32Block extends LTBlock {
         boolean match = checksum == a32.getValue();
         if (match)
             return true;
-        bytes = null;
+        rootJidBytes = null;
         return false;
     }
 }
