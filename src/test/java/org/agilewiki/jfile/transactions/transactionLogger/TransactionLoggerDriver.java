@@ -23,6 +23,7 @@ public class TransactionLoggerDriver extends JLPCActor {
             throws Exception {
         pendingManager = new PendingManager();
         pendingManager.rp = rp;
+        ndx = 0;
         int w = 0;
         while (w < win) {
             sender();

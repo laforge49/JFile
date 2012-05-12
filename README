@@ -1,4 +1,4 @@
-File Persistence and High Throughput Reliable Logging
+File Persistence and High Throughput Durable Logging
 
 ACID is a common claim, but the D in ACID stands for durable. Durable means
 that once committed, a transaction will persist even if the system crashes.
@@ -7,9 +7,10 @@ data has been flushed to disk--and this is SLOW.
 
 One approach to improve throughput while still flushing data to disk is to
     (1) group transactions into batches on one thread,
-    (2) log and flush each batch of transactions to disk on a second thread and
+    (2) log and fsync each batch of transactions to disk on a second thread and
     (3) update the database with the logged transactions on a third thread.
-This approach is supported by JFile.
+Using this approach, we can log and process up to 1 million durable transactions
+per second.
 
 Downloads:     https://sourceforge.net/projects/jactor/files/
 Blog:          https://sourceforge.net/p/jactor/blog/
