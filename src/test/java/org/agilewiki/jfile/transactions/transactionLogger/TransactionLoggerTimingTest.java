@@ -52,8 +52,8 @@ public class TransactionLoggerTimingTest extends TestCase {
         TransactionLoggerDriver transactionLoggerDriver =
                 new TransactionLoggerDriver(mailboxFactory.createAsyncMailbox());
         transactionLoggerDriver.setParent(transactionLogger);
-        transactionLoggerDriver.batch = 2000;
-        transactionLoggerDriver.count = 500;
+        transactionLoggerDriver.batch = 1;
+        transactionLoggerDriver.count = 1;
         transactionLoggerDriver.win = 3;
 
         Go.req.send(future, transactionLoggerDriver);
@@ -63,6 +63,10 @@ public class TransactionLoggerTimingTest extends TestCase {
         long t1 = System.currentTimeMillis();
 
         System.out.println("milliseconds: " + (t1 - t0));
+        System.out.println("transactions: " + (transactionLoggerDriver.batch * transactionLoggerDriver.count));
+
+        //latency = 2 ms
+        //throughput = 1,000,000 tps
 
         jFile.fileChannel.close();
         mailboxFactory.close();
