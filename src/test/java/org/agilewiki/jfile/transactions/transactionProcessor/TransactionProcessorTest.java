@@ -52,7 +52,7 @@ public class TransactionProcessorTest extends TestCase {
         block.setTimestamp(timestamp);
         (new ForcedWriteRootJid(block)).send(future, jFile);
 
-        (new ProcessBlock(false, block)).send(future, transactionProcessor);
+        (new ProcessBlock(block)).send(future, transactionProcessor);
 
         jFile.fileChannel.close();
         mailboxFactory.close();

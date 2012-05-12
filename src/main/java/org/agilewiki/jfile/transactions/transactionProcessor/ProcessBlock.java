@@ -31,17 +31,14 @@ import org.agilewiki.jfile.block.Block;
  * A ProcessBlock is sent with a list of transactions to be processed.
  */
 public class ProcessBlock extends Request<Object, _TransactionProcessor> {
-    public final boolean isRestart;
     public final Block block;
 
     /**
      * Create a request.
      *
-     * @param isRestart True if not online.
      * @param block     A block holding a list of transactions to be processed.
      */
-    public ProcessBlock(boolean isRestart, Block block) {
-        this.isRestart = isRestart;
+    public ProcessBlock(Block block) {
         this.block = block;
     }
 

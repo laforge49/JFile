@@ -30,18 +30,15 @@ import org.agilewiki.jactor.lpc.Request;
  * A TransactionEval request is used to execute a transaction.
  */
 public class TransactionEval extends Request<Object, Transaction> {
-    public final boolean isRestart;
     public final long blockTimestamp;
 
     /**
      * Create the Eval request.
      *
      * @param blockTimestamp When the block of transactions was logged.
-     * @param isRestart      True if not online.
      */
-    public TransactionEval(boolean isRestart, long blockTimestamp) {
+    public TransactionEval(long blockTimestamp) {
         this.blockTimestamp = blockTimestamp;
-        this.isRestart = isRestart;
     }
 
     /**

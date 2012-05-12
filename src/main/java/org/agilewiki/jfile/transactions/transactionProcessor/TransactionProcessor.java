@@ -62,7 +62,7 @@ final public class TransactionProcessor extends JLPCActor implements _Transactio
     protected void processRequest(Object request, RP rp) throws Exception {
         if (request.getClass() == ProcessBlock.class) {
             ProcessBlock req = (ProcessBlock) request;
-            processBlock(req.isRestart, req.block, rp);
+            processBlock(req.block, rp);
             return;
         }
 
@@ -75,13 +75,13 @@ final public class TransactionProcessor extends JLPCActor implements _Transactio
      * @param block The block holding the list of transactions.
      * @param rp    The RP used to signal completion.
      */
-    private void processBlock(final boolean isRestart, final Block block, final RP rp) throws Exception {
+    private void processBlock(final Block block, final RP rp) throws Exception {
         RootJid rootJid = block.getRootJid();
         GetActor.req.send(this, rootJid, new RP<Actor>() {
             @Override
             public void processResponse(Actor response) throws Exception {
                 Transaction transaction = (Transaction) response;
-                TransactionEval eval = new TransactionEval(isRestart, block.getTimestamp());
+                TransactionEval eval = new TransactionEval(block.getTimestamp());
                 eval.send(TransactionProcessor.this, transaction, new RP<Object>() {
                     @Override
                     public void processResponse(Object response) throws Exception {

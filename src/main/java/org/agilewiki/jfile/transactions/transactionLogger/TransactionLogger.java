@@ -158,7 +158,7 @@ public class TransactionLogger extends JLPCActor implements _TransactionLogger {
 
     private void processBlock()
             throws Exception {
-        (new ProcessBlock(false, processPending)).
+        (new ProcessBlock(processPending)).
                 send(TransactionLogger.this, TransactionLogger.this, new RP<Object>() {
                     @Override
                     public void processResponse(Object response)
