@@ -1,4 +1,4 @@
-package org.agilewiki.jfile.transactions.db;
+package org.agilewiki.jfile.transactions.db.counter;
 
 import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
