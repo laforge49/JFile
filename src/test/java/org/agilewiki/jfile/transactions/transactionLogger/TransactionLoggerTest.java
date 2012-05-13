@@ -9,7 +9,6 @@ import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.JFile;
 import org.agilewiki.jfile.JFileFactories;
 import org.agilewiki.jfile.transactions.HelloWorldTransaction;
-import org.agilewiki.jfile.transactions.NullTransactionFactory;
 import org.agilewiki.jfile.transactions.db.StatelessDB;
 import org.agilewiki.jfile.transactions.transactionProcessor.TransactionProcessor;
 
@@ -43,8 +42,8 @@ public class TransactionLoggerTest extends TestCase {
                 StandardOpenOption.WRITE,
                 StandardOpenOption.CREATE);
 
-        TransactionLogger transactionLogger =
-                new TransactionLogger(mailboxFactory.createAsyncMailbox());
+        TransactionLogger3 transactionLogger =
+                new TransactionLogger3(mailboxFactory.createAsyncMailbox());
         transactionLogger.setParent(jFile);
 
         (new ProcessTransaction("helloWorldTransaction")).sendEvent(transactionLogger);

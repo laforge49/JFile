@@ -41,9 +41,9 @@ import org.agilewiki.jfile.transactions.transactionProcessor.ProcessBlock;
 import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 
 /**
- * A transaction logger must handle ProcessTransaction requests.
+ * A 3-stage transaction logger: batch, log & process
  */
-public class TransactionLogger extends JLPCActor implements _TransactionLogger {
+public class TransactionLogger3 extends JLPCActor implements _TransactionLogger {
     private RootJid rootJid;
     private TransactionListJid transactionListJid;
     public int initialCapacity = 10;
@@ -55,7 +55,7 @@ public class TransactionLogger extends JLPCActor implements _TransactionLogger {
      *
      * @param mailbox A mailbox which may be shared with other actors.
      */
-    public TransactionLogger(Mailbox mailbox) {
+    public TransactionLogger3(Mailbox mailbox) {
         super(mailbox);
     }
 
@@ -161,7 +161,7 @@ public class TransactionLogger extends JLPCActor implements _TransactionLogger {
     private void processBlock()
             throws Exception {
         (new ProcessBlock(processPending)).
-                send(TransactionLogger.this, TransactionLogger.this, new RP<Object>() {
+                send(TransactionLogger3.this, TransactionLogger3.this, new RP<Object>() {
                     @Override
                     public void processResponse(Object response)
                             throws Exception {

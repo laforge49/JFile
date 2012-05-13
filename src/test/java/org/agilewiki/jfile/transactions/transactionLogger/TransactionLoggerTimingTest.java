@@ -44,8 +44,8 @@ public class TransactionLoggerTimingTest extends TestCase {
                 StandardOpenOption.CREATE);
 
         Mailbox transactionLoggerMailbox = mailboxFactory.createAsyncMailbox();
-        TransactionLogger transactionLogger =
-                new TransactionLogger(transactionLoggerMailbox);
+        TransactionLogger3 transactionLogger =
+                new TransactionLogger3(transactionLoggerMailbox);
         transactionLogger.setParent(jFile);
         transactionLogger.initialCapacity = 2000;
         

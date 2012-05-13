@@ -8,10 +8,8 @@ import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.JFile;
 import org.agilewiki.jfile.JFileFactories;
-import org.agilewiki.jfile.transactions.HelloWorldTransaction;
-import org.agilewiki.jfile.transactions.db.StatelessDB;
 import org.agilewiki.jfile.transactions.transactionLogger.ProcessTransaction;
-import org.agilewiki.jfile.transactions.transactionLogger.TransactionLogger;
+import org.agilewiki.jfile.transactions.transactionLogger.TransactionLogger3;
 import org.agilewiki.jfile.transactions.transactionProcessor.TransactionProcessor;
 
 import java.nio.channels.FileChannel;
@@ -44,8 +42,8 @@ public class CounterTest extends TestCase {
                 StandardOpenOption.WRITE,
                 StandardOpenOption.CREATE);
 
-        TransactionLogger transactionLogger =
-                new TransactionLogger(mailboxFactory.createAsyncMailbox());
+        TransactionLogger3 transactionLogger =
+                new TransactionLogger3(mailboxFactory.createAsyncMailbox());
         transactionLogger.setParent(jFile);
 
         (new ProcessTransaction("inc")).sendEvent(transactionLogger);
