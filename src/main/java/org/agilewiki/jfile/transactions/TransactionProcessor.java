@@ -21,15 +21,13 @@
  * A copy of this license is also included and can be
  * found as well at http://www.opensource.org/licenses/cpl1.0.txt
  */
-package org.agilewiki.jfile.transactions.transactionProcessor;
+package org.agilewiki.jfile.transactions;
 
 import org.agilewiki.jactor.Actor;
 import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.block.Block;
-import org.agilewiki.jfile.transactions.TransactionEval;
-import org.agilewiki.jfile.transactions.Transaction;
 import org.agilewiki.jfile.transactions.db.Checkpoint;
 import org.agilewiki.jid.scalar.vlens.actor.GetActor;
 import org.agilewiki.jid.scalar.vlens.actor.RootJid;
@@ -38,10 +36,8 @@ import org.agilewiki.jid.scalar.vlens.actor.RootJid;
  * On receipt of a ProcessBlock request, the transaction processor
  * first sends an Eval request to the contents of the block and then sends
  * a Checkpoint request to the database.
- * <p/>
- * ProcessBlock requests should only be sent on completion of the previous ProcessBlock request.
  */
-final public class TransactionProcessor extends JLPCActor implements _TransactionProcessor {
+final public class TransactionProcessor extends JLPCActor implements BlockProcessor {
     /**
      * Create a LiteActor
      *

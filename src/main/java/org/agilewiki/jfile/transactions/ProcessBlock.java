@@ -21,43 +21,36 @@
  * A copy of this license is also included and can be
  * found as well at http://www.opensource.org/licenses/cpl1.0.txt
  */
-package org.agilewiki.jfile.transactions.serializer;
+package org.agilewiki.jfile.transactions;
 
-import org.agilewiki.jactor.Mailbox;
-import org.agilewiki.jactor.RP;
-import org.agilewiki.jactor.lpc.JLPCActor;
+import org.agilewiki.jactor.Actor;
+import org.agilewiki.jactor.lpc.Request;
+import org.agilewiki.jfile.block.Block;
+import org.agilewiki.jfile.transactions.BlockProcessor;
 
 /**
- * Serializes the contents of a block.
+ * ProcessBlock requests should only be sent on completion of the previous ProcessBlock request.
  */
-public class Serializer extends JLPCActor {
+public class ProcessBlock extends Request<Object, BlockProcessor> {
+    public final Block block;
+
     /**
-     * Create a LiteActor
+     * Create a request.
      *
-     * @param mailbox A mailbox which may be shared with other actors.
+     * @param block     A block to be processed.
      */
-    public Serializer(Mailbox mailbox) {
-        super(mailbox);
+    public ProcessBlock(Block block) {
+        this.block = block;
     }
 
     /**
-     * The application method for processing requests sent to the actor.
+     * Returns true when targetActor is an instanceof TARGET_TYPE
      *
-     * @param request A request.
-     * @param rp      The response processor.
-     * @throws Exception Any uncaught exceptions raised while processing the request.
+     * @param targetActor The actor to be called.
+     * @return True when targetActor is an instanceof TARGET_TYPE.
      */
     @Override
-    protected void processRequest(Object request, RP rp) throws Exception {
-        Class reqClass = request.getClass();
-        
-        if (reqClass == SerializeBlock.class) {
-            SerializeBlock req = (SerializeBlock) request;
-            req.block.serialize();
-            rp.processResponse(null);
-            return;
-        }
-        
-        throw new UnsupportedOperationException(reqClass.getName());
+    public boolean isTargetType(Actor targetActor) {
+        return targetActor instanceof BlockProcessor;
     }
 }

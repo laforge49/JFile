@@ -21,35 +21,45 @@
  * A copy of this license is also included and can be
  * found as well at http://www.opensource.org/licenses/cpl1.0.txt
  */
-package org.agilewiki.jfile.transactions.serializer;
+package org.agilewiki.jfile.transactions;
 
-import org.agilewiki.jactor.Actor;
-import org.agilewiki.jactor.lpc.Request;
-import org.agilewiki.jfile.block.Block;
+import org.agilewiki.jactor.Mailbox;
+import org.agilewiki.jactor.RP;
+import org.agilewiki.jactor.lpc.JLPCActor;
 
 /**
- * A SerializeBlock request is sent to the Serializer to serialize the contents of a block.
+ * Serializes the contents of a block.
  */
-public class SerializeBlock extends Request<Object, Serializer> {
-    public final Block block;
-
+public class Serializer extends JLPCActor implements BlockProcessor {
+    public BlockProcessor next;
+    
     /**
-     * Create a request.
+     * Create a LiteActor
      *
-     * @param block     The block to be serialized.
+     * @param mailbox A mailbox which may be shared with other actors.
      */
-    public SerializeBlock(Block block) {
-        this.block = block;
+    public Serializer(Mailbox mailbox) {
+        super(mailbox);
     }
 
     /**
-     * Returns true when targetActor is an instanceof TARGET_TYPE
+     * The application method for processing requests sent to the actor.
      *
-     * @param targetActor The actor to be called.
-     * @return True when targetActor is an instanceof TARGET_TYPE.
+     * @param request A request.
+     * @param rp      The response processor.
+     * @throws Exception Any uncaught exceptions raised while processing the request.
      */
     @Override
-    public boolean isTargetType(Actor targetActor) {
-        return targetActor instanceof Serializer;
+    protected void processRequest(Object request, RP rp) throws Exception {
+        Class reqClass = request.getClass();
+        
+        if (reqClass == ProcessBlock.class) {
+            ProcessBlock req = (ProcessBlock) request;
+            req.block.serialize();
+            req.send(this, next, rp);
+            return;
+        }
+        
+        throw new UnsupportedOperationException(reqClass.getName());
     }
 }
