@@ -39,8 +39,7 @@ import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 /**
  * Aggregates transactions into blocks.
  */
-public class TransactionAggregator extends JLPCActor implements _TransactionAggregator {
-    public BlockProcessor next;
+public class TransactionAggregator extends BlockFlowSource implements _TransactionAggregator {
     public int initialCapacity = 10;
     private RootJid rootJid;
     private TransactionListJid transactionListJid;
@@ -55,10 +54,18 @@ public class TransactionAggregator extends JLPCActor implements _TransactionAggr
         super(mailbox);
     }
 
+    /**
+     * Creates a new block.
+     * @return A new block.
+     */
     protected Block newBlock() {
         return new LTA32Block();
     }
 
+    /**
+     * Generates a timestamp.
+     * @return A new timestamp.
+     */
     protected long newTimestamp() {
         return System.currentTimeMillis();
     }
@@ -142,7 +149,7 @@ public class TransactionAggregator extends JLPCActor implements _TransactionAggr
         rootJid = null;
         block.setTimestamp(newTimestamp());
         writePending = true;
-        (new ProcessBlock(block)).send(this, next, new RP<Object>() {
+        (new ProcessBlock(block)).send(this, blockFlowBuffer, new RP<Object>() {
             @Override
             public void processResponse(Object response)
                     throws Exception {

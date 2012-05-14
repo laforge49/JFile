@@ -29,7 +29,7 @@ public class TransactionAggregatorTest extends TestCase {
         TransactionAggregator transactionAggregator =
                 new TransactionAggregator(mailboxFactory.createAsyncMailbox());
         transactionAggregator.setParent(factory);
-        transactionAggregator.next = transactionProcessor;
+        transactionAggregator.setNext(transactionProcessor);
 
         (new AggregateTransaction("helloWorldTransaction")).sendEvent(transactionAggregator);
         (new AggregateTransaction("helloWorldTransaction")).sendEvent(transactionAggregator);
