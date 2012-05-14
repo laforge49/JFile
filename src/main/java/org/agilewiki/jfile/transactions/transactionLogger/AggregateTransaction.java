@@ -28,33 +28,32 @@ import org.agilewiki.jactor.factory.ActorFactory;
 import org.agilewiki.jactor.lpc.Request;
 
 /**
- * Log and then process the transaction.
- * The returned result is from when the transaction processes the TransactionEval request.
+ * Adds a transaction to a Block for subsequent logging and processing.
  */
-final public class ProcessTransaction extends Request<Object, _TransactionAggregator> {
+final public class AggregateTransaction extends Request<Object, _TransactionAggregator> {
     public final String actorType;
     public final ActorFactory actorFactory;
     public final byte[] bytes;
 
-    public ProcessTransaction(String actorType) {
+    public AggregateTransaction(String actorType) {
         this.actorType = actorType;
         this.actorFactory = null;
         this.bytes = null;
     }
 
-    public ProcessTransaction(ActorFactory actorFactory) {
+    public AggregateTransaction(ActorFactory actorFactory) {
         this.actorType = null;
         this.actorFactory = actorFactory;
         this.bytes = null;
     }
 
-    public ProcessTransaction(String actorType, byte[] bytes) {
+    public AggregateTransaction(String actorType, byte[] bytes) {
         this.actorType = actorType;
         this.actorFactory = null;
         this.bytes = bytes;
     }
 
-    public ProcessTransaction(ActorFactory actorFactory, byte[] bytes) {
+    public AggregateTransaction(ActorFactory actorFactory, byte[] bytes) {
         this.actorType = null;
         this.actorFactory = actorFactory;
         this.bytes = bytes;

@@ -9,7 +9,7 @@ import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.JFile;
 import org.agilewiki.jfile.JFileFactories;
 import org.agilewiki.jfile.transactions.TransactionProcessor;
-import org.agilewiki.jfile.transactions.transactionLogger.ProcessTransaction;
+import org.agilewiki.jfile.transactions.transactionLogger.AggregateTransaction;
 import org.agilewiki.jfile.transactions.transactionLogger.TransactionLogger3;
 
 import java.nio.channels.FileChannel;
@@ -46,9 +46,9 @@ public class CounterTest extends TestCase {
                 new TransactionLogger3(mailboxFactory.createAsyncMailbox());
         transactionLogger.setParent(jFile);
 
-        (new ProcessTransaction("inc")).sendEvent(transactionLogger);
-        (new ProcessTransaction("inc")).sendEvent(transactionLogger);
-        int total = (Integer) (new ProcessTransaction("inc")).send(future, transactionLogger);
+        (new AggregateTransaction("inc")).sendEvent(transactionLogger);
+        (new AggregateTransaction("inc")).sendEvent(transactionLogger);
+        int total = (Integer) (new AggregateTransaction("inc")).send(future, transactionLogger);
         assertEquals(3, total);
 
         jFile.fileChannel.close();

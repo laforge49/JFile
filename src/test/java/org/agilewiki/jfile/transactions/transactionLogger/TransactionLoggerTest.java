@@ -46,9 +46,9 @@ public class TransactionLoggerTest extends TestCase {
                 new TransactionLogger3(mailboxFactory.createAsyncMailbox());
         transactionLogger.setParent(jFile);
 
-        (new ProcessTransaction("helloWorldTransaction")).sendEvent(transactionLogger);
-        (new ProcessTransaction("helloWorldTransaction")).sendEvent(transactionLogger);
-        (new ProcessTransaction("helloWorldTransaction")).send(future, transactionLogger);
+        (new AggregateTransaction("helloWorldTransaction")).sendEvent(transactionLogger);
+        (new AggregateTransaction("helloWorldTransaction")).sendEvent(transactionLogger);
+        (new AggregateTransaction("helloWorldTransaction")).send(future, transactionLogger);
 
         jFile.fileChannel.close();
         mailboxFactory.close();

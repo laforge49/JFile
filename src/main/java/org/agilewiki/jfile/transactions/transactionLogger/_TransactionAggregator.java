@@ -26,7 +26,7 @@ package org.agilewiki.jfile.transactions.transactionLogger;
 import org.agilewiki.jactor.lpc.TargetActor;
 
 /**
- * A transaction logger must handle ProcessTransaction requests.
+ * Aggregates transactions into blocks.
  */
 public interface _TransactionAggregator extends TargetActor {
 }

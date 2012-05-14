@@ -36,14 +36,14 @@ public class TransactionLoggerDriver extends JLPCActor {
         int i = 0;
         int l = batch - 1;
         while (i < l) {
-            (new ProcessTransaction(ntf)).sendEvent(this, getParent());
+            (new AggregateTransaction(ntf)).sendEvent(this, getParent());
             i += 1;
         }
         pendingManager.pending += 1;
         ndx += 1;
         if (ndx == count)
             pendingManager.fin = true;
-        (new ProcessTransaction(ntf)).send(this, getParent(), pendingManager);
+        (new AggregateTransaction(ntf)).send(this, getParent(), pendingManager);
         //System.out.println("" + ndx + " " + pendingManager.fin + " " + pendingManager.pending);
     }
 

@@ -1,26 +1,3 @@
-/*
- * Copyright 2012 Bill La Forge
- *
- * This file is part of AgileWiki and is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License (LGPL) as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This code is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
- * or navigate to the following url http://www.gnu.org/licenses/lgpl-2.1.txt
- *
- * Note however that only Scala, Java and JavaScript files are being covered by LGPL.
- * All other files are covered by the Common Public License (CPL).
- * A copy of this license is also included and can be
- * found as well at http://www.opensource.org/licenses/cpl1.0.txt
- */
 package org.agilewiki.jfile.transactions.transactionLogger;
 
 import org.agilewiki.jactor.Mailbox;
@@ -34,28 +11,25 @@ import org.agilewiki.jfile.ForcedWriteRootJid;
 import org.agilewiki.jfile.JFileFactories;
 import org.agilewiki.jfile.block.Block;
 import org.agilewiki.jfile.block.LTA32Block;
-import org.agilewiki.jfile.transactions.ProcessBlock;
-import org.agilewiki.jfile.transactions.TransactionActorJid;
-import org.agilewiki.jfile.transactions.TransactionListJid;
-import org.agilewiki.jfile.transactions.TransactionResult;
+import org.agilewiki.jfile.transactions.*;
 import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 
 /**
- * A 3-stage transaction logger: batch, log & process
+ * Aggregates transactions into blocks.
  */
-public class TransactionLogger3 extends JLPCActor implements _TransactionAggregator {
+public class TransactionAggregator extends JLPCActor implements _TransactionAggregator {
+    public BlockProcessor next;
+    public int initialCapacity = 10;
     private RootJid rootJid;
     private TransactionListJid transactionListJid;
-    public int initialCapacity = 10;
     private boolean writePending;
-    private Block processPending;
 
     /**
      * Create a LiteActor
      *
      * @param mailbox A mailbox which may be shared with other actors.
      */
-    public TransactionLogger3(Mailbox mailbox) {
+    public TransactionAggregator(Mailbox mailbox) {
         super(mailbox);
     }
 
@@ -144,32 +118,13 @@ public class TransactionLogger3 extends JLPCActor implements _TransactionAggrega
         rootJid = null;
         block.setTimestamp(newTimestamp());
         writePending = true;
-        (new ForcedWriteRootJid(block)).send(this, this, new RP<Object>() {
+        (new ForcedWriteRootJid(block)).send(this, next, new RP<Object>() {
             @Override
             public void processResponse(Object response)
                     throws Exception {
-                if (processPending == null) {
-                    writePending = false;
-                    processPending = block;
-                    processBlock();
-                }
+                writePending = false;
             }
         });
-        getMailbox().sendPendingMessages();
-    }
-
-    private void processBlock()
-            throws Exception {
-        (new ProcessBlock(processPending)).
-                send(TransactionLogger3.this, TransactionLogger3.this, new RP<Object>() {
-                    @Override
-                    public void processResponse(Object response)
-                            throws Exception {
-                        processPending = null;
-                        if (rootJid != null)
-                            writeBlock();
-                    }
-                });
         getMailbox().sendPendingMessages();
     }
 }
