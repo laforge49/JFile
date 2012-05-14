@@ -17,7 +17,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
-public class TransactionLoggerTimingTest extends TestCase {
+public class TransactionLogger3TimingTest extends TestCase {
     public void test()
             throws Exception {
         MailboxFactory mailboxFactory = JAMailboxFactory.newMailboxFactory(10);
@@ -35,7 +35,7 @@ public class TransactionLoggerTimingTest extends TestCase {
 
         JFile jFile = new JFile(mailboxFactory.createAsyncMailbox());
         jFile.setParent(transactionProcessor);
-        Path path = FileSystems.getDefault().getPath("TransactionLoggerTimingTest.jf");
+        Path path = FileSystems.getDefault().getPath("TransactionLogger3TimingTest.jf");
         System.out.println(path.toAbsolutePath());
         jFile.fileChannel = FileChannel.open(
                 path,
