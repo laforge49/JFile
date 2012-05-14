@@ -5,7 +5,7 @@ import org.agilewiki.jactor.RP;
 import org.agilewiki.jfile.ForcedWriteRootJid;
 
 /**
- * Durably (fsynmc'e/forced) logs blocks of transactions.
+ * Durably (fsync'd/forced) logs blocks of transactions.
  */
 public class DurableTransactionLogger extends BlockSource implements BlockProcessor {
 
@@ -26,12 +26,17 @@ public class DurableTransactionLogger extends BlockSource implements BlockProces
      * @throws Exception Any uncaught exceptions raised while processing the request.
      */
     @Override
-    protected void processRequest(Object request, RP rp) throws Exception {
+    protected void processRequest(Object request, final RP rp) throws Exception {
         Class reqClass = request.getClass();
 
         if (reqClass == ProcessBlock.class) {
-            ProcessBlock req = (ProcessBlock) request;
-            (new ForcedWriteRootJid(req.block)).send(this, blockFlowBuffer, rp);
+            final ProcessBlock req = (ProcessBlock) request;
+            (new ForcedWriteRootJid(req.block)).send(this, this, new RP<Object>() {
+                @Override
+                public void processResponse(Object response) throws Exception {
+                    req.send(DurableTransactionLogger.this, blockFlowBuffer, rp);
+                }
+            });
             return;
         }
 
