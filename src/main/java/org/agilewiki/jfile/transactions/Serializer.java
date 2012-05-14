@@ -30,9 +30,8 @@ import org.agilewiki.jactor.lpc.JLPCActor;
 /**
  * Serializes the contents of a block.
  */
-public class Serializer extends JLPCActor implements BlockProcessor {
-    public BlockProcessor next;
-    
+public class Serializer extends BlockSource implements BlockProcessor {
+
     /**
      * Create a LiteActor
      *
@@ -56,7 +55,7 @@ public class Serializer extends JLPCActor implements BlockProcessor {
         if (reqClass == ProcessBlock.class) {
             ProcessBlock req = (ProcessBlock) request;
             req.block.serialize();
-            req.send(this, next, rp);
+            req.send(this, blockFlowBuffer, rp);
             return;
         }
         
