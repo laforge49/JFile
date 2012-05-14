@@ -94,14 +94,14 @@ public class TransactionAggregator extends BlockSource implements _TransactionAg
     final protected void processRequest(Object request, RP rp) throws Exception {
         if (request.getClass() == AggregateTransaction.class) {
             AggregateTransaction req = (AggregateTransaction) request;
-            processTransaction(req.actorType, req.actorFactory, req.bytes, rp);
+            aggregateTransaction(req.actorType, req.actorFactory, req.bytes, rp);
             return;
         }
 
         throw new UnsupportedOperationException(request.getClass().getName());
     }
 
-    private void processTransaction(String actorType, ActorFactory actorFactory, byte[] bytes, final RP rp)
+    private void aggregateTransaction(String actorType, ActorFactory actorFactory, byte[] bytes, final RP rp)
             throws Exception {
         makeRootJid();
         transactionListJid.iAdd(-1);

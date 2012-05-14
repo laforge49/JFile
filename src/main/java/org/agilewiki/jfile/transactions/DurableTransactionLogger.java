@@ -48,7 +48,7 @@ final public class DurableTransactionLogger extends JFile implements BlockProces
      */
     public void setNext(BlockProcessor nextInPipeline)
             throws Exception {
-        blockFlowBuffer = new BlockFlowBuffer(getMailboxFactory().createMailbox());
+        blockFlowBuffer = new BlockFlowBuffer(getMailboxFactory().createAsyncMailbox());
         blockFlowBuffer.next = nextInPipeline;
     }
 
