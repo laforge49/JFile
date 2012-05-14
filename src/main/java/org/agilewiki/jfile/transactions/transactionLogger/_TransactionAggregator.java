@@ -28,5 +28,5 @@ import org.agilewiki.jactor.lpc.TargetActor;
 /**
  * A transaction logger must handle ProcessTransaction requests.
  */
-public interface _TransactionLogger extends TargetActor {
+public interface _TransactionAggregator extends TargetActor {
 }

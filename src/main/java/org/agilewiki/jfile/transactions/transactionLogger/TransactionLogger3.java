@@ -43,7 +43,7 @@ import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 /**
  * A 3-stage transaction logger: batch, log & process
  */
-public class TransactionLogger3 extends JLPCActor implements _TransactionLogger {
+public class TransactionLogger3 extends JLPCActor implements _TransactionAggregator {
     private RootJid rootJid;
     private TransactionListJid transactionListJid;
     public int initialCapacity = 10;
