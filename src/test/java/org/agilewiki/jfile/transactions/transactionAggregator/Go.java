@@ -1,4 +1,4 @@
-package org.agilewiki.jfile.transactions.transactionLogger;
+package org.agilewiki.jfile.transactions.transactionAggregator;
 
 import org.agilewiki.jactor.Actor;
 import org.agilewiki.jactor.lpc.Request;
