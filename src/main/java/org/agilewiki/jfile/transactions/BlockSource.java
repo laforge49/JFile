@@ -47,7 +47,7 @@ public abstract class BlockSource extends JLPCActor {
      */
     public void setNext(BlockProcessor nextInPipeline)
             throws Exception {
-        blockFlowBuffer = new BlockFlowBuffer(getMailboxFactory().createAsyncMailbox());
+        blockFlowBuffer = new BlockFlowBuffer(getMailboxFactory().createMailbox());
         blockFlowBuffer.next = nextInPipeline;
     }
 }
