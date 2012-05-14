@@ -30,7 +30,7 @@ import org.agilewiki.jactor.lpc.JLPCActor;
 /**
  * Serializes the contents of a block.
  */
-public class Serializer extends BlockSource implements BlockProcessor {
+final public class Serializer extends BlockSource implements BlockProcessor {
 
     /**
      * Create a LiteActor
