@@ -29,7 +29,6 @@ import org.agilewiki.jactor.factory.ActorFactory;
 import org.agilewiki.jactor.factory.JAFactoryFactory;
 import org.agilewiki.jactor.factory.NewActor;
 import org.agilewiki.jactor.factory.Requirement;
-import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.JFileFactories;
 import org.agilewiki.jfile.block.Block;
 import org.agilewiki.jfile.block.LTA32Block;
@@ -39,7 +38,7 @@ import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 /**
  * Aggregates transactions into blocks.
  */
-public class TransactionAggregator extends BlockFlowSource implements _TransactionAggregator {
+public class TransactionAggregator extends BlockSource implements _TransactionAggregator {
     public int initialCapacity = 10;
     private RootJid rootJid;
     private TransactionListJid transactionListJid;

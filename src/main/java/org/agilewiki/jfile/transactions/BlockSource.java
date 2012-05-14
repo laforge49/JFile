@@ -29,7 +29,7 @@ import org.agilewiki.jactor.lpc.JLPCActor;
 /**
  * A source of blocks in a block flow pipeline.
  */
-public abstract class BlockFlowSource extends JLPCActor {
+public abstract class BlockSource extends JLPCActor {
     protected BlockFlowBuffer blockFlowBuffer;
 
     /**
@@ -37,7 +37,7 @@ public abstract class BlockFlowSource extends JLPCActor {
      *
      * @param mailbox A mailbox which may be shared with other actors.
      */
-    public BlockFlowSource(Mailbox mailbox) {
+    public BlockSource(Mailbox mailbox) {
         super(mailbox);
     }
 
