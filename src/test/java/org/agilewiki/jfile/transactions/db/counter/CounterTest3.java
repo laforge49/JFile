@@ -17,7 +17,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
-public class CounterTest extends TestCase {
+public class CounterTest3 extends TestCase {
     public void test()
             throws Exception {
         MailboxFactory mailboxFactory = JAMailboxFactory.newMailboxFactory(10);
@@ -34,7 +34,7 @@ public class CounterTest extends TestCase {
 
         JFile jFile = new JFile(mailboxFactory.createAsyncMailbox());
         jFile.setParent(transactionProcessor);
-        Path path = FileSystems.getDefault().getPath("CounterTest.jf");
+        Path path = FileSystems.getDefault().getPath("Counter3Test.jf");
         System.out.println(path.toAbsolutePath());
         jFile.fileChannel = FileChannel.open(
                 path,
