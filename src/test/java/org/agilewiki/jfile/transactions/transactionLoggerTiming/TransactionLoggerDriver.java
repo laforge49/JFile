@@ -1,9 +1,10 @@
-package org.agilewiki.jfile.transactions.transactionAggregator;
+package org.agilewiki.jfile.transactions.transactionLoggerTiming;
 
 import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.transactions.NullTransactionFactory;
+import org.agilewiki.jfile.transactions.transactionAggregator.AggregateTransaction;
 
 public class TransactionLoggerDriver extends JLPCActor {
     PendingManager pendingManager;

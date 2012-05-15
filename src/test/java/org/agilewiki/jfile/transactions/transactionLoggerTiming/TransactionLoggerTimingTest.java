@@ -1,4 +1,4 @@
-package org.agilewiki.jfile.transactions.transactionAggregator;
+package org.agilewiki.jfile.transactions.transactionLoggerTiming;
 
 import junit.framework.TestCase;
 import org.agilewiki.jactor.JAFuture;
@@ -6,13 +6,13 @@ import org.agilewiki.jactor.JAMailboxFactory;
 import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.factory.JAFactory;
-import org.agilewiki.jfile.JFile;
 import org.agilewiki.jfile.JFileFactories;
 import org.agilewiki.jfile.transactions.DurableTransactionLogger;
 import org.agilewiki.jfile.transactions.NullTransactionFactory;
 import org.agilewiki.jfile.transactions.Serializer;
 import org.agilewiki.jfile.transactions.TransactionProcessor;
 import org.agilewiki.jfile.transactions.db.StatelessDB;
+import org.agilewiki.jfile.transactions.transactionAggregator.TransactionAggregator;
 
 import java.nio.channels.FileChannel;
 import java.nio.file.FileSystems;
