@@ -7,7 +7,7 @@ data has been flushed to disk--and this is SLOW.
 
 One approach to improve throughput while still flushing data to disk is to
     (1) group transactions into batches on one thread,
-    (2) serialize and calculate the checksum of each batch on a second thread,,
+    (2) serialize and calculate the checksum of each batch on a second thread,
     (3) log and fsync each batch of transactions to disk on a third thread and
     (4) update the database with the logged transactions on a fourth thread.
 Using this approach, we can log and process up to 1,300,000 durable transactions
