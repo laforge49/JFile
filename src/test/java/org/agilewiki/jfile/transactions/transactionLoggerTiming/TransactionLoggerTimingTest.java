@@ -33,13 +33,9 @@ public class TransactionLoggerTimingTest extends TestCase {
         Mailbox dbMailbox = mailboxFactory.createAsyncMailbox();
         StatelessDB db = new StatelessDB(dbMailbox);
         db.setParent(factory);
-        TransactionProcessor transactionProcessor = new TransactionProcessor(dbMailbox);
-        transactionProcessor.setParent(db);
+        db.initialCapacity = 10000;
 
-        DurableTransactionLogger durableTransactionLogger =
-                new DurableTransactionLogger(mailboxFactory.createAsyncMailbox());
-        durableTransactionLogger.setParent(factory);
-        durableTransactionLogger.setNext(transactionProcessor);
+        DurableTransactionLogger durableTransactionLogger = db.getDurableTransactionLogger();
         Path path = FileSystems.getDefault().getPath("TransactionLoggerTimingTest.jf");
         System.out.println(path.toAbsolutePath());
         durableTransactionLogger.fileChannel = FileChannel.open(
@@ -48,25 +44,18 @@ public class TransactionLoggerTimingTest extends TestCase {
                 StandardOpenOption.WRITE,
                 StandardOpenOption.CREATE);
 
-        Serializer serializer = new Serializer(mailboxFactory.createAsyncMailbox());
-        serializer.setParent(factory);
-        serializer.setNext(durableTransactionLogger);
-
-        TransactionAggregator transactionAggregator =
-                new TransactionAggregator(mailboxFactory.createAsyncMailbox());
-        transactionAggregator.setParent(db);
-        transactionAggregator.setNext(serializer);
-        transactionAggregator.initialCapacity = 10000;
+        TransactionAggregator transactionAggregator = db.getTransactionAggregator();
 
         TransactionLoggerDriver transactionLoggerDriver =
                 new TransactionLoggerDriver(mailboxFactory.createAsyncMailbox());
         transactionLoggerDriver.setParent(transactionAggregator);
         transactionLoggerDriver.setInitialBufferCapacity(10000);
+        transactionLoggerDriver.win = 3;
+
         transactionLoggerDriver.batch = 1;
         transactionLoggerDriver.count = 1;
     //  transactionLoggerDriver.batch = 10000;
     //  transactionLoggerDriver.count = 1000;
-        transactionLoggerDriver.win = 3;
 
         Go.req.send(future, transactionLoggerDriver);
         long t0 = System.currentTimeMillis();

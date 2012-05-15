@@ -42,7 +42,6 @@ import java.nio.file.Path;
 abstract public class DB extends JLPCActor {
     public int initialCapacity;
     private TransactionAggregator transactionAggregator;
-    private TransactionProcessor transactionProcessor;
     private DurableTransactionLogger durableTransactionLogger;
     
     /**
@@ -92,7 +91,7 @@ abstract public class DB extends JLPCActor {
             throw new IllegalStateException("call setParent before getTransactionAggregator");
         }
 
-        transactionProcessor = new TransactionProcessor(getMailbox());
+        TransactionProcessor transactionProcessor = new TransactionProcessor(getMailbox());
         transactionProcessor.setParent(this);
 
         durableTransactionLogger = new DurableTransactionLogger(getMailboxFactory().createAsyncMailbox());
