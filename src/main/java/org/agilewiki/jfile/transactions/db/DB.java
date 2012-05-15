@@ -23,10 +23,19 @@
  */
 package org.agilewiki.jfile.transactions.db;
 
-import org.agilewiki.jactor.lpc.TargetActor;
+import org.agilewiki.jactor.Mailbox;
+import org.agilewiki.jactor.lpc.JLPCActor;
 
 /**
  * A database must handle checkpoint requests.
  */
-public interface DB extends TargetActor {
+abstract public class DB extends JLPCActor {
+    /**
+     * Create a LiteActor
+     *
+     * @param mailbox A mailbox which may be shared with other actors.
+     */
+    public DB(Mailbox mailbox) {
+        super(mailbox);
+    }
 }

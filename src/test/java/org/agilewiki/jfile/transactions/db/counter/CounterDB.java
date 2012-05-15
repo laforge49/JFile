@@ -6,7 +6,7 @@ import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.transactions.db.Checkpoint;
 import org.agilewiki.jfile.transactions.db.DB;
 
-public class CounterDB extends JLPCActor implements DB {
+public class CounterDB extends DB {
     private int value;
     
     public CounterDB(Mailbox mailbox) {
