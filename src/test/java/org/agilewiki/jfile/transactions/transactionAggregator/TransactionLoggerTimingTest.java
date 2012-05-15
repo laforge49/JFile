@@ -62,8 +62,10 @@ public class TransactionLoggerTimingTest extends TestCase {
                 new TransactionLoggerDriver(mailboxFactory.createAsyncMailbox());
         transactionLoggerDriver.setParent(transactionAggregator);
         transactionLoggerDriver.setInitialBufferCapacity(10000);
-        transactionLoggerDriver.batch = 10000;
-        transactionLoggerDriver.count = 1000;
+        transactionLoggerDriver.batch = 1;
+        transactionLoggerDriver.count = 1;
+    //  transactionLoggerDriver.batch = 10000;
+    //  transactionLoggerDriver.count = 1000;
         transactionLoggerDriver.win = 3;
 
         Go.req.send(future, transactionLoggerDriver);
