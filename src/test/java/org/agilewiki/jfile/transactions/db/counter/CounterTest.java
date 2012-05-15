@@ -31,13 +31,8 @@ public class CounterTest extends TestCase {
         Mailbox dbMailbox = mailboxFactory.createAsyncMailbox();
         CounterDB db = new CounterDB(dbMailbox);
         db.setParent(factory);
-        TransactionProcessor transactionProcessor = new TransactionProcessor(dbMailbox);
-        transactionProcessor.setParent(db);
 
-        DurableTransactionLogger durableTransactionLogger =
-                new DurableTransactionLogger(mailboxFactory.createAsyncMailbox());
-        durableTransactionLogger.setParent(factory);
-        durableTransactionLogger.setNext(transactionProcessor);
+        DurableTransactionLogger durableTransactionLogger = db.getDurableTransactionLogger();
         Path path = FileSystems.getDefault().getPath("CounterTest.jf");
         System.out.println(path.toAbsolutePath());
         durableTransactionLogger.fileChannel = FileChannel.open(
@@ -45,15 +40,8 @@ public class CounterTest extends TestCase {
                 StandardOpenOption.READ,
                 StandardOpenOption.WRITE,
                 StandardOpenOption.CREATE);
-        
-        Serializer serializer = new Serializer(mailboxFactory.createAsyncMailbox());
-        serializer.setParent(factory);
-        serializer.setNext(durableTransactionLogger);
 
-        TransactionAggregator transactionAggregator =
-                new TransactionAggregator(mailboxFactory.createAsyncMailbox());
-        transactionAggregator.setParent(db);
-        transactionAggregator.setNext(serializer);
+        TransactionAggregator transactionAggregator = db.getTransactionAggregator();
 
         (new AggregateTransaction("inc")).sendEvent(transactionAggregator);
         (new AggregateTransaction("inc")).sendEvent(transactionAggregator);
