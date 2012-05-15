@@ -25,7 +25,6 @@ package org.agilewiki.jfile.transactions.db;
 
 import org.agilewiki.jactor.Actor;
 import org.agilewiki.jactor.Mailbox;
-import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.factory.JAFactoryFactory;
 import org.agilewiki.jactor.factory.NewActor;
 import org.agilewiki.jactor.factory.Requirement;
@@ -41,6 +40,7 @@ import java.nio.file.Path;
  * A database must handle checkpoint requests.
  */
 abstract public class DB extends JLPCActor {
+    public int initialCapacity;
     private TransactionAggregator transactionAggregator;
     private TransactionProcessor transactionProcessor;
     private DurableTransactionLogger durableTransactionLogger;
@@ -76,8 +76,12 @@ abstract public class DB extends JLPCActor {
                 new JAFactoryFactory(JAFactoryFactory.TYPE));
         return requirements;
     }
-    
-    public TransactionAggregator getTransactionAggregator(int initialCapacity)
+
+    /**
+     * Returns the transaction aggregator.
+     * @return The transaction aggregator.
+     */
+    public TransactionAggregator getTransactionAggregator()
             throws Exception {
         if (transactionAggregator != null) {
             return transactionAggregator;
@@ -102,8 +106,14 @@ abstract public class DB extends JLPCActor {
         transactionAggregator = newTransactionAggregator(getMailboxFactory().createAsyncMailbox());
         transactionAggregator.setParent(this);
         transactionAggregator.setNext(serializer);
-        transactionAggregator.initialCapacity = 10000;
+        transactionAggregator.initialCapacity = initialCapacity;
 
         return transactionAggregator;
+    }
+    
+    public DurableTransactionLogger getDurableTransactionLogger() throws Exception {
+        if (transactionAggregator == null)
+            getTransactionAggregator();
+        return durableTransactionLogger;
     }
 }
