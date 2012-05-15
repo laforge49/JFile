@@ -23,13 +23,28 @@
  */
 package org.agilewiki.jfile.transactions.db;
 
+import org.agilewiki.jactor.Actor;
 import org.agilewiki.jactor.Mailbox;
+import org.agilewiki.jactor.MailboxFactory;
+import org.agilewiki.jactor.factory.JAFactoryFactory;
+import org.agilewiki.jactor.factory.NewActor;
+import org.agilewiki.jactor.factory.Requirement;
 import org.agilewiki.jactor.lpc.JLPCActor;
+import org.agilewiki.jfile.transactions.DurableTransactionLogger;
+import org.agilewiki.jfile.transactions.Serializer;
+import org.agilewiki.jfile.transactions.TransactionProcessor;
+import org.agilewiki.jfile.transactions.transactionAggregator.TransactionAggregator;
+
+import java.nio.file.Path;
 
 /**
  * A database must handle checkpoint requests.
  */
 abstract public class DB extends JLPCActor {
+    private TransactionAggregator transactionAggregator;
+    private TransactionProcessor transactionProcessor;
+    private DurableTransactionLogger durableTransactionLogger;
+    
     /**
      * Create a LiteActor
      *
@@ -37,5 +52,58 @@ abstract public class DB extends JLPCActor {
      */
     public DB(Mailbox mailbox) {
         super(mailbox);
+    }
+
+    /**
+     * Create a transaction aggregator.
+     * @param mailbox A mailbox which may be shared with other actors.
+     * @return A TransactionAggregator.
+     */
+    protected TransactionAggregator newTransactionAggregator(Mailbox mailbox) {
+        return new TransactionAggregator(mailbox);
+    } 
+
+    /**
+     * Returns the actor's requirements.
+     *
+     * @return The actor's requirents.
+     */
+    @Override
+    final protected Requirement[] requirements() throws Exception {
+        Requirement[] requirements = new Requirement[1];
+        requirements[0] = new Requirement(
+                new NewActor(""),
+                new JAFactoryFactory(JAFactoryFactory.TYPE));
+        return requirements;
+    }
+    
+    public TransactionAggregator getTransactionAggregator(int initialCapacity)
+            throws Exception {
+        if (transactionAggregator != null) {
+            return transactionAggregator;
+        }
+
+        Actor parent = getParent();
+        if (parent == null) {
+            throw new IllegalStateException("call setParent before getTransactionAggregator");
+        }
+
+        transactionProcessor = new TransactionProcessor(getMailbox());
+        transactionProcessor.setParent(this);
+
+        durableTransactionLogger = new DurableTransactionLogger(getMailboxFactory().createAsyncMailbox());
+        durableTransactionLogger.setParent(parent);
+        durableTransactionLogger.setNext(transactionProcessor);
+
+        Serializer serializer = new Serializer(getMailboxFactory().createAsyncMailbox());
+        serializer.setParent(parent);
+        serializer.setNext(durableTransactionLogger);
+
+        transactionAggregator = newTransactionAggregator(getMailboxFactory().createAsyncMailbox());
+        transactionAggregator.setParent(this);
+        transactionAggregator.setNext(serializer);
+        transactionAggregator.initialCapacity = 10000;
+
+        return transactionAggregator;
     }
 }

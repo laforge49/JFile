@@ -30,7 +30,7 @@ import org.agilewiki.jactor.lpc.Request;
 /**
  * Adds a transaction to a Block for subsequent logging and processing.
  */
-final public class AggregateTransaction extends Request<Object, _TransactionAggregator> {
+final public class AggregateTransaction extends Request<Object, TransactionAggregator> {
     public final String actorType;
     public final ActorFactory actorFactory;
     public final byte[] bytes;
@@ -67,6 +67,6 @@ final public class AggregateTransaction extends Request<Object, _TransactionAggr
      */
     @Override
     public boolean isTargetType(Actor targetActor) {
-        return targetActor instanceof _TransactionAggregator;
+        return targetActor instanceof TransactionAggregator;
     }
 }

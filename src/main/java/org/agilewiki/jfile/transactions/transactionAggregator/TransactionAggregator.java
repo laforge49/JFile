@@ -38,7 +38,7 @@ import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 /**
  * Aggregates transactions into blocks.
  */
-public class TransactionAggregator extends BlockSource implements _TransactionAggregator {
+public class TransactionAggregator extends BlockSource {
     public int initialCapacity = 10;
     private RootJid rootJid;
     private TransactionListJid transactionListJid;
