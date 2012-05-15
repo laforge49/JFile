@@ -1,4 +1,4 @@
-package org.agilewiki.jfile.transactions.transactionAggregator;
+package org.agilewiki.jfile.transactions;
 
 import junit.framework.TestCase;
 import org.agilewiki.jactor.JAFuture;
@@ -10,6 +10,8 @@ import org.agilewiki.jfile.JFileFactories;
 import org.agilewiki.jfile.transactions.HelloWorldTransaction;
 import org.agilewiki.jfile.transactions.TransactionProcessor;
 import org.agilewiki.jfile.transactions.db.StatelessDB;
+import org.agilewiki.jfile.transactions.transactionAggregator.AggregateTransaction;
+import org.agilewiki.jfile.transactions.transactionAggregator.TransactionAggregator;
 
 public class TransactionAggregatorTest extends TestCase {
     public void test()
