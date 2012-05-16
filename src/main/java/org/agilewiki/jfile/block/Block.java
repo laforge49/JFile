@@ -103,6 +103,12 @@ public interface Block {
             throws Exception;
 
     /**
+     * Indicates the abscense of a root jic.
+     * @return True when a root jit is not present.
+     */
+    public boolean isEmpty();
+
+    /**
      * Returns the timestamp.
      *
      * @return The timestamp.

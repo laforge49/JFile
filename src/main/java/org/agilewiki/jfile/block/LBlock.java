@@ -175,6 +175,14 @@ public class LBlock implements Block {
     }
 
     /**
+     * Indicates the abscense of a root jic.
+     * @return True when a root jit is not present.
+     */
+    public boolean isEmpty() {
+        return rootJid == null && rootJidBytes == null;
+    }
+
+    /**
      * Returns the timestamp.
      *
      * @return The timestamp.

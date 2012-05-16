@@ -21,28 +21,50 @@
  * A copy of this license is also included and can be
  * found as well at http://www.opensource.org/licenses/cpl1.0.txt
  */
-package org.agilewiki.jfile.transactions;
+package org.agilewiki.jfile.transactions.logReader;
 
 import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
-import org.agilewiki.jid.collection.vlenc.ListJid;
+import org.agilewiki.jfile.JFile;
+import org.agilewiki.jfile.block.Block;
+import org.agilewiki.jfile.block.LTA32Block;
+import org.agilewiki.jfile.transactions.BlockFlowBuffer;
+import org.agilewiki.jfile.transactions.BlockProcessor;
+import org.agilewiki.jfile.transactions.ProcessBlock;
 
 /**
- * A list of transaction actor's.
+ * Reads a transaction log file and forwards the blocks..
  */
-public class TransactionListJid extends ListJid implements Transaction {
-    private int ndx;
-    private boolean sync;
-    private boolean async;
-    private RP _rp;
+public class LogReader extends JFile {
+    private BlockFlowBuffer blockFlowBuffer;
 
     /**
-     * Create a ListJid
+     * Create a LiteActor
      *
      * @param mailbox A mailbox which may be shared with other actors.
      */
-    public TransactionListJid(Mailbox mailbox) {
+    public LogReader(Mailbox mailbox) {
         super(mailbox);
+    }
+
+    /**
+     * Creates a new block.
+     *
+     * @return A new block.
+     */
+    protected Block newBlock() {
+        return new LTA32Block();
+    }
+
+    /**
+     * Creates a buffered connection to the block processor that is next in the pipeline.
+     *
+     * @param nextInPipeline The next block processor in the pipeline.
+     */
+    public void setNext(BlockProcessor nextInPipeline)
+            throws Exception {
+        blockFlowBuffer = new BlockFlowBuffer(getMailboxFactory().createMailbox());
+        blockFlowBuffer.next = nextInPipeline;
     }
 
     /**
@@ -53,40 +75,46 @@ public class TransactionListJid extends ListJid implements Transaction {
      * @throws Exception Any uncaught exceptions raised while processing the request.
      */
     @Override
-    protected void processRequest(Object request, RP rp) throws Exception {
+    protected void processRequest(Object request, final RP rp) throws Exception {
         if (_rp != null)
             throw new IllegalStateException("busy");
 
-        if (request.getClass() == TransactionEval.class) {
-            ndx = 0;
+        Class reqClass = request.getClass();
+
+        if (reqClass == ReadLog.class) {
             _rp = rp;
-            eval((TransactionEval) request);
+            reader();
             return;
         }
 
         super.processRequest(request, rp);
     }
 
-    private void eval(final TransactionEval req)
+    private RP _rp;
+    private boolean sync;
+    private boolean async;
+
+    private void reader()
             throws Exception {
         while (true) {
-            if (ndx == size()) {
+            Block block = newBlock();
+            readRootJid(block);
+            if (block.isEmpty()) {
                 RP rp = _rp;
                 _rp = null;
                 rp.processResponse(null);
                 return;
             }
-            Transaction transaction = (Transaction) iGet(ndx);
-            ndx += 1;
+            ProcessBlock req = new ProcessBlock(block);
             sync = false;
             async = false;
-            req.send(this, transaction, new RP<Object>() {
+            req.send(this, blockFlowBuffer, new RP<Object>() {
                 @Override
                 public void processResponse(Object response) throws Exception {
                     if (!async)
                         sync = true;
                     else
-                        eval(req);
+                        reader();
                 }
             });
             if (!sync) {
