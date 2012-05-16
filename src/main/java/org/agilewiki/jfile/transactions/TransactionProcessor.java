@@ -38,6 +38,8 @@ import org.agilewiki.jid.scalar.vlens.actor.RootJid;
  * a Checkpoint request to the database.
  */
 final public class TransactionProcessor extends JLPCActor implements BlockProcessor {
+    public boolean generateCheckpoints = true;
+
     /**
      * Create a LiteActor
      *
@@ -78,13 +80,17 @@ final public class TransactionProcessor extends JLPCActor implements BlockProces
             public void processResponse(Actor response) throws Exception {
                 Transaction transaction = (Transaction) response;
                 TransactionEval eval = new TransactionEval(block.getTimestamp());
-                eval.send(TransactionProcessor.this, transaction, new RP<Object>() {
-                    @Override
-                    public void processResponse(Object response) throws Exception {
-                        Checkpoint checkpoint = new Checkpoint(block.getCurrentPosition(), block.getTimestamp());
-                        checkpoint.send(TransactionProcessor.this, getParent(), rp);
-                    }
-                });
+                if (generateCheckpoints) {
+                    eval.send(TransactionProcessor.this, transaction, new RP<Object>() {
+                        @Override
+                        public void processResponse(Object response) throws Exception {
+                            Checkpoint checkpoint = new Checkpoint(block.getCurrentPosition(), block.getTimestamp());
+                            checkpoint.send(TransactionProcessor.this, getParent(), rp);
+                        }
+                    });
+                } else {
+                    eval.send(TransactionProcessor.this, transaction, rp);
+                }
             }
         });
     }
