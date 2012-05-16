@@ -29,9 +29,11 @@ import org.agilewiki.jactor.factory.JAFactoryFactory;
 import org.agilewiki.jactor.factory.NewActor;
 import org.agilewiki.jactor.factory.Requirement;
 import org.agilewiki.jactor.lpc.JLPCActor;
+import org.agilewiki.jfile.transactions.Deserializer;
 import org.agilewiki.jfile.transactions.DurableTransactionLogger;
 import org.agilewiki.jfile.transactions.Serializer;
 import org.agilewiki.jfile.transactions.TransactionProcessor;
+import org.agilewiki.jfile.transactions.logReader.LogReader;
 import org.agilewiki.jfile.transactions.transactionAggregator.TransactionAggregator;
 
 import java.nio.file.Path;
@@ -43,6 +45,7 @@ abstract public class DB extends JLPCActor {
     public int initialCapacity;
     private TransactionAggregator transactionAggregator;
     private DurableTransactionLogger durableTransactionLogger;
+    private LogReader logReader;
     
     /**
      * Create a LiteActor
@@ -77,6 +80,34 @@ abstract public class DB extends JLPCActor {
     }
 
     /**
+     * Returns the transaction log reader.
+     * @return The LogReader
+     */
+    public LogReader getLogReader()
+            throws Exception {
+        if (logReader != null)
+            return logReader;
+
+        Actor parent = getParent();
+        if (parent == null) {
+            throw new IllegalStateException("call setParent before getLogReader");
+        }
+
+        TransactionProcessor transactionProcessor = new TransactionProcessor(getMailbox());
+        transactionProcessor.setParent(this);
+
+        Deserializer deserializer = new Deserializer(getMailboxFactory().createAsyncMailbox());
+        deserializer.setParent(this);
+        deserializer.setNext(transactionProcessor);
+
+        LogReader logReader = new LogReader(getMailboxFactory().createAsyncMailbox());
+        logReader.setParent(parent);
+        logReader.setNext(deserializer);
+
+        return logReader;
+    }
+
+    /**
      * Returns the transaction aggregator.
      * @return The transaction aggregator.
      */
@@ -85,6 +116,8 @@ abstract public class DB extends JLPCActor {
         if (transactionAggregator != null) {
             return transactionAggregator;
         }
+
+        logReader = null;
 
         Actor parent = getParent();
         if (parent == null) {
@@ -111,8 +144,15 @@ abstract public class DB extends JLPCActor {
     }
     
     public DurableTransactionLogger getDurableTransactionLogger() throws Exception {
-        if (transactionAggregator == null)
-            getTransactionAggregator();
+        if (transactionAggregator != null)
+            return durableTransactionLogger;
+
+        Actor parent = getParent();
+        if (parent == null) {
+            throw new IllegalStateException("call setParent before getDurableTransactionLogger");
+        }
+
+        getTransactionAggregator();
         return durableTransactionLogger;
     }
 }
