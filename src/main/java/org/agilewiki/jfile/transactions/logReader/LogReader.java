@@ -90,7 +90,7 @@ public class LogReader extends JFile {
         super.processRequest(request, rp);
     }
 
-    private RP _rp;
+    private RP<Long> _rp;
     private boolean sync;
     private boolean async;
 
@@ -100,9 +100,12 @@ public class LogReader extends JFile {
             Block block = newBlock();
             readRootJid(block);
             if (block.isEmpty()) {
-                RP rp = _rp;
+                long position = block.getCurrentPosition();
+                long size = fileChannel.size();
+                long rem = size - position;
+                RP<Long> rp = _rp;
                 _rp = null;
-                rp.processResponse(null);
+                rp.processResponse(rem);
                 return;
             }
             ProcessBlock req = new ProcessBlock(block);

@@ -5,8 +5,9 @@ import org.agilewiki.jactor.lpc.Request;
 
 /**
  * Read a transaction log file.
+ * The returned result is the remaining number of unprocessed bytes.
  */
-public class ReadLog extends Request<Object, LogReader> {
+public class ReadLog extends Request<Long, LogReader> {
     public final static ReadLog req = new ReadLog();
 
     /**
