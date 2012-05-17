@@ -37,7 +37,6 @@ public class CounterTest extends TestCase {
         System.out.println(path.toAbsolutePath());
         durableTransactionLogger.fileChannel = FileChannel.open(
                 path,
-                StandardOpenOption.READ,
                 StandardOpenOption.WRITE,
                 StandardOpenOption.CREATE);
 
