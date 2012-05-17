@@ -63,7 +63,16 @@ abstract public class DB extends JLPCActor {
      */
     protected TransactionAggregator newTransactionAggregator(Mailbox mailbox) {
         return new TransactionAggregator(mailbox);
-    } 
+    }
+
+    /**
+     * Create a transaction log reader.
+     * @param mailbox A mailbox which may be shared with other actors.
+     * @return A LogReader.
+     */
+    protected LogReader newLogReader(Mailbox mailbox) {
+        return new LogReader(mailbox);
+    }
 
     /**
      * Returns the actor's requirements.
@@ -95,12 +104,13 @@ abstract public class DB extends JLPCActor {
 
         TransactionProcessor transactionProcessor = new TransactionProcessor(getMailbox());
         transactionProcessor.setParent(this);
+        transactionProcessor.generateCheckpoints = false;
 
         Deserializer deserializer = new Deserializer(getMailboxFactory().createAsyncMailbox());
         deserializer.setParent(this);
         deserializer.setNext(transactionProcessor);
 
-        LogReader logReader = new LogReader(getMailboxFactory().createAsyncMailbox());
+        LogReader logReader = newLogReader(getMailboxFactory().createAsyncMailbox());
         logReader.setParent(parent);
         logReader.setNext(deserializer);
 
