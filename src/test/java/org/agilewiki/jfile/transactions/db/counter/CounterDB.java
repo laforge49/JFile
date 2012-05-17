@@ -22,6 +22,11 @@ public class CounterDB extends DB {
             return;
         }
 
+        if (reqClass == GetCounter.class) {
+            rp.processResponse(value);
+            return;
+        }
+
         if (reqClass == Checkpoint.class) {
             rp.processResponse(null);
             return;

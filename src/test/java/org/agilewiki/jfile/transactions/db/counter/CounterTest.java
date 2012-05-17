@@ -26,6 +26,7 @@ public class CounterTest extends TestCase {
         JAFactory factory = new JAFactory(factoryMailbox);
         (new JFileFactories(factoryMailbox)).setParent(factory);
         factory.defineActorType("inc", IncrementCounterTransaction.class);
+        factory.defineActorType("get", GetCounterTransaction.class);
         JAFuture future = new JAFuture();
         
         Mailbox dbMailbox = mailboxFactory.createAsyncMailbox();
@@ -48,8 +49,8 @@ public class CounterTest extends TestCase {
         (new AggregateTransaction("inc")).sendEvent(transactionAggregator);
         (new AggregateTransaction("inc")).sendEvent(transactionAggregator);
         (new AggregateTransaction("inc")).sendEvent(transactionAggregator);
-        int total = (Integer) (new AggregateTransaction("inc")).send(future, transactionAggregator);
-        assertEquals(7, total);
+        int total = (Integer) (new AggregateTransaction("get")).send(future, transactionAggregator);
+        assertEquals(6, total);
 
         durableTransactionLogger.fileChannel.close();
         mailboxFactory.close();

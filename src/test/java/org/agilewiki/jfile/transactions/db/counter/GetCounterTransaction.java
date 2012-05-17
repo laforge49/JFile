@@ -1,0 +1,16 @@
+package org.agilewiki.jfile.transactions.db.counter;
+
+import org.agilewiki.jactor.Mailbox;
+import org.agilewiki.jactor.RP;
+import org.agilewiki.jfile.transactions._TransactionJid;
+
+public class GetCounterTransaction extends _TransactionJid {
+    public GetCounterTransaction(Mailbox mailbox) {
+        super(mailbox);
+    }
+
+    @Override
+    protected void eval(RP rp) throws Exception {
+        GetCounter.req.send(this, getParent(), rp);
+    }
+}
