@@ -24,12 +24,15 @@
 package org.agilewiki.jfile.transactions;
 
 import org.agilewiki.jactor.Mailbox;
+import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
+import org.agilewiki.jid.scalar.vlens.actor.ActorJid;
+import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 
 /**
  * A source of blocks in a block flow pipeline.
  */
-public abstract class BlockSource extends JLPCActor {
+public abstract class BlockSource extends JLPCActor implements Finisher {
     protected BlockFlowBuffer blockFlowBuffer;
 
     /**
@@ -49,5 +52,24 @@ public abstract class BlockSource extends JLPCActor {
             throws Exception {
         blockFlowBuffer = new BlockFlowBuffer(getMailboxFactory().createMailbox());
         blockFlowBuffer.next = nextInPipeline;
+    }
+
+    /**
+     * The application method for processing requests sent to the actor.
+     *
+     * @param request A request.
+     * @param rp      The response processor.
+     * @throws Exception Any uncaught exceptions raised while processing the request.
+     */
+    @Override
+    protected void processRequest(Object request, RP rp) throws Exception {
+        Class reqClass = request.getClass();
+
+        if (reqClass == Finish.class) {
+            Finish.req.send(this, blockFlowBuffer, rp);
+            return;
+        }
+
+        throw new UnsupportedOperationException(reqClass.getName());
     }
 }

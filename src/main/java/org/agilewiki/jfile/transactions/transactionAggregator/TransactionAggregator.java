@@ -98,7 +98,7 @@ public class TransactionAggregator extends BlockSource {
             return;
         }
 
-        throw new UnsupportedOperationException(request.getClass().getName());
+        super.processRequest(request, rp);
     }
 
     private void aggregateTransaction(String actorType, ActorFactory actorFactory, byte[] bytes, final RP rp)

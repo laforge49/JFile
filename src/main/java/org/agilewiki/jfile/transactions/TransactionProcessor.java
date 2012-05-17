@@ -58,13 +58,20 @@ final public class TransactionProcessor extends JLPCActor implements BlockProces
      */
     @Override
     protected void processRequest(Object request, RP rp) throws Exception {
-        if (request.getClass() == ProcessBlock.class) {
+        Class reqClass = request.getClass();
+        
+        if (reqClass == ProcessBlock.class) {
             ProcessBlock req = (ProcessBlock) request;
             processBlock(req.block, rp);
             return;
         }
 
-        throw new UnsupportedOperationException(request.getClass().getName());
+        if (reqClass == Finish.class) {
+            rp.processResponse(null);
+            return;
+        }
+
+        throw new UnsupportedOperationException(reqClass.getName());
     }
 
     /**

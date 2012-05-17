@@ -58,7 +58,7 @@ final public class Serializer extends BlockSource implements BlockProcessor {
             req.send(this, blockFlowBuffer, rp);
             return;
         }
-        
-        throw new UnsupportedOperationException(reqClass.getName());
+
+        super.processRequest(request, rp);
     }
 }

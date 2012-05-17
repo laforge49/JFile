@@ -28,14 +28,12 @@ import org.agilewiki.jactor.RP;
 import org.agilewiki.jfile.JFile;
 import org.agilewiki.jfile.block.Block;
 import org.agilewiki.jfile.block.LTA32Block;
-import org.agilewiki.jfile.transactions.BlockFlowBuffer;
-import org.agilewiki.jfile.transactions.BlockProcessor;
-import org.agilewiki.jfile.transactions.ProcessBlock;
+import org.agilewiki.jfile.transactions.*;
 
 /**
  * Reads a transaction log file and forwards the blocks..
  */
-public class LogReader extends JFile {
+public class LogReader extends JFile implements Finisher {
     private BlockFlowBuffer blockFlowBuffer;
 
     /**
@@ -84,6 +82,11 @@ public class LogReader extends JFile {
         if (reqClass == ReadLog.class) {
             _rp = rp;
             reader();
+            return;
+        }
+
+        if (reqClass == Finish.class) {
+            Finish.req.send(this, blockFlowBuffer, rp);
             return;
         }
 

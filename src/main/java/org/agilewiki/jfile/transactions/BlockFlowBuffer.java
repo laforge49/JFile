@@ -63,6 +63,11 @@ public class BlockFlowBuffer extends JLPCActor implements BlockProcessor {
             return;
         }
 
+        if (reqClass == Finish.class) {
+            Finish.req.send(this, next, rp);
+            return;
+        }
+
         throw new UnsupportedOperationException(reqClass.getName());
     }
     

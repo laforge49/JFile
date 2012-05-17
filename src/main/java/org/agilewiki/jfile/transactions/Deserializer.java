@@ -67,6 +67,6 @@ public class Deserializer extends BlockSource implements BlockProcessor {
             return;
         }
 
-        throw new UnsupportedOperationException(reqClass.getName());
+        super.processRequest(request, rp);
     }
 }

@@ -70,6 +70,11 @@ final public class DurableTransactionLogger extends JFile implements BlockProces
             return;
         }
 
+        if (reqClass == Finish.class) {
+            Finish.req.send(this, blockFlowBuffer, rp);
+            return;
+        }
+
         super.processRequest(request, rp);
     }
 }
