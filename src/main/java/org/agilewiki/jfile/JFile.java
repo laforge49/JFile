@@ -28,6 +28,7 @@ import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.block.Block;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
@@ -112,14 +113,16 @@ public class JFile extends JLPCActor {
             ByteBuffer hbb = ByteBuffer.wrap(hdr);
             long currentPosition = block.getCurrentPosition();
             int rl = fileChannel.read(hbb, currentPosition);
-            if (rl == -1)
+            if (rl == -1) {
                 return;
+            }
             currentPosition += rl;
             rem -= rl;
             while (rem > 0) {
                 rl = fileChannel.read(hbb, currentPosition);
-                if (rl == -1)
+                if (rl == -1) {
                     return;
+                }
                 currentPosition += rl;
                 rem -= rl;
             }
@@ -129,8 +132,9 @@ public class JFile extends JLPCActor {
                 ByteBuffer rjbb = ByteBuffer.wrap(rjb);
                 while (rem > 0) {
                     rl = fileChannel.read(rjbb, currentPosition);
-                    if (rl == -1)
+                    if (rl == -1) {
                         return;
+                    }
                     currentPosition += rl;
                     rem -= rl;
                 }
@@ -139,6 +143,7 @@ public class JFile extends JLPCActor {
                 block.setCurrentPosition(currentPosition);
             }
         } catch (Exception ex) {
+            block.setRootJid(null);
             return;
         }
         return;

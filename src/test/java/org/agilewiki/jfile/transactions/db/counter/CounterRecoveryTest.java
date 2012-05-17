@@ -36,10 +36,16 @@ public class CounterRecoveryTest extends TestCase {
         logReader.fileChannel = FileChannel.open(
                 path,
                 StandardOpenOption.READ);
+        logReader.currentPosition = 0;
 
-        ReadLog.req.send(future, logReader);
+        long rem = ReadLog.req.send(future, logReader);
+        System.out.println("unprocessed bytes remaining: " + rem);
         Finish.req.send(future, logReader);
         logReader.fileChannel.close();
+        
+        //int total = db.getCounter();
+        //assertEquals(6, total);
+
         mailboxFactory.close();
     }
 }

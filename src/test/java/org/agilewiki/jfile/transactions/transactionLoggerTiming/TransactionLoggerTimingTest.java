@@ -43,6 +43,7 @@ public class TransactionLoggerTimingTest extends TestCase {
                 StandardOpenOption.READ,
                 StandardOpenOption.WRITE,
                 StandardOpenOption.CREATE);
+        durableTransactionLogger.currentPosition = 0L;
 
         TransactionAggregator transactionAggregator = db.getTransactionAggregator();
 

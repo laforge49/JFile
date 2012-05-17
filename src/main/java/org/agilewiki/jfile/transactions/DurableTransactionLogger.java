@@ -26,12 +26,14 @@ package org.agilewiki.jfile.transactions;
 import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jfile.JFile;
+import org.agilewiki.jfile.block.Block;
 
 /**
  * Durably (fsync'd/forced) logs blocks of transactions.
  */
 final public class DurableTransactionLogger extends JFile implements BlockProcessor {
     private BlockFlowBuffer blockFlowBuffer;
+    public long currentPosition;
 
     /**
      * Create a LiteActor
@@ -65,7 +67,10 @@ final public class DurableTransactionLogger extends JFile implements BlockProces
 
         if (reqClass == ProcessBlock.class) {
             ProcessBlock req = (ProcessBlock) request;
-            forcedWriteRootJid(req.block, -1);
+            Block block = req.block;
+            block.setCurrentPosition(currentPosition);
+            forcedWriteRootJid(block, -1);
+            currentPosition = block.getCurrentPosition();
             req.send(DurableTransactionLogger.this, blockFlowBuffer, rp);
             return;
         }

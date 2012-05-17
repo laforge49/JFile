@@ -35,6 +35,7 @@ import org.agilewiki.jfile.transactions.*;
  */
 public class LogReader extends JFile implements Finisher {
     private BlockFlowBuffer blockFlowBuffer;
+    public long currentPosition;
 
     /**
      * Create a LiteActor
@@ -101,7 +102,9 @@ public class LogReader extends JFile implements Finisher {
             throws Exception {
         while (true) {
             Block block = newBlock();
+            block.setCurrentPosition(currentPosition);
             readRootJid(block);
+            currentPosition = block.getCurrentPosition();
             if (block.isEmpty()) {
                 long position = block.getCurrentPosition();
                 long size = fileChannel.size();

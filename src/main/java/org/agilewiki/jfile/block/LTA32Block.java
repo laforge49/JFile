@@ -83,6 +83,10 @@ public class LTA32Block extends LTBlock {
     public boolean setRootJidBytes(byte[] bytesRead) {
         if (!super.setRootJidBytes(bytesRead))
             return false;
+        int i = 0;
+        while (i < bytesRead.length) {
+            i += 1;
+        }
         a32.reset();
         a32.update(bytesRead);
         boolean match = checksum == a32.getValue();

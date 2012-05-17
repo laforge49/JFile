@@ -39,4 +39,8 @@ public class CounterDB extends DB {
         value += 1;
         return value;
     }
+    
+    public int getCounter() {
+        return value;
+    }
 }

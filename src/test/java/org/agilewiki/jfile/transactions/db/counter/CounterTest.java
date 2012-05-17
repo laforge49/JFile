@@ -40,6 +40,7 @@ public class CounterTest extends TestCase {
                 path,
                 StandardOpenOption.WRITE,
                 StandardOpenOption.CREATE);
+        durableTransactionLogger.currentPosition = 0L;
 
         TransactionAggregator transactionAggregator = db.getTransactionAggregator();
 

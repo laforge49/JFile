@@ -66,9 +66,10 @@ public class LBlock implements Block {
             return blockBytes;
         l = rootJid.getSerializedLength();
         blockBytes = new byte[headerLength() + l];
-        AppendableBytes ab = new AppendableBytes(blockBytes, 0);
-        saveHeader(ab, l);
+        AppendableBytes ab = new AppendableBytes(blockBytes, headerLength());
         rootJid.save(ab);
+        ab = new AppendableBytes(blockBytes, 0);
+        saveHeader(ab, l);
         return blockBytes;
     }
 
@@ -168,7 +169,7 @@ public class LBlock implements Block {
         rb = null;
         if (rootJidBytes == null)
             return null;
-        RootJid rootJid = new RootJid(mailbox);
+        rootJid = new RootJid(mailbox);
         rootJid.setParent(parent);
         rootJid.load(new ReadableBytes(rootJidBytes, 0));
         return rootJid;
