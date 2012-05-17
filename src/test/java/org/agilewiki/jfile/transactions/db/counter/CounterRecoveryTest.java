@@ -7,6 +7,7 @@ import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.JFileFactories;
+import org.agilewiki.jfile.transactions.Finish;
 import org.agilewiki.jfile.transactions.logReader.LogReader;
 import org.agilewiki.jfile.transactions.logReader.ReadLog;
 
@@ -37,7 +38,7 @@ public class CounterRecoveryTest extends TestCase {
                 StandardOpenOption.READ);
 
         ReadLog.req.send(future, logReader);
-
+        Finish.req.send(future, logReader);
         logReader.fileChannel.close();
         mailboxFactory.close();
     }
