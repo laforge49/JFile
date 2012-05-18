@@ -92,7 +92,7 @@ abstract public class DB extends JLPCActor {
      * Returns the transaction log reader.
      * @return The LogReader
      */
-    public LogReader getLogReader()
+    public LogReader getLogReader(int maxSize)
             throws Exception {
         if (logReader != null)
             return logReader;
@@ -113,6 +113,7 @@ abstract public class DB extends JLPCActor {
         LogReader logReader = newLogReader(getMailboxFactory().createAsyncMailbox());
         logReader.setParent(parent);
         logReader.setNext(deserializer);
+        logReader.maxSize = maxSize;
 
         return logReader;
     }

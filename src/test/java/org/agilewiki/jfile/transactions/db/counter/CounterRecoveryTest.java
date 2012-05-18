@@ -30,7 +30,7 @@ public class CounterRecoveryTest extends TestCase {
         CounterDB db = new CounterDB(dbMailbox);
         db.setParent(factory);
 
-        LogReader logReader = db.getLogReader();
+        LogReader logReader = db.getLogReader(10000);
         Path path = FileSystems.getDefault().getPath("CounterTest.jf");
         System.out.println(path.toAbsolutePath());
         logReader.fileChannel = FileChannel.open(
@@ -43,7 +43,7 @@ public class CounterRecoveryTest extends TestCase {
         Finish.req.send(future, logReader);
         logReader.fileChannel.close();
         
-        //int total = db.getCounter();
+        int total = db.getCounter();
         //assertEquals(6, total);
 
         mailboxFactory.close();

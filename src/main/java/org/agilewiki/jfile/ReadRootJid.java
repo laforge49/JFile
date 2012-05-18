@@ -33,6 +33,7 @@ import org.agilewiki.jfile.block.Block;
  */
 public class ReadRootJid extends Request<Object, JFile> {
     public final Block block;
+    public final int maxSize;
 
     /**
      * Read a RootJid.
@@ -41,6 +42,17 @@ public class ReadRootJid extends Request<Object, JFile> {
      */
     public ReadRootJid(Block block) {
         this.block = block;
+        maxSize = -1;
+    }
+
+    /**
+     * Read a RootJid.
+     *
+     * @param block The Block used to manage the operation.
+     */
+    public ReadRootJid(Block block, int maxSize) {
+        this.block = block;
+        this.maxSize = maxSize;
     }
 
     /**

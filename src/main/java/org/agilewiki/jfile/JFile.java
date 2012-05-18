@@ -61,7 +61,7 @@ public class JFile extends JLPCActor {
 
         if (reqClass == ReadRootJid.class) {
             ReadRootJid req = (ReadRootJid) request;
-            readRootJid(req.block);
+            readRootJid(req.block, req.maxSize);
             rp.processResponse(null);
             return;
         }
@@ -105,7 +105,7 @@ public class JFile extends JLPCActor {
         fileChannel.force(metaData);
     }
 
-    protected void readRootJid(Block block) {
+    protected void readRootJid(Block block, int maxSize) {
         try {
             block.setRootJid(null);
             int rem = block.headerLength();
@@ -127,6 +127,10 @@ public class JFile extends JLPCActor {
                 rem -= rl;
             }
             rem = block.setHeaderBytes(hdr);
+            if (rem < 0)
+                return;
+            if (maxSize > -1 && rem > maxSize)
+                return;
             byte[] rjb = new byte[rem];
             if (rem > 0) {
                 ByteBuffer rjbb = ByteBuffer.wrap(rjb);
