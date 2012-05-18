@@ -24,6 +24,7 @@ public class CounterRecoveryTest extends TestCase {
         JAFactory factory = new JAFactory(factoryMailbox);
         (new JFileFactories(factoryMailbox)).setParent(factory);
         factory.defineActorType("inc", IncrementCounterTransaction.class);
+        factory.defineActorType("get", GetCounterTransaction.class);
         JAFuture future = new JAFuture();
 
         Mailbox dbMailbox = mailboxFactory.createAsyncMailbox();
@@ -44,7 +45,7 @@ public class CounterRecoveryTest extends TestCase {
         logReader.fileChannel.close();
         
         int total = db.getCounter();
-        //assertEquals(6, total);
+        assertEquals(6, total);
 
         mailboxFactory.close();
     }

@@ -15,7 +15,6 @@ public class IncrementCounterTransaction extends _TransactionJid {
 
     @Override
     protected void eval(RP rp) throws Exception {
-        System.out.println("inc!");
         IncrementCounter.req.send(this, getParent(), rp);
     }
 }
