@@ -134,6 +134,7 @@ public class LBlock implements Block {
     @Override
     public boolean setRootJidBytes(byte[] rootJidBytes) {
         if (l != rootJidBytes.length) {
+            System.out.println("wrong length");
             return false;
         }
         this.rootJidBytes = rootJidBytes;

@@ -121,16 +121,21 @@ public class JFile extends JLPCActor {
             while (rem > 0) {
                 rl = fileChannel.read(hbb, currentPosition);
                 if (rl == -1) {
+                    System.out.println("eof2");
                     return;
                 }
                 currentPosition += rl;
                 rem -= rl;
             }
             rem = block.setHeaderBytes(hdr);
-            if (rem < 0)
+            if (rem < 0) {
+                System.out.println("eof3");
                 return;
-            if (maxSize > -1 && rem > maxSize)
+            }
+            if (maxSize > -1 && rem > maxSize) {
+                System.out.println("max size exceeded: " + rem);
                 return;
+            }
             byte[] rjb = new byte[rem];
             if (rem > 0) {
                 ByteBuffer rjbb = ByteBuffer.wrap(rjb);
@@ -145,8 +150,11 @@ public class JFile extends JLPCActor {
             }
             if (block.setRootJidBytes(rjb)) {
                 block.setCurrentPosition(currentPosition);
+            } else {
+                System.out.println("eof5");
             }
         } catch (Exception ex) {
+            System.out.println("eof6");
             block.setRootJid(null);
             return;
         }

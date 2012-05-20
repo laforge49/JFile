@@ -24,29 +24,41 @@ public class RecoveryTimingTest extends TestCase {
         JAFactory factory = new JAFactory(factoryMailbox);
         (new JFileFactories(factoryMailbox)).setParent(factory);
         factory.defineActorType("n", IncrementCounterTransaction.class);
-        factory.defineActorType("get", GetCounterTransaction.class);
         JAFuture future = new JAFuture();
 
         Mailbox dbMailbox = mailboxFactory.createAsyncMailbox();
         CounterDB db = new CounterDB(dbMailbox);
         db.setParent(factory);
 
-        LogReader logReader = db.getLogReader(10000);
+        LogReader logReader = db.getLogReader(1000000);
         Path path = FileSystems.getDefault().getPath("TransactionLoggerTimingTest.jf");
         System.out.println(path.toAbsolutePath());
+        try {
         logReader.fileChannel = FileChannel.open(
                 path,
                 StandardOpenOption.READ);
+        } catch (Exception ex) {
+            System.out.println("unable to open log file");
+            mailboxFactory.close();
+            return;
+        }
         logReader.currentPosition = 0;
 
+        long t0 = System.currentTimeMillis();
         long rem = ReadLog.req.send(future, logReader);
-        System.out.println("unprocessed bytes remaining: " + rem);
+        long t1 = System.currentTimeMillis();
         Finish.req.send(future, logReader);
+        Finish.req.send(future, logReader);
+        Finish.req.send(future, logReader);
+        Finish.req.send(future, logReader);
+        System.out.println("unprocessed bytes remaining: " + rem);
         logReader.fileChannel.close();
 
-        int total = db.getCounter();
-        System.out.println(total);
-
+        int transactions = db.getCounter();
+        System.out.println("milliseconds: " + (t1 - t0));
+        System.out.println("transactions: " + transactions);
+        System.out.println("transactions per second = " + (1000L * transactions / (t1 - t0)));
+        //tps = 956937
         mailboxFactory.close();
     }
 }

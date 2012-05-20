@@ -92,6 +92,7 @@ public class LTA32Block extends LTBlock {
         boolean match = checksum == a32.getValue();
         if (match)
             return true;
+        System.out.println("bad checksum");
         rootJidBytes = null;
         return false;
     }

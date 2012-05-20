@@ -52,14 +52,13 @@ public class TransactionLoggerTimingTest extends TestCase {
         transactionLoggerDriver.setInitialBufferCapacity(10000);
         transactionLoggerDriver.win = 3;
 
-    //    transactionLoggerDriver.batch = 1;
-    //    transactionLoggerDriver.count = 1;
-        transactionLoggerDriver.batch = 10000;
-        transactionLoggerDriver.count = 1000;
+       transactionLoggerDriver.batch = 10;
+       transactionLoggerDriver.count = 10;
+    //    transactionLoggerDriver.batch = 10000;
+    //    transactionLoggerDriver.count = 1000;
 
         Go.req.send(future, transactionLoggerDriver);
         Finish.req.send(future, durableTransactionLogger);
-        durableTransactionLogger.fileChannel.truncate(0);
         long t0 = System.currentTimeMillis();
         Go.req.send(future, transactionLoggerDriver);
         Finish.req.send(future, durableTransactionLogger);
@@ -72,13 +71,13 @@ public class TransactionLoggerTimingTest extends TestCase {
         System.out.println("transactions: " + transactions);
         System.out.println("transactions per second = " + (1000L * transactions / (t1 - t0)));
 
-        //latency = 3 ms
+        //latency = 2 ms
 
         //batch = 10000
         //count = 1000
         //transactions = 10,000,000
-        //time = 11.117 seconds
-        //throughput = 899,523 tps
+        //time = 9.953 seconds
+        //throughput = 1,004,722 tps
 
         durableTransactionLogger.fileChannel.close();
         mailboxFactory.close();
