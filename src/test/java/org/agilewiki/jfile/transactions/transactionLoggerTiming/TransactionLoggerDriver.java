@@ -27,7 +27,7 @@ public class TransactionLoggerDriver extends JLPCActor {
         pendingManager.rp = rp;
         ndx = 0;
         int w = 0;
-        while (w < win) {
+        while (w < win && w < batch) {
             sender();
             w += 1;
         }

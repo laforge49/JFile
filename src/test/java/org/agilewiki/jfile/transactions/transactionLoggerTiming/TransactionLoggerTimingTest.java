@@ -7,12 +7,10 @@ import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.JFileFactories;
-import org.agilewiki.jfile.transactions.DurableTransactionLogger;
-import org.agilewiki.jfile.transactions.NullTransactionFactory;
-import org.agilewiki.jfile.transactions.Serializer;
-import org.agilewiki.jfile.transactions.TransactionProcessor;
+import org.agilewiki.jfile.transactions.*;
 import org.agilewiki.jfile.transactions.db.StatelessDB;
 import org.agilewiki.jfile.transactions.db.counter.CounterDB;
+import org.agilewiki.jfile.transactions.db.counter.IncrementCounterFactory;
 import org.agilewiki.jfile.transactions.transactionAggregator.TransactionAggregator;
 
 import java.nio.channels.FileChannel;
@@ -27,7 +25,7 @@ public class TransactionLoggerTimingTest extends TestCase {
         Mailbox factoryMailbox = mailboxFactory.createMailbox();
         JAFactory factory = new JAFactory(factoryMailbox);
         (new JFileFactories(factoryMailbox)).setParent(factory);
-        NullTransactionFactory ntf = new NullTransactionFactory("n");
+        IncrementCounterFactory ntf = new IncrementCounterFactory("n");
         factory.registerActorFactory(ntf);
         JAFuture future = new JAFuture();
 
@@ -60,8 +58,11 @@ public class TransactionLoggerTimingTest extends TestCase {
         transactionLoggerDriver.count = 1000;
 
         Go.req.send(future, transactionLoggerDriver);
+        Finish.req.send(future, durableTransactionLogger);
+        durableTransactionLogger.fileChannel.truncate(0);
         long t0 = System.currentTimeMillis();
         Go.req.send(future, transactionLoggerDriver);
+        Finish.req.send(future, durableTransactionLogger);
         long t1 = System.currentTimeMillis();
 
         int transactions = transactionLoggerDriver.batch * transactionLoggerDriver.count;
@@ -76,8 +77,8 @@ public class TransactionLoggerTimingTest extends TestCase {
         //batch = 10000
         //count = 1000
         //transactions = 10,000,000
-        //time = 7.4 seconds
-        //throughput = 1,351,351 tps
+        //time = 11.117 seconds
+        //throughput = 899,523 tps
 
         durableTransactionLogger.fileChannel.close();
         mailboxFactory.close();
