@@ -4,6 +4,7 @@ import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.transactions.NullTransactionFactory;
+import org.agilewiki.jfile.transactions.db.counter.IncrementCounterFactory;
 import org.agilewiki.jfile.transactions.transactionAggregator.AggregateTransaction;
 
 public class TransactionLoggerDriver extends JLPCActor {
@@ -12,7 +13,7 @@ public class TransactionLoggerDriver extends JLPCActor {
     public int count;
     public int win;
     int ndx;
-    final NullTransactionFactory ntf = new NullTransactionFactory("n");
+    final IncrementCounterFactory ntf = new IncrementCounterFactory("n");
 
 
     public TransactionLoggerDriver(Mailbox mailbox) {

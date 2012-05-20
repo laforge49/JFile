@@ -12,6 +12,7 @@ import org.agilewiki.jfile.transactions.NullTransactionFactory;
 import org.agilewiki.jfile.transactions.Serializer;
 import org.agilewiki.jfile.transactions.TransactionProcessor;
 import org.agilewiki.jfile.transactions.db.StatelessDB;
+import org.agilewiki.jfile.transactions.db.counter.CounterDB;
 import org.agilewiki.jfile.transactions.transactionAggregator.TransactionAggregator;
 
 import java.nio.channels.FileChannel;
@@ -31,7 +32,7 @@ public class TransactionLoggerTimingTest extends TestCase {
         JAFuture future = new JAFuture();
 
         Mailbox dbMailbox = mailboxFactory.createAsyncMailbox();
-        StatelessDB db = new StatelessDB(dbMailbox);
+        CounterDB db = new CounterDB(dbMailbox);
         db.setParent(factory);
         db.initialCapacity = 10000;
 
@@ -53,19 +54,22 @@ public class TransactionLoggerTimingTest extends TestCase {
         transactionLoggerDriver.setInitialBufferCapacity(10000);
         transactionLoggerDriver.win = 3;
 
-        transactionLoggerDriver.batch = 1;
-        transactionLoggerDriver.count = 1;
-    //  transactionLoggerDriver.batch = 10000;
-    //  transactionLoggerDriver.count = 1000;
+    //    transactionLoggerDriver.batch = 1;
+    //    transactionLoggerDriver.count = 1;
+        transactionLoggerDriver.batch = 10000;
+        transactionLoggerDriver.count = 1000;
 
         Go.req.send(future, transactionLoggerDriver);
         long t0 = System.currentTimeMillis();
         Go.req.send(future, transactionLoggerDriver);
         long t1 = System.currentTimeMillis();
 
+        int transactions = transactionLoggerDriver.batch * transactionLoggerDriver.count;
+        assertEquals(2 * transactions, db.getCounter());
+
         System.out.println("milliseconds: " + (t1 - t0));
-        System.out.println("transactions: " +
-                (transactionLoggerDriver.batch * transactionLoggerDriver.count));
+        System.out.println("transactions: " + transactions);
+        System.out.println("transactions per second = " + (1000L * transactions / (t1 - t0)));
 
         //latency = 3 ms
 
