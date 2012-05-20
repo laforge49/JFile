@@ -26,6 +26,7 @@ package org.agilewiki.jfile.transactions;
 import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
+import org.agilewiki.jfile.block.FBlock;
 
 /**
  * Buffers the flow of blocks for increased parallelism.
@@ -35,7 +36,7 @@ public class BlockFlowBuffer extends JLPCActor implements BlockProcessor {
     private RP _rp;
     private boolean responsePending;
     public BlockProcessor next;
-    
+
     /**
      * Create a LiteActor
      *
@@ -64,14 +65,16 @@ public class BlockFlowBuffer extends JLPCActor implements BlockProcessor {
         }
 
         if (reqClass == Finish.class) {
-            Finish.req.send(this, next, rp);
+            pendingRequest = FBlock.process;
+            _rp = rp;
+            nextSend();
             return;
         }
 
         throw new UnsupportedOperationException(reqClass.getName());
     }
-    
-    private void nextSend() 
+
+    private void nextSend()
             throws Exception {
         if (responsePending || pendingRequest == null)
             return;
@@ -82,12 +85,22 @@ public class BlockFlowBuffer extends JLPCActor implements BlockProcessor {
             _rp.processResponse(null);
             _rp = null;
         }
-        req.send(this, next, new RP<Object>() {
-            @Override
-            public void processResponse(Object response) throws Exception {
-                responsePending = false;
-                nextSend();
-            }
-        });
+        if (req.block instanceof FBlock) {
+            Finish.req.send(this, next, new RP<Object>() {
+                @Override
+                public void processResponse(Object response) throws Exception {
+                    responsePending = false;
+                    nextSend();
+                }
+            });
+        } else {
+            req.send(this, next, new RP<Object>() {
+                @Override
+                public void processResponse(Object response) throws Exception {
+                    responsePending = false;
+                    nextSend();
+                }
+            });
+        }
     }
 }
