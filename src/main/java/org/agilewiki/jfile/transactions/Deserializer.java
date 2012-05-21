@@ -60,7 +60,12 @@ public class Deserializer extends BlockSource implements BlockProcessor {
             int i = 0;
             while (i < transactionListJid.size()) {
                 ActorJid actorJid = (ActorJid) transactionListJid.iGet(i);
-                actorJid.getValue();
+                try {
+                    actorJid.getValue();
+                } catch (Exception ex) {
+                    System.err.println(">>>>>>>>>> "+ex.toString());
+                    throw ex;
+                }
                 i += 1;
             }
             req.send(this, blockFlowBuffer, rp);

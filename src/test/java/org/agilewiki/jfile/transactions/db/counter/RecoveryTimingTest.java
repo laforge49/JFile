@@ -58,7 +58,7 @@ public class RecoveryTimingTest extends TestCase {
         System.out.println("milliseconds: " + (t1 - t0));
         System.out.println("transactions: " + transactions);
         System.out.println("transactions per second = " + (1000L * transactions / (t1 - t0)));
-        //tps = 956937
+        //tps = 956,937
         mailboxFactory.close();
     }
 }
