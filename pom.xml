@@ -91,12 +91,12 @@
         <dependency>
             <groupId>org.agilewiki.jactor</groupId>
             <artifactId>jactor</artifactId>
-            <version>3.0.3</version>
+            <version>3.0.4-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.agilewiki.jid</groupId>
             <artifactId>jid</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
