@@ -63,7 +63,6 @@ public class Deserializer extends BlockSource implements BlockProcessor {
                 try {
                     actorJid.getValue();
                 } catch (Exception ex) {
-                    System.err.println(">>>>>>>>>> "+ex.toString());
                     throw ex;
                 }
                 i += 1;
