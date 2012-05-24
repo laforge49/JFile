@@ -25,18 +25,23 @@ package org.agilewiki.jfile.transactions;
 
 import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
-import org.agilewiki.jid.scalar.vlens.actor.ActorJid;
+import org.agilewiki.jid.collection.vlenc.ListJid;
 
 /**
- * An ActorJid that supports Eval
+ * A list of transaction actor's.
  */
-public class TransactionActorJid extends ActorJid implements Evaluater {
+public class EvaluaterListJid extends ListJid implements Evaluater {
+    private int ndx;
+    private boolean sync;
+    private boolean async;
+    private RP _rp;
+
     /**
-     * Create an actor jid.
+     * Create a ListJid
      *
      * @param mailbox A mailbox which may be shared with other actors.
      */
-    public TransactionActorJid(Mailbox mailbox) {
+    public EvaluaterListJid(Mailbox mailbox) {
         super(mailbox);
     }
 
@@ -49,13 +54,45 @@ public class TransactionActorJid extends ActorJid implements Evaluater {
      */
     @Override
     protected void processRequest(Object request, RP rp) throws Exception {
+        if (_rp != null)
+            throw new IllegalStateException("busy");
+
         if (request.getClass() == Eval.class) {
-            Eval req = (Eval) request;
-            Transaction transaction = (Transaction) getValue();
-            req.send(this, transaction, rp);
+            ndx = 0;
+            _rp = rp;
+            eval((Eval) request);
             return;
         }
 
         super.processRequest(request, rp);
+    }
+
+    private void eval(final Eval req)
+            throws Exception {
+        while (true) {
+            if (ndx == size()) {
+                RP rp = _rp;
+                _rp = null;
+                rp.processResponse(null);
+                return;
+            }
+            Evaluater evaluater = (Evaluater) iGet(ndx);
+            ndx += 1;
+            sync = false;
+            async = false;
+            req.send(this, evaluater, new RP<Object>() {
+                @Override
+                public void processResponse(Object response) throws Exception {
+                    if (!async)
+                        sync = true;
+                    else
+                        eval(req);
+                }
+            });
+            if (!sync) {
+                async = true;
+                return;
+            }
+        }
     }
 }

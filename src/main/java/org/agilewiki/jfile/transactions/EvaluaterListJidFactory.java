@@ -29,7 +29,7 @@ import org.agilewiki.jid.collection.vlenc.ListJidFactory;
 /**
  * Creates TransactionListJid's.
  */
-public class TransactionListJidFactory extends ListJidFactory {
+public class EvaluaterListJidFactory extends ListJidFactory {
 
     /**
      * Create an ActorFactory.
@@ -37,8 +37,8 @@ public class TransactionListJidFactory extends ListJidFactory {
      * @param actorType       The actor type.
      * @param initialCapacity The initial capacity.
      */
-    public TransactionListJidFactory(String actorType, int initialCapacity) {
-        super(actorType, TransactionActorJidFactory.fac, initialCapacity);
+    public EvaluaterListJidFactory(String actorType, int initialCapacity) {
+        super(actorType, EvaluaterActerJidFactory.fac, initialCapacity);
     }
 
     /**
@@ -46,8 +46,8 @@ public class TransactionListJidFactory extends ListJidFactory {
      *
      * @param actorType The actor type.
      */
-    public TransactionListJidFactory(String actorType) {
-        super(actorType, TransactionActorJidFactory.fac);
+    public EvaluaterListJidFactory(String actorType) {
+        super(actorType, EvaluaterActerJidFactory.fac);
     }
 
     /**
@@ -57,8 +57,8 @@ public class TransactionListJidFactory extends ListJidFactory {
      * @return The new actor.
      */
     @Override
-    protected TransactionListJid instantiateActor(Mailbox mailbox) throws Exception {
-        TransactionListJid transactionListJid = new TransactionListJid(mailbox);
+    protected EvaluaterListJid instantiateActor(Mailbox mailbox) throws Exception {
+        EvaluaterListJid transactionListJid = new EvaluaterListJid(mailbox);
         assignElementsFactory(transactionListJid);
         return transactionListJid;
     }

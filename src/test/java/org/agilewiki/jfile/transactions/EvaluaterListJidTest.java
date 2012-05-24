@@ -23,7 +23,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
-public class TransactionListJidTest extends TestCase {
+public class EvaluaterListJidTest extends TestCase {
     public void test()
             throws Exception {
         MailboxFactory mailboxFactory = JAMailboxFactory.newMailboxFactory(1);
@@ -49,14 +49,14 @@ public class TransactionListJidTest extends TestCase {
 
         RootJid rj = new RootJid(mailbox);
         rj.setParent(db);
-        (new SetActor(JFileFactories.TRANSACTION_LIST_JID_TYPE)).send(future, rj);
-        TransactionListJid transactionListJid = (TransactionListJid) GetActor.req.send(future, rj);
+        (new SetActor(JFileFactories.EVALUATER_LIST_JID_TYPE)).send(future, rj);
+        EvaluaterListJid transactionListJid = (EvaluaterListJid) GetActor.req.send(future, rj);
 
         (new IAdd(-1)).send(future, transactionListJid);
-        TransactionActorJid transactionActorJid = (TransactionActorJid) (new IGet(-1)).send(future, transactionListJid);
+        EvaluaterActorJid transactionActorJid = (EvaluaterActorJid) (new IGet(-1)).send(future, transactionListJid);
         (new SetActor("helloWorldTransaction")).send(future, transactionActorJid);
         (new IAdd(-1)).send(future, transactionListJid);
-        transactionActorJid = (TransactionActorJid) (new IGet(-1)).send(future, transactionListJid);
+        transactionActorJid = (EvaluaterActorJid) (new IGet(-1)).send(future, transactionListJid);
         (new SetActor("helloWorldTransaction")).send(future, transactionActorJid);
 
         Block block = new LTBlock();

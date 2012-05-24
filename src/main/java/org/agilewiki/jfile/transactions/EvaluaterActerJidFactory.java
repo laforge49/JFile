@@ -31,14 +31,14 @@ import org.agilewiki.jfile.JFileFactories;
 /**
  * Creates TransactionActorJid's.
  */
-public class TransactionActorJidFactory extends ActorFactory {
-    final public static TransactionActorJidFactory fac = new TransactionActorJidFactory();
+public class EvaluaterActerJidFactory extends ActorFactory {
+    final public static EvaluaterActerJidFactory fac = new EvaluaterActerJidFactory();
 
     /**
      * Create an ActorFactory.
      */
-    public TransactionActorJidFactory() {
-        super(JFileFactories.TRANSACTION_ACTOR_JID_TYPE);
+    public EvaluaterActerJidFactory() {
+        super(JFileFactories.EVALUATER_ACTOR_JID_TYPE);
     }
 
     /**
@@ -49,6 +49,6 @@ public class TransactionActorJidFactory extends ActorFactory {
      */
     @Override
     protected JLPCActor instantiateActor(Mailbox mailbox) throws Exception {
-        return new TransactionActorJid(mailbox);
+        return new EvaluaterActorJid(mailbox);
     }
 }

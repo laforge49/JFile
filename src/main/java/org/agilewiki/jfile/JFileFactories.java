@@ -31,16 +31,16 @@ import org.agilewiki.jactor.factory.JAFactoryFactory;
 import org.agilewiki.jactor.factory.NewActor;
 import org.agilewiki.jactor.factory.Requirement;
 import org.agilewiki.jactor.lpc.JLPCActor;
-import org.agilewiki.jfile.transactions.TransactionActorJidFactory;
-import org.agilewiki.jfile.transactions.TransactionListJidFactory;
+import org.agilewiki.jfile.transactions.EvaluaterActerJidFactory;
+import org.agilewiki.jfile.transactions.EvaluaterListJidFactory;
 
 /**
  * Defines JFactory actor types and registers the factories.
  */
 public class JFileFactories extends JLPCActor {
 
-    public final static String TRANSACTION_ACTOR_JID_TYPE = "TRANSACTION_ACTOR_JID";
-    public final static String TRANSACTION_LIST_JID_TYPE = "TRANSACTION_LIST_JID";
+    public final static String EVALUATER_ACTOR_JID_TYPE = "EVALUATER_ACTOR_JID";
+    public final static String EVALUATER_LIST_JID_TYPE = "EVALUATER_LIST_JID";
 
     /**
      * Create a LiteActor
@@ -82,8 +82,8 @@ public class JFileFactories extends JLPCActor {
         while (!(f instanceof JAFactory)) f = f.getParent();
         JAFactory factory = (JAFactory) f;
 
-        factory.registerActorFactory(TransactionActorJidFactory.fac);
-        factory.registerActorFactory(new TransactionListJidFactory(TRANSACTION_LIST_JID_TYPE));
+        factory.registerActorFactory(EvaluaterActerJidFactory.fac);
+        factory.registerActorFactory(new EvaluaterListJidFactory(EVALUATER_LIST_JID_TYPE));
     }
 
     /**

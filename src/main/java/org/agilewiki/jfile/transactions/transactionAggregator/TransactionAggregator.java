@@ -41,7 +41,7 @@ import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 public class TransactionAggregator extends BlockSource {
     public int initialCapacity = 10;
     private RootJid rootJid;
-    private TransactionListJid transactionListJid;
+    private EvaluaterListJid transactionListJid;
     private boolean writePending;
 
     /**
@@ -105,7 +105,7 @@ public class TransactionAggregator extends BlockSource {
             throws Exception {
         makeRootJid();
         transactionListJid.iAdd(-1);
-        TransactionActorJid transactionActorJid = (TransactionActorJid) transactionListJid.iGet(-1);
+        EvaluaterActorJid transactionActorJid = (EvaluaterActorJid) transactionListJid.iGet(-1);
         if (actorType != null) {
             if (bytes == null) {
                 transactionActorJid.setValue(actorType);
@@ -134,8 +134,8 @@ public class TransactionAggregator extends BlockSource {
             return;
         rootJid = new RootJid(getMailboxFactory().createMailbox());
         rootJid.setParent(getParent());
-        rootJid.setValue(JFileFactories.TRANSACTION_LIST_JID_TYPE);
-        transactionListJid = (TransactionListJid) rootJid.getValue();
+        rootJid.setValue(JFileFactories.EVALUATER_LIST_JID_TYPE);
+        transactionListJid = (EvaluaterListJid) rootJid.getValue();
         transactionListJid.initialCapacity = initialCapacity;
     }
 
