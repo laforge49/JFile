@@ -30,7 +30,7 @@ import org.agilewiki.jid.collection.vlenc.ListJid;
 /**
  * A list of transaction actor's.
  */
-public class TransactionListJid extends ListJid implements Transaction {
+public class TransactionListJid extends ListJid implements Evaluater {
     private int ndx;
     private boolean sync;
     private boolean async;
@@ -57,17 +57,17 @@ public class TransactionListJid extends ListJid implements Transaction {
         if (_rp != null)
             throw new IllegalStateException("busy");
 
-        if (request.getClass() == TransactionEval.class) {
+        if (request.getClass() == Eval.class) {
             ndx = 0;
             _rp = rp;
-            eval((TransactionEval) request);
+            eval((Eval) request);
             return;
         }
 
         super.processRequest(request, rp);
     }
 
-    private void eval(final TransactionEval req)
+    private void eval(final Eval req)
             throws Exception {
         while (true) {
             if (ndx == size()) {
@@ -76,11 +76,11 @@ public class TransactionListJid extends ListJid implements Transaction {
                 rp.processResponse(null);
                 return;
             }
-            Transaction transaction = (Transaction) iGet(ndx);
+            Evaluater evaluater = (Evaluater) iGet(ndx);
             ndx += 1;
             sync = false;
             async = false;
-            req.send(this, transaction, new RP<Object>() {
+            req.send(this, evaluater, new RP<Object>() {
                 @Override
                 public void processResponse(Object response) throws Exception {
                     if (!async)

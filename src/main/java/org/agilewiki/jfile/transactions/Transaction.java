@@ -29,5 +29,5 @@ import org.agilewiki.jid._Jid;
 /**
  * A transaction must support TransactionEval and TransactionResult requests.
  */
-public interface Transaction extends _Jid {
+public interface Transaction extends Evaluater {
 }

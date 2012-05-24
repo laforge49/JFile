@@ -58,8 +58,8 @@ public abstract class _TransactionJid extends Jid implements Transaction {
             return;
         }
 
-        if (reqClass == TransactionEval.class) {
-            TransactionEval req = (TransactionEval) request;
+        if (reqClass == Eval.class) {
+            Eval req = (Eval) request;
             long blockTimestamp = req.blockTimestamp;
             if (requestReturn == null) {
                 eval(blockTimestamp, rp);

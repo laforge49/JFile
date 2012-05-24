@@ -30,7 +30,7 @@ import org.agilewiki.jid.scalar.vlens.actor.ActorJid;
 /**
  * An ActorJid that supports Eval
  */
-public class TransactionActorJid extends ActorJid implements Transaction {
+public class TransactionActorJid extends ActorJid implements Evaluater {
     /**
      * Create an actor jid.
      *
@@ -49,8 +49,8 @@ public class TransactionActorJid extends ActorJid implements Transaction {
      */
     @Override
     protected void processRequest(Object request, RP rp) throws Exception {
-        if (request.getClass() == TransactionEval.class) {
-            TransactionEval req = (TransactionEval) request;
+        if (request.getClass() == Eval.class) {
+            Eval req = (Eval) request;
             Transaction transaction = (Transaction) getValue();
             req.send(this, transaction, rp);
             return;
