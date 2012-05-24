@@ -24,7 +24,7 @@
 package org.agilewiki.jfile.transactions;
 
 /**
- * A transaction must support TransactionEval and TransactionResult requests.
+ * A transaction must support Eval and TransactionResult requests.
  */
 public interface Transaction extends Evaluator {
 }
