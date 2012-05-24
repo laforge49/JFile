@@ -31,8 +31,8 @@ import org.agilewiki.jactor.factory.JAFactoryFactory;
 import org.agilewiki.jactor.factory.NewActor;
 import org.agilewiki.jactor.factory.Requirement;
 import org.agilewiki.jactor.lpc.JLPCActor;
-import org.agilewiki.jfile.transactions.EvaluaterActerJidFactory;
-import org.agilewiki.jfile.transactions.EvaluaterListJidFactory;
+import org.agilewiki.jfile.transactions.EvaluatorActerJidFactory;
+import org.agilewiki.jfile.transactions.EvaluatorListJidFactory;
 
 /**
  * Defines JFactory actor types and registers the factories.
@@ -82,8 +82,8 @@ public class JFileFactories extends JLPCActor {
         while (!(f instanceof JAFactory)) f = f.getParent();
         JAFactory factory = (JAFactory) f;
 
-        factory.registerActorFactory(EvaluaterActerJidFactory.fac);
-        factory.registerActorFactory(new EvaluaterListJidFactory(EVALUATER_LIST_JID_TYPE));
+        factory.registerActorFactory(EvaluatorActerJidFactory.fac);
+        factory.registerActorFactory(new EvaluatorListJidFactory(EVALUATER_LIST_JID_TYPE));
     }
 
     /**

@@ -56,7 +56,7 @@ public class Deserializer extends BlockSource implements BlockProcessor {
         if (reqClass == ProcessBlock.class) {
             ProcessBlock req = (ProcessBlock) request;
             RootJid rootJid = req.block.getRootJid(getMailboxFactory().createMailbox(), getParent());
-            EvaluaterListJid transactionListJid = (EvaluaterListJid) rootJid.getValue();
+            EvaluatorListJid transactionListJid = (EvaluatorListJid) rootJid.getValue();
             int i = 0;
             while (i < transactionListJid.size()) {
                 ActorJid actorJid = (ActorJid) transactionListJid.iGet(i);

@@ -30,7 +30,7 @@ import org.agilewiki.jid.collection.vlenc.ListJid;
 /**
  * A list of transaction actor's.
  */
-public class EvaluaterListJid extends ListJid implements Evaluater {
+public class EvaluatorListJid extends ListJid implements Evaluater {
     private int ndx;
     private boolean sync;
     private boolean async;
@@ -41,7 +41,7 @@ public class EvaluaterListJid extends ListJid implements Evaluater {
      *
      * @param mailbox A mailbox which may be shared with other actors.
      */
-    public EvaluaterListJid(Mailbox mailbox) {
+    public EvaluatorListJid(Mailbox mailbox) {
         super(mailbox);
     }
 

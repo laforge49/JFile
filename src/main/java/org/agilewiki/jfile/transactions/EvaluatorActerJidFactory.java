@@ -24,38 +24,31 @@
 package org.agilewiki.jfile.transactions;
 
 import org.agilewiki.jactor.Mailbox;
-import org.agilewiki.jactor.RP;
-import org.agilewiki.jid.scalar.vlens.actor.ActorJid;
+import org.agilewiki.jactor.factory.ActorFactory;
+import org.agilewiki.jactor.lpc.JLPCActor;
+import org.agilewiki.jfile.JFileFactories;
 
 /**
- * An ActorJid that supports Eval
+ * Creates TransactionActorJid's.
  */
-public class EvaluaterActorJid extends ActorJid implements Evaluater {
+public class EvaluatorActerJidFactory extends ActorFactory {
+    final public static EvaluatorActerJidFactory fac = new EvaluatorActerJidFactory();
+
     /**
-     * Create an actor jid.
-     *
-     * @param mailbox A mailbox which may be shared with other actors.
+     * Create an ActorFactory.
      */
-    public EvaluaterActorJid(Mailbox mailbox) {
-        super(mailbox);
+    public EvaluatorActerJidFactory() {
+        super(JFileFactories.EVALUATER_ACTOR_JID_TYPE);
     }
 
     /**
-     * The application method for processing requests sent to the actor.
+     * Create a JLPCActor.
      *
-     * @param request A request.
-     * @param rp      The response processor.
-     * @throws Exception Any uncaught exceptions raised while processing the request.
+     * @param mailbox The mailbox of the new actor.
+     * @return The new actor.
      */
     @Override
-    protected void processRequest(Object request, RP rp) throws Exception {
-        if (request.getClass() == Eval.class) {
-            Eval req = (Eval) request;
-            Transaction transaction = (Transaction) getValue();
-            req.send(this, transaction, rp);
-            return;
-        }
-
-        super.processRequest(request, rp);
+    protected JLPCActor instantiateActor(Mailbox mailbox) throws Exception {
+        return new EvaluatorActorJid(mailbox);
     }
 }
