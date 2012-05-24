@@ -10,7 +10,7 @@ public class GetCounterTransaction extends _TransactionJid {
     }
 
     @Override
-    protected void eval(RP rp) throws Exception {
+    protected void eval(long blockTimestamp, RP rp) throws Exception {
         GetCounter.req.send(this, getParent(), rp);
     }
 }

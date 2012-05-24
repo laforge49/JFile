@@ -59,10 +59,12 @@ public abstract class _TransactionJid extends Jid implements Transaction {
         }
 
         if (reqClass == TransactionEval.class) {
+            TransactionEval req = (TransactionEval) request;
+            long blockTimestamp = req.blockTimestamp;
             if (requestReturn == null) {
-                eval(rp);
+                eval(blockTimestamp, rp);
             } else {
-                eval(new RP<Integer>() {
+                eval(blockTimestamp, new RP<Integer>() {
                     @Override
                     public void processResponse(Integer response) throws Exception {
                         rp.processResponse(null);
@@ -80,6 +82,6 @@ public abstract class _TransactionJid extends Jid implements Transaction {
      * Evaluate the transaction.
      * @param rp      The response processor.
      */
-    abstract protected void eval(RP rp)
+    abstract protected void eval(long blockTimestamp, RP rp)
             throws Exception;
 }

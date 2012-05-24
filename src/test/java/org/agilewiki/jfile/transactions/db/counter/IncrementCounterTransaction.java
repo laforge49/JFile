@@ -14,7 +14,7 @@ public class IncrementCounterTransaction extends _TransactionJid {
     }
 
     @Override
-    protected void eval(RP rp) throws Exception {
+    protected void eval(long blockTimestamp, RP rp) throws Exception {
         IncrementCounter.req.send(this, getParent(), rp);
     }
 }

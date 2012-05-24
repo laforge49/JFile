@@ -10,7 +10,7 @@ final public class NullTransaction extends _TransactionJid {
     }
 
     @Override
-    protected void eval(RP rp) throws Exception {
+    protected void eval(long blockTimestamp, RP rp) throws Exception {
         rp.processResponse(null);
     }
 }
