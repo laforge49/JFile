@@ -5,5 +5,5 @@ import org.agilewiki.jid._Jid;
 /**
  * Supports TransactionEval requests.
  */
-public interface Evaluater extends _Jid {
+public interface Evaluator extends _Jid {
 }

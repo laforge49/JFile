@@ -85,7 +85,7 @@ final public class TransactionProcessor extends JLPCActor implements BlockProces
         GetActor.req.send(this, rootJid, new RP<Actor>() {
             @Override
             public void processResponse(Actor response) throws Exception {
-                Evaluater evaluater = (Evaluater) response;
+                Evaluator evaluater = (Evaluator) response;
                 Eval eval = new Eval(block.getTimestamp());
                 if (generateCheckpoints) {
                     eval.send(TransactionProcessor.this, evaluater, new RP<Object>() {

@@ -30,7 +30,7 @@ import org.agilewiki.jid.collection.vlenc.ListJid;
 /**
  * A list of transaction actor's.
  */
-public class EvaluatorListJid extends ListJid implements Evaluater {
+public class EvaluatorListJid extends ListJid implements Evaluator {
     private int ndx;
     private boolean sync;
     private boolean async;
@@ -76,7 +76,7 @@ public class EvaluatorListJid extends ListJid implements Evaluater {
                 rp.processResponse(null);
                 return;
             }
-            Evaluater evaluater = (Evaluater) iGet(ndx);
+            Evaluator evaluater = (Evaluator) iGet(ndx);
             ndx += 1;
             sync = false;
             async = false;

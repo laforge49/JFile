@@ -29,7 +29,7 @@ import org.agilewiki.jactor.lpc.Request;
 /**
  * A TransactionEval request is used to execute a transaction.
  */
-public class Eval extends Request<Object, Evaluater> {
+public class Eval extends Request<Object, Evaluator> {
     public final long blockTimestamp;
 
     /**
@@ -49,6 +49,6 @@ public class Eval extends Request<Object, Evaluater> {
      */
     @Override
     public boolean isTargetType(Actor targetActor) {
-        return targetActor instanceof Evaluater;
+        return targetActor instanceof Evaluator;
     }
 }

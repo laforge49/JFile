@@ -30,7 +30,7 @@ import org.agilewiki.jid.scalar.vlens.actor.ActorJid;
 /**
  * An ActorJid that supports Eval
  */
-public class EvaluatorActorJid extends ActorJid implements Evaluater {
+public class EvaluatorActorJid extends ActorJid implements Evaluator {
     /**
      * Create an actor jid.
      *
