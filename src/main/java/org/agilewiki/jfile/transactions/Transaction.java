@@ -24,9 +24,10 @@
 package org.agilewiki.jfile.transactions;
 
 import org.agilewiki.jactor.lpc.TargetActor;
+import org.agilewiki.jid._Jid;
 
 /**
  * A transaction must support TransactionEval and TransactionResult requests.
  */
-public interface Transaction extends TargetActor {
+public interface Transaction extends _Jid {
 }
