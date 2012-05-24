@@ -48,9 +48,6 @@ public class RecoveryTimingTest extends TestCase {
         long rem = ReadLog.req.send(future, logReader);
         long t1 = System.currentTimeMillis();
         Finish.req.send(future, logReader);
-        Finish.req.send(future, logReader);
-        Finish.req.send(future, logReader);
-        Finish.req.send(future, logReader);
         System.out.println("unprocessed bytes remaining: " + rem);
         logReader.fileChannel.close();
 

@@ -81,19 +81,20 @@ public class BlockFlowBuffer extends JLPCActor implements BlockProcessor {
         responsePending = true;
         ProcessBlock req = pendingRequest;
         pendingRequest = null;
-        if (_rp != null) {
-            _rp.processResponse(null);
-            _rp = null;
-        }
         if (req.block instanceof FBlock) {
+            final RP rp = _rp;
+            _rp = null;
             Finish.req.send(this, next, new RP<Object>() {
                 @Override
                 public void processResponse(Object response) throws Exception {
                     responsePending = false;
+                    rp.processResponse(null);
                     nextSend();
                 }
             });
         } else {
+            _rp.processResponse(null);
+            _rp = null;
             req.send(this, next, new RP<Object>() {
                 @Override
                 public void processResponse(Object response) throws Exception {

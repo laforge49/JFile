@@ -54,8 +54,8 @@ public class TransactionLoggerTimingTest extends TestCase {
 
        transactionLoggerDriver.batch = 10;
        transactionLoggerDriver.count = 10;
-    //    transactionLoggerDriver.batch = 10000;
-    //    transactionLoggerDriver.count = 1000;
+    //   transactionLoggerDriver.batch = 10000;
+    //   transactionLoggerDriver.count = 1000;
 
         Go.req.send(future, transactionLoggerDriver);
         Finish.req.send(future, durableTransactionLogger);
