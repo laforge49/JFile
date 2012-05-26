@@ -90,6 +90,7 @@ abstract public class DB extends JLPCActor {
 
     /**
      * Returns the transaction log reader.
+     * @param maxSize    The maximum possible block size.
      * @return The LogReader
      */
     public LogReader getLogReader(int maxSize)
