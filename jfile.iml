@@ -10,8 +10,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.agilewiki.jactor:jactor:3.0.4" level="project" />
-    <orderEntry type="library" name="Maven: org.agilewiki.jid:jid:1.0.3" level="project" />
+    <orderEntry type="library" name="Maven: org.agilewiki.jactor:jactor:3.1.0-RC1-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.agilewiki.jid:jid:1.1.0-RC1-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.8.2" level="project" />
   </component>
 </module>
