@@ -18,19 +18,19 @@ public class TransactionAggregatorTest extends TestCase {
             throws Exception {
         MailboxFactory mailboxFactory = JAMailboxFactory.newMailboxFactory(10);
         Mailbox factoryMailbox = mailboxFactory.createMailbox();
-        JAFactory factory = new JAFactory(factoryMailbox);
-        (new JFileFactories(factoryMailbox)).setParent(factory);
+        JAFactory factory = new JAFactory();
+        factory.initialize(factoryMailbox);
+        (new JFileFactories()).initialize(factoryMailbox, factory);
         factory.defineActorType("helloWorldTransaction", HelloWorldTransaction.class);
         JAFuture future = new JAFuture();
         Mailbox dbMailbox = mailboxFactory.createAsyncMailbox();
-        StatelessDB db = new StatelessDB(dbMailbox);
-        db.setParent(factory);
-        TransactionProcessor transactionProcessor = new TransactionProcessor(dbMailbox);
-        transactionProcessor.setParent(db);
+        StatelessDB db = new StatelessDB();
+        db.initialize(dbMailbox, factory);
+        TransactionProcessor transactionProcessor = new TransactionProcessor();
+        transactionProcessor.initialize(dbMailbox, db);
 
-        TransactionAggregator transactionAggregator =
-                new TransactionAggregator(mailboxFactory.createAsyncMailbox());
-        transactionAggregator.setParent(factory);
+        TransactionAggregator transactionAggregator = new TransactionAggregator();
+        transactionAggregator.initialize(mailboxFactory.createAsyncMailbox(), factory);
         transactionAggregator.setNext(transactionProcessor);
 
         (new AggregateTransaction("helloWorldTransaction")).sendEvent(transactionAggregator);

@@ -31,16 +31,6 @@ import org.agilewiki.jactor.lpc.JLPCActor;
  * Serializes the contents of a block.
  */
 final public class Serializer extends BlockSource implements BlockProcessor {
-
-    /**
-     * Create a LiteActor
-     *
-     * @param mailbox A mailbox which may be shared with other actors.
-     */
-    public Serializer(Mailbox mailbox) {
-        super(mailbox);
-    }
-
     /**
      * The application method for processing requests sent to the actor.
      *

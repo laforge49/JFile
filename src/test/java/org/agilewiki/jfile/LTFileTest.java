@@ -20,11 +20,12 @@ public class LTFileTest extends TestCase {
             throws Exception {
         MailboxFactory mailboxFactory = JAMailboxFactory.newMailboxFactory(1);
         Mailbox mailbox = mailboxFactory.createMailbox();
-        JAFactory factory = new JAFactory(mailbox);
+        JAFactory factory = new JAFactory();
+        factory.initialize(mailbox);
         JAFuture future = new JAFuture();
 
-        JFile jFile = new JFile(mailbox);
-        jFile.setParent(factory);
+        JFile jFile = new JFile();
+        jFile.initialize(mailbox, factory);
         Path path = FileSystems.getDefault().getPath("LTFileTest.jf");
         System.out.println(path.toAbsolutePath());
         jFile.fileChannel = FileChannel.open(
@@ -33,8 +34,8 @@ public class LTFileTest extends TestCase {
                 StandardOpenOption.WRITE,
                 StandardOpenOption.CREATE);
 
-        RootJid rj = new RootJid(mailbox);
-        rj.setParent(factory);
+        RootJid rj = new RootJid();
+        rj.initialize(mailbox, factory);
         Block block = new LTBlock();
         block.setRootJid(rj);
         long timestamp = System.currentTimeMillis();

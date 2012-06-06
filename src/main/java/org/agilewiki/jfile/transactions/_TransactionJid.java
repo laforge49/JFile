@@ -34,15 +34,6 @@ public abstract class _TransactionJid extends Jid implements Transaction {
     private RP requestReturn;
 
     /**
-     * Create a JidA
-     *
-     * @param mailbox A mailbox which may be shared with other actors.
-     */
-    public _TransactionJid(Mailbox mailbox) {
-        super(mailbox);
-    }
-
-    /**
      * The application method for processing requests sent to the actor.
      *
      * @param request A request.

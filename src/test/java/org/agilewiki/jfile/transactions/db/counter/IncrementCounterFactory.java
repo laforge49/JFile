@@ -11,7 +11,7 @@ public class IncrementCounterFactory extends ActorFactory {
     }
 
     @Override
-    protected JLPCActor instantiateActor(Mailbox mailbox) throws Exception {
-        return new IncrementCounterTransaction(mailbox);
+    protected JLPCActor instantiateActor() throws Exception {
+        return new IncrementCounterTransaction();
     }
 }

@@ -46,32 +46,21 @@ abstract public class DB extends JLPCActor {
     private TransactionAggregator transactionAggregator;
     private DurableTransactionLogger durableTransactionLogger;
     private LogReader logReader;
-    
+
     /**
-     * Create a LiteActor
-     *
-     * @param mailbox A mailbox which may be shared with other actors.
+     * Create a transaction log reader.
+     * @return A LogReader.
      */
-    public DB(Mailbox mailbox) {
-        super(mailbox);
+    protected LogReader newLogReader() {
+        return new LogReader();
     }
 
     /**
      * Create a transaction aggregator.
-     * @param mailbox A mailbox which may be shared with other actors.
      * @return A TransactionAggregator.
      */
-    protected TransactionAggregator newTransactionAggregator(Mailbox mailbox) {
-        return new TransactionAggregator(mailbox);
-    }
-
-    /**
-     * Create a transaction log reader.
-     * @param mailbox A mailbox which may be shared with other actors.
-     * @return A LogReader.
-     */
-    protected LogReader newLogReader(Mailbox mailbox) {
-        return new LogReader(mailbox);
+    protected TransactionAggregator newTransactionAggregator() {
+        return new TransactionAggregator();
     }
 
     /**
@@ -103,16 +92,16 @@ abstract public class DB extends JLPCActor {
             throw new IllegalStateException("call setParent before getLogReader");
         }
 
-        TransactionProcessor transactionProcessor = new TransactionProcessor(getMailbox());
-        transactionProcessor.setParent(this);
+        TransactionProcessor transactionProcessor = new TransactionProcessor();
+        transactionProcessor.initialize(getMailbox(), this);
         transactionProcessor.generateCheckpoints = false;
 
-        Deserializer deserializer = new Deserializer(getMailboxFactory().createAsyncMailbox());
-        deserializer.setParent(this);
+        Deserializer deserializer = new Deserializer();
+        deserializer.initialize(getMailboxFactory().createAsyncMailbox(), this);
         deserializer.setNext(transactionProcessor);
 
-        LogReader logReader = newLogReader(getMailboxFactory().createAsyncMailbox());
-        logReader.setParent(parent);
+        LogReader logReader = newLogReader();
+        logReader.initialize(getMailboxFactory().createAsyncMailbox(), parent);
         logReader.setNext(deserializer);
         logReader.maxSize = maxSize;
 
@@ -136,19 +125,19 @@ abstract public class DB extends JLPCActor {
             throw new IllegalStateException("call setParent before getTransactionAggregator");
         }
 
-        TransactionProcessor transactionProcessor = new TransactionProcessor(getMailbox());
-        transactionProcessor.setParent(this);
+        TransactionProcessor transactionProcessor = new TransactionProcessor();
+        transactionProcessor.initialize(getMailbox(), this);
 
-        durableTransactionLogger = new DurableTransactionLogger(getMailboxFactory().createAsyncMailbox());
-        durableTransactionLogger.setParent(parent);
+        durableTransactionLogger = new DurableTransactionLogger();
+        durableTransactionLogger.initialize(getMailboxFactory().createAsyncMailbox(), parent);
         durableTransactionLogger.setNext(transactionProcessor);
 
-        Serializer serializer = new Serializer(getMailboxFactory().createAsyncMailbox());
-        serializer.setParent(parent);
+        Serializer serializer = new Serializer();
+        serializer.initialize(getMailboxFactory().createAsyncMailbox(), parent);
         serializer.setNext(durableTransactionLogger);
 
-        transactionAggregator = newTransactionAggregator(getMailboxFactory().createAsyncMailbox());
-        transactionAggregator.setParent(this);
+        transactionAggregator = newTransactionAggregator();
+        transactionAggregator.initialize(getMailboxFactory().createAsyncMailbox(), this);
         transactionAggregator.setNext(serializer);
         transactionAggregator.initialCapacity = initialCapacity;
 

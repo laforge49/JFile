@@ -32,15 +32,6 @@ import org.agilewiki.jid.scalar.vlens.actor.ActorJid;
  */
 public class EvaluatorActorJid extends ActorJid implements Evaluator {
     /**
-     * Create an actor jid.
-     *
-     * @param mailbox A mailbox which may be shared with other actors.
-     */
-    public EvaluatorActorJid(Mailbox mailbox) {
-        super(mailbox);
-    }
-
-    /**
      * The application method for processing requests sent to the actor.
      *
      * @param request A request.

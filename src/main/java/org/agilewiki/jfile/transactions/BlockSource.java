@@ -36,21 +36,13 @@ public abstract class BlockSource extends JLPCActor implements Finisher {
     protected BlockFlowBuffer blockFlowBuffer;
 
     /**
-     * Create a LiteActor
-     *
-     * @param mailbox A mailbox which may be shared with other actors.
-     */
-    public BlockSource(Mailbox mailbox) {
-        super(mailbox);
-    }
-
-    /**
      * Creates a buffered connection to the block processor that is next in the pipeline.
      * @param nextInPipeline    The next block processor in the pipeline.
      */
     public void setNext(BlockProcessor nextInPipeline)
             throws Exception {
-        blockFlowBuffer = new BlockFlowBuffer(getMailboxFactory().createMailbox());
+        blockFlowBuffer = new BlockFlowBuffer();
+        blockFlowBuffer.initialize(getMailboxFactory().createMailbox());
         blockFlowBuffer.next = nextInPipeline;
     }
 

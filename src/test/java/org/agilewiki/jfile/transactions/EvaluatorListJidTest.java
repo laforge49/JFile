@@ -28,17 +28,18 @@ public class EvaluatorListJidTest extends TestCase {
             throws Exception {
         MailboxFactory mailboxFactory = JAMailboxFactory.newMailboxFactory(1);
         Mailbox mailbox = mailboxFactory.createMailbox();
-        JAFactory factory = new JAFactory(mailbox);
-        (new JFileFactories(mailbox)).setParent(factory);
+        JAFactory factory = new JAFactory();
+        factory.initialize(mailbox);
+        (new JFileFactories()).initialize(mailbox, factory);
         factory.defineActorType("helloWorldTransaction", HelloWorldTransaction.class);
         JAFuture future = new JAFuture();
-        StatelessDB db = new StatelessDB(mailbox);
-        db.setParent(factory);
-        TransactionProcessor transactionProcessor = new TransactionProcessor(mailbox);
-        transactionProcessor.setParent(db);
+        StatelessDB db = new StatelessDB();
+        db.initialize(mailbox, factory);
+        TransactionProcessor transactionProcessor = new TransactionProcessor();
+        transactionProcessor.initialize(mailbox, db);
 
-        JFile jFile = new JFile(mailbox);
-        jFile.setParent(factory);
+        JFile jFile = new JFile();
+        jFile.initialize(mailbox, factory);
         Path path = FileSystems.getDefault().getPath("TransactionListJidTest.jf");
         System.out.println(path.toAbsolutePath());
         jFile.fileChannel = FileChannel.open(
@@ -47,8 +48,8 @@ public class EvaluatorListJidTest extends TestCase {
                 StandardOpenOption.WRITE,
                 StandardOpenOption.CREATE);
 
-        RootJid rj = new RootJid(mailbox);
-        rj.setParent(db);
+        RootJid rj = new RootJid();
+        rj.initialize(mailbox, db);
         (new SetActor(JFileFactories.EVALUATER_LIST_JID_TYPE)).send(future, rj);
         EvaluatorListJid transactionListJid = (EvaluatorListJid) GetActor.req.send(future, rj);
 

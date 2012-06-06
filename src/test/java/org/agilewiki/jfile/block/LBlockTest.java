@@ -12,10 +12,11 @@ public class LBlockTest extends TestCase {
             throws Exception {
         MailboxFactory mailboxFactory = JAMailboxFactory.newMailboxFactory(1);
         Mailbox mailbox = mailboxFactory.createMailbox();
-        JAFactory factory = new JAFactory(mailbox);
+        JAFactory factory = new JAFactory();
+        factory.initialize(mailbox);
 
-        RootJid rj = new RootJid(mailbox);
-        rj.setParent(factory);
+        RootJid rj = new RootJid();
+        rj.initialize(mailbox, factory);
         LBlock lb1 = new LBlock();
         lb1.setRootJid(rj);
         byte[] bs = lb1.serialize();

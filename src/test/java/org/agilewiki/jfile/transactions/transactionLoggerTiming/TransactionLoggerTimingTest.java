@@ -23,15 +23,16 @@ public class TransactionLoggerTimingTest extends TestCase {
             throws Exception {
         MailboxFactory mailboxFactory = JAMailboxFactory.newMailboxFactory(10);
         Mailbox factoryMailbox = mailboxFactory.createMailbox();
-        JAFactory factory = new JAFactory(factoryMailbox);
-        (new JFileFactories(factoryMailbox)).setParent(factory);
+        JAFactory factory = new JAFactory();
+        factory.initialize(factoryMailbox);
+        (new JFileFactories()).initialize(factoryMailbox, factory);
         IncrementCounterFactory ntf = new IncrementCounterFactory("n");
         factory.registerActorFactory(ntf);
         JAFuture future = new JAFuture();
 
         Mailbox dbMailbox = mailboxFactory.createAsyncMailbox();
-        CounterDB db = new CounterDB(dbMailbox);
-        db.setParent(factory);
+        CounterDB db = new CounterDB();
+        db.initialize(dbMailbox, factory);
         db.initialCapacity = 10000;
 
         DurableTransactionLogger durableTransactionLogger = db.getDurableTransactionLogger();
@@ -47,8 +48,8 @@ public class TransactionLoggerTimingTest extends TestCase {
         TransactionAggregator transactionAggregator = db.getTransactionAggregator();
 
         TransactionLoggerDriver transactionLoggerDriver =
-                new TransactionLoggerDriver(mailboxFactory.createAsyncMailbox());
-        transactionLoggerDriver.setParent(transactionAggregator);
+                new TransactionLoggerDriver();
+        transactionLoggerDriver.initialize(mailboxFactory.createAsyncMailbox(), transactionAggregator);
         transactionLoggerDriver.setInitialBufferCapacity(10000);
         transactionLoggerDriver.win = 3;
 

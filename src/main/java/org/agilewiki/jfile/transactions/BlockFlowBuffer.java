@@ -38,15 +38,6 @@ public class BlockFlowBuffer extends JLPCActor implements BlockProcessor {
     public BlockProcessor next;
 
     /**
-     * Create a LiteActor
-     *
-     * @param mailbox A mailbox which may be shared with other actors.
-     */
-    public BlockFlowBuffer(Mailbox mailbox) {
-        super(mailbox);
-    }
-
-    /**
      * The application method for processing requests sent to the actor.
      *
      * @param request A request.

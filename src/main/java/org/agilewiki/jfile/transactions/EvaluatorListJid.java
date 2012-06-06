@@ -37,15 +37,6 @@ public class EvaluatorListJid extends ListJid implements Evaluator {
     private RP _rp;
 
     /**
-     * Create a ListJid
-     *
-     * @param mailbox A mailbox which may be shared with other actors.
-     */
-    public EvaluatorListJid(Mailbox mailbox) {
-        super(mailbox);
-    }
-
-    /**
      * The application method for processing requests sent to the actor.
      *
      * @param request A request.

@@ -15,11 +15,6 @@ public class TransactionLoggerDriver extends JLPCActor {
     int ndx;
     final IncrementCounterFactory ntf = new IncrementCounterFactory("n");
 
-
-    public TransactionLoggerDriver(Mailbox mailbox) {
-        super(mailbox);
-    }
-
     @Override
     protected void processRequest(Object request, RP rp)
             throws Exception {

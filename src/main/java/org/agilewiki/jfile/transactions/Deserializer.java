@@ -32,16 +32,6 @@ import org.agilewiki.jid.scalar.vlens.actor.RootJid;
  * Partially deserializes the transactions in a block.
  */
 public class Deserializer extends BlockSource implements BlockProcessor {
-
-    /**
-     * Create a LiteActor
-     *
-     * @param mailbox A mailbox which may be shared with other actors.
-     */
-    public Deserializer(Mailbox mailbox) {
-        super(mailbox);
-    }
-
     /**
      * The application method for processing requests sent to the actor.
      *

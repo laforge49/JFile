@@ -45,15 +45,6 @@ public class TransactionAggregator extends BlockSource {
     private boolean writePending;
 
     /**
-     * Create a LiteActor
-     *
-     * @param mailbox A mailbox which may be shared with other actors.
-     */
-    public TransactionAggregator(Mailbox mailbox) {
-        super(mailbox);
-    }
-
-    /**
      * Creates a new block.
      * @return A new block.
      */
@@ -132,8 +123,8 @@ public class TransactionAggregator extends BlockSource {
             throws Exception {
         if (rootJid != null)
             return;
-        rootJid = new RootJid(getMailboxFactory().createMailbox());
-        rootJid.setParent(getParent());
+        rootJid = new RootJid();
+        rootJid.initialize(getMailboxFactory().createMailbox(), getParent());
         rootJid.setValue(JFileFactories.EVALUATER_LIST_JID_TYPE);
         transactionListJid = (EvaluatorListJid) rootJid.getValue();
         transactionListJid.initialCapacity = initialCapacity;

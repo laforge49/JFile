@@ -10,7 +10,7 @@ final public class NullTransactionFactory extends ActorFactory {
     }
 
     @Override
-    protected JLPCActor instantiateActor(Mailbox mailbox) throws Exception {
-        return new NullTransaction(mailbox);
+    protected JLPCActor instantiateActor() throws Exception {
+        return new NullTransaction();
     }
 }

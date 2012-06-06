@@ -170,8 +170,8 @@ public class LBlock implements Block {
         rb = null;
         if (rootJidBytes == null)
             return null;
-        rootJid = new RootJid(mailbox);
-        rootJid.setParent(parent);
+        rootJid = new RootJid();
+        rootJid.initialize(mailbox, parent);
         rootJid.load(new ReadableBytes(rootJidBytes, 0));
         return rootJid;
     }

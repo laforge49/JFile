@@ -27,16 +27,17 @@ public class TransactionProcessorTest extends TestCase {
             throws Exception {
         MailboxFactory mailboxFactory = JAMailboxFactory.newMailboxFactory(1);
         Mailbox mailbox = mailboxFactory.createMailbox();
-        JAFactory factory = new JAFactory(mailbox);
+        JAFactory factory = new JAFactory();
+        factory.initialize(mailbox);
         factory.defineActorType("helloWorldTransaction", HelloWorldTransaction.class);
         JAFuture future = new JAFuture();
-        StatelessDB db = new StatelessDB(mailbox);
-        db.setParent(factory);
-        TransactionProcessor transactionProcessor = new TransactionProcessor(mailbox);
-        transactionProcessor.setParent(db);
+        StatelessDB db = new StatelessDB();
+        db.initialize(mailbox, factory);
+        TransactionProcessor transactionProcessor = new TransactionProcessor();
+        transactionProcessor.initialize(mailbox, db);
 
-        JFile jFile = new JFile(mailbox);
-        jFile.setParent(factory);
+        JFile jFile = new JFile();
+        jFile.initialize(mailbox, factory);
         Path path = FileSystems.getDefault().getPath("TransactionProcessorTest.jf");
         System.out.println(path.toAbsolutePath());
         jFile.fileChannel = FileChannel.open(
@@ -45,8 +46,8 @@ public class TransactionProcessorTest extends TestCase {
                 StandardOpenOption.WRITE,
                 StandardOpenOption.CREATE);
 
-        RootJid rj = new RootJid(mailbox);
-        rj.setParent(db);
+        RootJid rj = new RootJid();
+        rj.initialize(mailbox, db);
         (new SetActor("helloWorldTransaction")).send(future, rj);
         Block block = new LTBlock();
         block.setRootJid(rj);

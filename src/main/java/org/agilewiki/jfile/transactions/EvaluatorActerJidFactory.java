@@ -44,11 +44,10 @@ public class EvaluatorActerJidFactory extends ActorFactory {
     /**
      * Create a JLPCActor.
      *
-     * @param mailbox The mailbox of the new actor.
      * @return The new actor.
      */
     @Override
-    protected JLPCActor instantiateActor(Mailbox mailbox) throws Exception {
-        return new EvaluatorActorJid(mailbox);
+    protected JLPCActor instantiateActor() throws Exception {
+        return new EvaluatorActorJid();
     }
 }

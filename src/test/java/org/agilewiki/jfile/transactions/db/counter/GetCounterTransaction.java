@@ -5,10 +5,6 @@ import org.agilewiki.jactor.RP;
 import org.agilewiki.jfile.transactions._TransactionJid;
 
 public class GetCounterTransaction extends _TransactionJid {
-    public GetCounterTransaction(Mailbox mailbox) {
-        super(mailbox);
-    }
-
     @Override
     protected void eval(long blockTimestamp, RP rp) throws Exception {
         GetCounter.req.send(this, getParent(), rp);

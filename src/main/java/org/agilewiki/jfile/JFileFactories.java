@@ -26,10 +26,7 @@ package org.agilewiki.jfile;
 import org.agilewiki.jactor.Actor;
 import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
-import org.agilewiki.jactor.factory.JAFactory;
-import org.agilewiki.jactor.factory.JAFactoryFactory;
-import org.agilewiki.jactor.factory.NewActor;
-import org.agilewiki.jactor.factory.Requirement;
+import org.agilewiki.jactor.factory.*;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.transactions.EvaluatorActerJidFactory;
 import org.agilewiki.jfile.transactions.EvaluatorListJidFactory;
@@ -41,15 +38,6 @@ public class JFileFactories extends JLPCActor {
 
     public final static String EVALUATER_ACTOR_JID_TYPE = "EVALUATER_ACTOR_JID";
     public final static String EVALUATER_LIST_JID_TYPE = "EVALUATER_LIST_JID";
-
-    /**
-     * Create a LiteActor
-     *
-     * @param mailbox A mailbox which may be shared with other actors.
-     */
-    public JFileFactories(Mailbox mailbox) {
-        super(mailbox);
-    }
 
     /**
      * Returns the actor's requirements.
@@ -69,14 +57,18 @@ public class JFileFactories extends JLPCActor {
      * Process the requirements and assign the parent actor.
      * Once assigned, it can not be changed.
      *
-     * @param parent The parent actor.
+     * @param mailbox A mailbox which may be shared with other actors.
+     * @param parent  The parent actor.
+     * @param actorFactory The factory.
      */
     @Override
-    public void setParent(Actor parent) throws Exception {
+    public void initialize(Mailbox mailbox, Actor parent, ActorFactory actorFactory)
+            throws Exception {
         if (parent == null) {
-            parent = new JAFactory(getMailbox());
+            parent = new JAFactory();
+            ((JAFactory) parent).initialize(mailbox);
         }
-        super.setParent(parent);
+        super.initialize(mailbox, parent, actorFactory);
 
         Actor f = parent;
         while (!(f instanceof JAFactory)) f = f.getParent();
@@ -84,17 +76,5 @@ public class JFileFactories extends JLPCActor {
 
         factory.registerActorFactory(EvaluatorActerJidFactory.fac);
         factory.registerActorFactory(new EvaluatorListJidFactory(EVALUATER_LIST_JID_TYPE));
-    }
-
-    /**
-     * The application method for processing requests sent to the actor.
-     *
-     * @param request A request.
-     * @param rp      The response processor.
-     * @throws Exception Any uncaught exceptions raised while processing the request.
-     */
-    @Override
-    protected void processRequest(Object request, RP rp)
-            throws Exception {
     }
 }

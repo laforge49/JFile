@@ -39,15 +39,6 @@ public class LogReader extends JFile implements Finisher {
     public int maxSize;
 
     /**
-     * Create a LiteActor
-     *
-     * @param mailbox A mailbox which may be shared with other actors.
-     */
-    public LogReader(Mailbox mailbox) {
-        super(mailbox);
-    }
-
-    /**
      * Creates a new block.
      *
      * @return A new block.
@@ -63,7 +54,8 @@ public class LogReader extends JFile implements Finisher {
      */
     public void setNext(BlockProcessor nextInPipeline)
             throws Exception {
-        blockFlowBuffer = new BlockFlowBuffer(getMailboxFactory().createMailbox());
+        blockFlowBuffer = new BlockFlowBuffer();
+        blockFlowBuffer.initialize(getMailboxFactory().createMailbox());
         blockFlowBuffer.next = nextInPipeline;
     }
 

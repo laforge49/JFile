@@ -53,12 +53,11 @@ public class EvaluatorListJidFactory extends ListJidFactory {
     /**
      * Create a JLPCActor.
      *
-     * @param mailbox The mailbox of the new actor.
      * @return The new actor.
      */
     @Override
-    protected EvaluatorListJid instantiateActor(Mailbox mailbox) throws Exception {
-        EvaluatorListJid transactionListJid = new EvaluatorListJid(mailbox);
+    protected EvaluatorListJid instantiateActor() throws Exception {
+        EvaluatorListJid transactionListJid = new EvaluatorListJid();
         assignElementsFactory(transactionListJid);
         return transactionListJid;
     }

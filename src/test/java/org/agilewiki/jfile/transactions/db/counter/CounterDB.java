@@ -8,10 +8,6 @@ import org.agilewiki.jfile.transactions.db.DB;
 
 public class CounterDB extends DB {
     private int value;
-    
-    public CounterDB(Mailbox mailbox) {
-        super(mailbox);
-    }
 
     @Override
     protected void processRequest(Object request, RP rp) throws Exception {
