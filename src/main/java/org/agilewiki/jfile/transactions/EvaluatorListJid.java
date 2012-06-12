@@ -36,26 +36,12 @@ public class EvaluatorListJid extends ListJid implements Evaluator {
     private boolean async;
     private RP _rp;
 
-    /**
-     * The application method for processing requests sent to the actor.
-     *
-     * @param request A request.
-     * @param rp      The response processor.
-     * @throws Exception Any uncaught exceptions raised while processing the request.
-     */
-    @Override
-    protected void processRequest(Object request, RP rp) throws Exception {
+    public void eval(Eval req, final RP rp) throws Exception {
         if (_rp != null)
             throw new IllegalStateException("busy");
-
-        if (request.getClass() == Eval.class) {
-            ndx = 0;
-            _rp = rp;
-            eval((Eval) request);
-            return;
-        }
-
-        super.processRequest(request, rp);
+        ndx = 0;
+        _rp = rp;
+        eval((Eval) req);
     }
 
     private void eval(final Eval req)

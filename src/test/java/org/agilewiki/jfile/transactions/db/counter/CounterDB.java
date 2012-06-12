@@ -9,33 +9,21 @@ import org.agilewiki.jfile.transactions.db.DB;
 public class CounterDB extends DB {
     private int value;
 
-    @Override
-    protected void processRequest(Object request, RP rp) throws Exception {
-        Class reqClass = request.getClass();
-
-        if (reqClass == IncrementCounter.class) {
-            rp.processResponse(increment());
-            return;
-        }
-
-        if (reqClass == GetCounter.class) {
-            rp.processResponse(value);
-            return;
-        }
-
-        if (reqClass == Checkpoint.class) {
-            rp.processResponse(null);
-            return;
-        }
-
-        throw new UnsupportedOperationException(reqClass.getName());
+    public void increment(RP rp)
+            throws Exception {
+        rp.processResponse(increment());
     }
-    
+
     public int increment() {
         value += 1;
         return value;
     }
-    
+
+    public void getCounter(RP rp)
+            throws Exception {
+        rp.processResponse(getCounter());
+    }
+
     public int getCounter() {
         return value;
     }

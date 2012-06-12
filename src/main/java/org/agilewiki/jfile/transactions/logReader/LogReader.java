@@ -59,32 +59,15 @@ public class LogReader extends JFile implements Finisher {
         blockFlowBuffer.next = nextInPipeline;
     }
 
-    /**
-     * The application method for processing requests sent to the actor.
-     *
-     * @param request A request.
-     * @param rp      The response processor.
-     * @throws Exception Any uncaught exceptions raised while processing the request.
-     */
-    @Override
-    protected void processRequest(Object request, final RP rp) throws Exception {
-        if (_rp != null)
-            throw new IllegalStateException("busy");
+    public void readLog(RP rp)
+            throws Exception {
+        _rp = rp;
+        reader();
+    }
 
-        Class reqClass = request.getClass();
-
-        if (reqClass == ReadLog.class) {
-            _rp = rp;
-            reader();
-            return;
-        }
-
-        if (reqClass == Finish.class) {
-            Finish.req.send(this, blockFlowBuffer, rp);
-            return;
-        }
-
-        super.processRequest(request, rp);
+    public void finish(RP rp)
+            throws Exception {
+        Finish.req.send(this, blockFlowBuffer, rp);
     }
 
     private RP<Long> _rp;

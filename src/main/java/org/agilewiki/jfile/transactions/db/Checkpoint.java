@@ -24,14 +24,16 @@
 package org.agilewiki.jfile.transactions.db;
 
 import org.agilewiki.jactor.Actor;
+import org.agilewiki.jactor.RP;
+import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jactor.lpc.Request;
 
 /**
  * A checkpoint request is sent to a database to write all state to disk.
  */
 public class Checkpoint extends Request<Object, DB> {
-    public final long timestamp;
     public final long logPosition;
+    public final long timestamp;
 
     /**
      * Create a Checkpoint request.
@@ -42,6 +44,12 @@ public class Checkpoint extends Request<Object, DB> {
     public Checkpoint(long logPosition, long timestamp) {
         this.logPosition = logPosition;
         this.timestamp = timestamp;
+    }
+
+    @Override
+    public void processRequest(JLPCActor targetActor, RP rp) throws Exception {
+        DB a = (DB) targetActor;
+        a.checkpoint(logPosition, timestamp, rp);
     }
 
     /**

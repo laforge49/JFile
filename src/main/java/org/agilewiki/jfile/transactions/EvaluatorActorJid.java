@@ -31,22 +31,8 @@ import org.agilewiki.jid.scalar.vlens.actor.ActorJid;
  * An ActorJid that supports Eval
  */
 public class EvaluatorActorJid extends ActorJid implements Evaluator {
-    /**
-     * The application method for processing requests sent to the actor.
-     *
-     * @param request A request.
-     * @param rp      The response processor.
-     * @throws Exception Any uncaught exceptions raised while processing the request.
-     */
-    @Override
-    protected void processRequest(Object request, RP rp) throws Exception {
-        if (request.getClass() == Eval.class) {
-            Eval req = (Eval) request;
-            Transaction transaction = (Transaction) getValue();
-            req.send(this, transaction, rp);
-            return;
-        }
-
-        super.processRequest(request, rp);
+    public void eval(Eval req, final RP rp) throws Exception {
+        Transaction transaction = (Transaction) getValue();
+        req.send(this, transaction, rp);
     }
 }

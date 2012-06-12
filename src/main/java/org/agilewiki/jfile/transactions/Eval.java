@@ -24,7 +24,10 @@
 package org.agilewiki.jfile.transactions;
 
 import org.agilewiki.jactor.Actor;
+import org.agilewiki.jactor.RP;
+import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jactor.lpc.Request;
+import org.agilewiki.jfile.transactions.db.DB;
 
 /**
  * A TransactionEval request is used to execute a transaction.
@@ -39,6 +42,12 @@ public class Eval extends Request<Object, Evaluator> {
      */
     public Eval(long blockTimestamp) {
         this.blockTimestamp = blockTimestamp;
+    }
+
+    @Override
+    public void processRequest(JLPCActor targetActor, RP rp) throws Exception {
+        Evaluator a = (Evaluator) targetActor;
+        a.eval(this, rp);
     }
 
     /**

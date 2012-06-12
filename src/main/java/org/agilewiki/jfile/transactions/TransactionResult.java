@@ -24,6 +24,8 @@
 package org.agilewiki.jfile.transactions;
 
 import org.agilewiki.jactor.Actor;
+import org.agilewiki.jactor.RP;
+import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jactor.lpc.Request;
 
 /**
@@ -31,6 +33,12 @@ import org.agilewiki.jactor.lpc.Request;
  */
 public class TransactionResult extends Request<Object, Transaction> {
     public final static TransactionResult req = new TransactionResult();
+
+    @Override
+    public void processRequest(JLPCActor targetActor, RP rp) throws Exception {
+        Transaction a = (Transaction) targetActor;
+        a.transactionResult(rp);
+    }
 
     /**
      * Returns true when targetActor is an instanceof TARGET_TYPE

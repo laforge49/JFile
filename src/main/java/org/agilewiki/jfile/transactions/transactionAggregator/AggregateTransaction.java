@@ -24,8 +24,11 @@
 package org.agilewiki.jfile.transactions.transactionAggregator;
 
 import org.agilewiki.jactor.Actor;
+import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.factory.ActorFactory;
+import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jactor.lpc.Request;
+import org.agilewiki.jfile.transactions.logReader.LogReader;
 
 /**
  * Adds a transaction to a Block for subsequent logging and processing.
@@ -57,6 +60,12 @@ final public class AggregateTransaction extends Request<Object, TransactionAggre
         this.actorType = null;
         this.actorFactory = actorFactory;
         this.bytes = bytes;
+    }
+
+    @Override
+    public void processRequest(JLPCActor targetActor, RP rp) throws Exception {
+        TransactionAggregator a = (TransactionAggregator) targetActor;
+        a.aggregateTransaction(actorType, actorFactory, bytes, rp);
     }
 
     /**

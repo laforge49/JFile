@@ -25,6 +25,7 @@ package org.agilewiki.jfile.transactions.db;
 
 import org.agilewiki.jactor.Actor;
 import org.agilewiki.jactor.Mailbox;
+import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.factory.JAFactoryFactory;
 import org.agilewiki.jactor.factory.NewActor;
 import org.agilewiki.jactor.factory.Requirement;
@@ -155,5 +156,10 @@ abstract public class DB extends JLPCActor {
 
         getTransactionAggregator();
         return durableTransactionLogger;
+    }
+
+    public void checkpoint(long logPosition, long timestamp, RP rp)
+            throws Exception {
+        rp.processResponse(null);
     }
 }

@@ -28,6 +28,7 @@ import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.block.Block;
+import org.agilewiki.jfile.block.FBlock;
 import org.agilewiki.jfile.transactions.db.Checkpoint;
 import org.agilewiki.jid.scalar.vlens.actor.GetActor;
 import org.agilewiki.jid.scalar.vlens.actor.RootJid;
@@ -40,29 +41,13 @@ import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 final public class TransactionProcessor extends JLPCActor implements BlockProcessor {
     public boolean generateCheckpoints = true;
 
-    /**
-     * The application method for processing requests sent to the actor.
-     *
-     * @param request A request.
-     * @param rp      The response processor.
-     * @throws Exception Any uncaught exceptions raised while processing the request.
-     */
-    @Override
-    protected void processRequest(Object request, RP rp) throws Exception {
-        Class reqClass = request.getClass();
-        
-        if (reqClass == ProcessBlock.class) {
-            ProcessBlock req = (ProcessBlock) request;
-            processBlock(req.block, rp);
-            return;
-        }
+    public void finish(RP rp)
+            throws Exception {
+        rp.processResponse(null);
+    }
 
-        if (reqClass == Finish.class) {
-            rp.processResponse(null);
-            return;
-        }
-
-        throw new UnsupportedOperationException(reqClass.getName());
+    public void processBlock(ProcessBlock req, RP rp) throws Exception {
+        processBlock(req.block, rp);
     }
 
     /**

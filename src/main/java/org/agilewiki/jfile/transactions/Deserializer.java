@@ -32,35 +32,19 @@ import org.agilewiki.jid.scalar.vlens.actor.RootJid;
  * Partially deserializes the transactions in a block.
  */
 public class Deserializer extends BlockSource implements BlockProcessor {
-    /**
-     * The application method for processing requests sent to the actor.
-     *
-     * @param request A request.
-     * @param rp      The response processor.
-     * @throws Exception Any uncaught exceptions raised while processing the request.
-     */
-    @Override
-    protected void processRequest(Object request, RP rp) throws Exception {
-        Class reqClass = request.getClass();
-
-        if (reqClass == ProcessBlock.class) {
-            ProcessBlock req = (ProcessBlock) request;
-            RootJid rootJid = req.block.getRootJid(getMailboxFactory().createMailbox(), getParent());
-            EvaluatorListJid transactionListJid = (EvaluatorListJid) rootJid.getValue();
-            int i = 0;
-            while (i < transactionListJid.size()) {
-                ActorJid actorJid = (ActorJid) transactionListJid.iGet(i);
-                try {
-                    actorJid.getValue();
-                } catch (Exception ex) {
-                    throw ex;
-                }
-                i += 1;
+    public void processBlock(ProcessBlock req, RP rp) throws Exception {
+        RootJid rootJid = req.block.getRootJid(getMailboxFactory().createMailbox(), getParent());
+        EvaluatorListJid transactionListJid = (EvaluatorListJid) rootJid.getValue();
+        int i = 0;
+        while (i < transactionListJid.size()) {
+            ActorJid actorJid = (ActorJid) transactionListJid.iGet(i);
+            try {
+                actorJid.getValue();
+            } catch (Exception ex) {
+                throw ex;
             }
-            req.send(this, blockFlowBuffer, rp);
-            return;
+            i += 1;
         }
-
-        super.processRequest(request, rp);
+        req.send(this, blockFlowBuffer, rp);
     }
 }

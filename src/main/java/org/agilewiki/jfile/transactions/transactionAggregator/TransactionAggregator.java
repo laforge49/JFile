@@ -68,25 +68,7 @@ public class TransactionAggregator extends BlockSource {
         return requirements;
     }
 
-    /**
-     * The application method for processing requests sent to the actor.
-     *
-     * @param request A request.
-     * @param rp      The response processor.
-     * @throws Exception Any uncaught exceptions raised while processing the request.
-     */
-    @Override
-    final protected void processRequest(Object request, RP rp) throws Exception {
-        if (request.getClass() == AggregateTransaction.class) {
-            AggregateTransaction req = (AggregateTransaction) request;
-            aggregateTransaction(req.actorType, req.actorFactory, req.bytes, rp);
-            return;
-        }
-
-        super.processRequest(request, rp);
-    }
-
-    private void aggregateTransaction(String actorType, ActorFactory actorFactory, byte[] bytes, final RP rp)
+    public void aggregateTransaction(String actorType, ActorFactory actorFactory, byte[] bytes, final RP rp)
             throws Exception {
         makeRootJid();
         transactionListJid.iAdd(-1);

@@ -23,8 +23,12 @@
  */
 package org.agilewiki.jfile.transactions;
 
+import org.agilewiki.jactor.RP;
+
 /**
  * A transaction must support Eval and TransactionResult requests.
  */
 public interface Transaction extends Evaluator {
+    void transactionResult(RP rp)
+            throws Exception;
 }

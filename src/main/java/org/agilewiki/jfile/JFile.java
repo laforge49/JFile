@@ -39,42 +39,7 @@ public class JFile extends JLPCActor {
     public FileChannel fileChannel;
     public boolean metaData;
 
-    /**
-     * The application method for processing requests sent to the actor.
-     *
-     * @param request A request.
-     * @param rp      The response processor.
-     * @throws Exception Any uncaught exceptions raised while processing the request.
-     */
-    @Override
-    protected void processRequest(Object request, RP rp) throws Exception {
-        Class reqClass = request.getClass();
-
-        if (reqClass == ReadRootJid.class) {
-            ReadRootJid req = (ReadRootJid) request;
-            readRootJid(req.block, req.maxSize);
-            rp.processResponse(null);
-            return;
-        }
-
-        if (reqClass == ForcedWriteRootJid.class) {
-            ForcedWriteRootJid req = (ForcedWriteRootJid) request;
-            forcedWriteRootJid(req.block, req.maxSize);
-            rp.processResponse(null);
-            return;
-        }
-
-        if (reqClass == WriteRootJid.class) {
-            WriteRootJid req = (WriteRootJid) request;
-            writeRootJid(req.block, req.maxSize);
-            rp.processResponse(null);
-            return;
-        }
-
-        throw new UnsupportedOperationException(reqClass.getName());
-    }
-
-    protected void writeRootJid(Block block, int maxSize)
+    public void writeRootJid(Block block, int maxSize)
             throws Exception {
         byte[] bytes = block.serialize();
         if (maxSize > -1 && bytes.length > maxSize)
@@ -90,13 +55,13 @@ public class JFile extends JLPCActor {
         block.setCurrentPosition(currentPosition);
     }
 
-    protected void forcedWriteRootJid(Block block, int maxSize)
+    public void forcedWriteRootJid(Block block, int maxSize)
             throws Exception {
         writeRootJid(block, maxSize);
         fileChannel.force(metaData);
     }
 
-    protected void readRootJid(Block block, int maxSize) {
+    public void readRootJid(Block block, int maxSize) {
         try {
             block.setRootJid(null);
             int rem = block.headerLength();

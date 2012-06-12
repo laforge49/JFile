@@ -37,32 +37,17 @@ public class BlockFlowBuffer extends JLPCActor implements BlockProcessor {
     private boolean responsePending;
     public BlockProcessor next;
 
-    /**
-     * The application method for processing requests sent to the actor.
-     *
-     * @param request A request.
-     * @param rp      The response processor.
-     * @throws Exception Any uncaught exceptions raised while processing the request.
-     */
-    @Override
-    protected void processRequest(Object request, RP rp) throws Exception {
-        Class reqClass = request.getClass();
+    public void finish(RP rp)
+            throws Exception {
+        pendingRequest = FBlock.process;
+        _rp = rp;
+        nextSend();
+    }
 
-        if (reqClass == ProcessBlock.class) {
-            pendingRequest = (ProcessBlock) request;
-            _rp = rp;
-            nextSend();
-            return;
-        }
-
-        if (reqClass == Finish.class) {
-            pendingRequest = FBlock.process;
-            _rp = rp;
-            nextSend();
-            return;
-        }
-
-        throw new UnsupportedOperationException(reqClass.getName());
+    public void processBlock(ProcessBlock req, RP rp) throws Exception {
+        pendingRequest = (ProcessBlock) req;
+        _rp = rp;
+        nextSend();
     }
 
     private void nextSend()

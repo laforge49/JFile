@@ -1,7 +1,10 @@
 package org.agilewiki.jfile.transactions.logReader;
 
 import org.agilewiki.jactor.Actor;
+import org.agilewiki.jactor.RP;
+import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jactor.lpc.Request;
+import org.agilewiki.jfile.transactions.Finisher;
 
 /**
  * Read a transaction log file.
@@ -9,6 +12,12 @@ import org.agilewiki.jactor.lpc.Request;
  */
 public class ReadLog extends Request<Long, LogReader> {
     public final static ReadLog req = new ReadLog();
+
+    @Override
+    public void processRequest(JLPCActor targetActor, RP rp) throws Exception {
+        LogReader a = (LogReader) targetActor;
+        a.readLog(rp);
+    }
 
     /**
      * Returns true when targetActor is an instanceof TARGET_TYPE

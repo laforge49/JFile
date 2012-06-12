@@ -24,8 +24,11 @@
 package org.agilewiki.jfile;
 
 import org.agilewiki.jactor.Actor;
+import org.agilewiki.jactor.RP;
+import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jactor.lpc.Request;
 import org.agilewiki.jfile.block.Block;
+import org.agilewiki.jfile.transactions.Evaluator;
 
 /**
  * Read a RootJid.
@@ -53,6 +56,13 @@ public class ReadRootJid extends Request<Object, JFile> {
     public ReadRootJid(Block block, int maxSize) {
         this.block = block;
         this.maxSize = maxSize;
+    }
+
+    @Override
+    public void processRequest(JLPCActor targetActor, RP rp) throws Exception {
+        JFile a = (JFile) targetActor;
+        a.readRootJid(block, maxSize);
+        rp.processResponse(null);
     }
 
     /**

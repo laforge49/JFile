@@ -27,6 +27,8 @@ import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jfile.JFile;
 import org.agilewiki.jfile.block.Block;
+import org.agilewiki.jid.scalar.vlens.actor.ActorJid;
+import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 
 /**
  * Durably (fsync'd/forced) logs blocks of transactions.
@@ -46,32 +48,16 @@ final public class DurableTransactionLogger extends JFile implements BlockProces
         blockFlowBuffer.next = nextInPipeline;
     }
 
-    /**
-     * The application method for processing requests sent to the actor.
-     *
-     * @param request A request.
-     * @param rp      The response processor.
-     * @throws Exception Any uncaught exceptions raised while processing the request.
-     */
-    @Override
-    protected void processRequest(Object request, final RP rp) throws Exception {
-        Class reqClass = request.getClass();
+    public void finish(RP rp)
+            throws Exception {
+        Finish.req.send(this, blockFlowBuffer, rp);
+    }
 
-        if (reqClass == ProcessBlock.class) {
-            ProcessBlock req = (ProcessBlock) request;
-            Block block = req.block;
-            block.setCurrentPosition(currentPosition);
-            forcedWriteRootJid(block, -1);
-            currentPosition = block.getCurrentPosition();
-            req.send(DurableTransactionLogger.this, blockFlowBuffer, rp);
-            return;
-        }
-
-        if (reqClass == Finish.class) {
-            Finish.req.send(this, blockFlowBuffer, rp);
-            return;
-        }
-
-        super.processRequest(request, rp);
+    public void processBlock(ProcessBlock req, RP rp) throws Exception {
+        Block block = req.block;
+        block.setCurrentPosition(currentPosition);
+        forcedWriteRootJid(block, -1);
+        currentPosition = block.getCurrentPosition();
+        req.send(DurableTransactionLogger.this, blockFlowBuffer, rp);
     }
 }

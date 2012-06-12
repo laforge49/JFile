@@ -46,22 +46,8 @@ public abstract class BlockSource extends JLPCActor implements Finisher {
         blockFlowBuffer.next = nextInPipeline;
     }
 
-    /**
-     * The application method for processing requests sent to the actor.
-     *
-     * @param request A request.
-     * @param rp      The response processor.
-     * @throws Exception Any uncaught exceptions raised while processing the request.
-     */
-    @Override
-    protected void processRequest(Object request, RP rp) throws Exception {
-        Class reqClass = request.getClass();
-
-        if (reqClass == Finish.class) {
-            Finish.req.send(this, blockFlowBuffer, rp);
-            return;
-        }
-
-        throw new UnsupportedOperationException(reqClass.getName());
+    public void finish(RP rp)
+            throws Exception {
+        Finish.req.send(this, blockFlowBuffer, rp);
     }
 }

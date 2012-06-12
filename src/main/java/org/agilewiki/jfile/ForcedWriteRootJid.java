@@ -23,6 +23,8 @@
  */
 package org.agilewiki.jfile;
 
+import org.agilewiki.jactor.RP;
+import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.block.Block;
 
 /**
@@ -49,5 +51,12 @@ public class ForcedWriteRootJid extends WriteRootJid {
      */
     public ForcedWriteRootJid(Block block, int maxSize) {
         super(block, maxSize);
+    }
+
+    @Override
+    public void processRequest(JLPCActor targetActor, RP rp) throws Exception {
+        JFile a = (JFile) targetActor;
+        a.forcedWriteRootJid(block, maxSize);
+        rp.processResponse(null);
     }
 }

@@ -24,9 +24,12 @@
 package org.agilewiki.jfile.transactions;
 
 import org.agilewiki.jactor.Actor;
+import org.agilewiki.jactor.RP;
+import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jactor.lpc.Request;
 import org.agilewiki.jfile.block.Block;
 import org.agilewiki.jfile.transactions.BlockProcessor;
+import org.agilewiki.jfile.transactions.db.DB;
 
 /**
  * ProcessBlock requests should only be sent on completion of the previous ProcessBlock request.
@@ -41,6 +44,12 @@ public class ProcessBlock extends Request<Object, BlockProcessor> {
      */
     public ProcessBlock(Block block) {
         this.block = block;
+    }
+
+    @Override
+    public void processRequest(JLPCActor targetActor, RP rp) throws Exception {
+        BlockProcessor a = (BlockProcessor) targetActor;
+        a.processBlock(this, rp);
     }
 
     /**

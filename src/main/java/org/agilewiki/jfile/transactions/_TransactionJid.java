@@ -33,40 +33,23 @@ import org.agilewiki.jid.Jid;
 public abstract class _TransactionJid extends Jid implements Transaction {
     private RP requestReturn;
 
-    /**
-     * The application method for processing requests sent to the actor.
-     *
-     * @param request A request.
-     * @param rp      The response processor.
-     * @throws Exception Any uncaught exceptions raised while processing the request.
-     */
-    @Override
-    protected void processRequest(Object request, final RP rp) throws Exception {
-        Class reqClass = request.getClass();
+    public void transactionResult(RP rp)
+            throws Exception {
+        requestReturn = rp;
+    }
 
-        if (reqClass == TransactionResult.class) {
-            requestReturn = rp;
-            return;
+    public void eval(Eval req, final RP rp) throws Exception {
+        if (requestReturn == null) {
+            eval(req.blockTimestamp, rp);
+        } else {
+            eval(req.blockTimestamp, new RP<Integer>() {
+                @Override
+                public void processResponse(Integer response) throws Exception {
+                    rp.processResponse(null);
+                    requestReturn.processResponse(response);
+                }
+            });
         }
-
-        if (reqClass == Eval.class) {
-            Eval req = (Eval) request;
-            long blockTimestamp = req.blockTimestamp;
-            if (requestReturn == null) {
-                eval(blockTimestamp, rp);
-            } else {
-                eval(blockTimestamp, new RP<Integer>() {
-                    @Override
-                    public void processResponse(Integer response) throws Exception {
-                        rp.processResponse(null);
-                        requestReturn.processResponse(response);
-                    }
-                });
-            }
-            return;
-        }
-
-        super.processRequest(request, rp);
     }
 
     /**
