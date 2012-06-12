@@ -30,6 +30,8 @@ import org.agilewiki.jactor.factory.JAFactoryFactory;
 import org.agilewiki.jactor.factory.NewActor;
 import org.agilewiki.jactor.factory.Requirement;
 import org.agilewiki.jfile.JFileFactories;
+import org.agilewiki.jfile.UniqueClock;
+import org.agilewiki.jfile.UniqueTimestamp;
 import org.agilewiki.jfile.block.Block;
 import org.agilewiki.jfile.block.LTA32Block;
 import org.agilewiki.jfile.transactions.*;
@@ -50,14 +52,6 @@ public class TransactionAggregator extends BlockSource {
      */
     protected Block newBlock() {
         return new LTA32Block();
-    }
-
-    /**
-     * Generates a timestamp.
-     * @return A new timestamp.
-     */
-    protected long newTimestamp() {
-        return System.currentTimeMillis();
     }
 
     /**
@@ -137,17 +131,23 @@ public class TransactionAggregator extends BlockSource {
         final Block block = newBlock();
         block.setRootJid(rootJid);
         rootJid = null;
-        block.setTimestamp(newTimestamp());
         writePending = true;
-        (new ProcessBlock(block)).send(this, blockFlowBuffer, new RP<Object>() {
-            @Override
-            public void processResponse(Object response)
+        UniqueClock uc = UniqueClock.uc(getMailboxFactory());
+        UniqueTimestamp.req.send(this, uc, new RP<Long>() {
+            public void processResponse(Long response)
                     throws Exception {
-                writePending = false;
-                if (getMailbox().isEmpty())
-                    writeBlock();
+                block.setTimestamp(response);
+                (new ProcessBlock(block)).send(TransactionAggregator.this, blockFlowBuffer, new RP<Object>() {
+                    @Override
+                    public void processResponse(Object response)
+                            throws Exception {
+                        writePending = false;
+                        if (getMailbox().isEmpty())
+                            writeBlock();
+                    }
+                });
+                getMailbox().sendPendingMessages();
             }
         });
-        getMailbox().sendPendingMessages();
     }
 }
