@@ -24,11 +24,7 @@
 package org.agilewiki.jfile.transactions.db;
 
 import org.agilewiki.jactor.Actor;
-import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
-import org.agilewiki.jactor.factory.JAFactoryFactory;
-import org.agilewiki.jactor.factory.NewActor;
-import org.agilewiki.jactor.factory.Requirement;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.transactions.Deserializer;
 import org.agilewiki.jfile.transactions.DurableTransactionLogger;
@@ -62,20 +58,6 @@ abstract public class DB extends JLPCActor {
      */
     protected TransactionAggregator newTransactionAggregator() {
         return new TransactionAggregator();
-    }
-
-    /**
-     * Returns the actor's requirements.
-     *
-     * @return The actor's requirents.
-     */
-    @Override
-    final protected Requirement[] requirements() throws Exception {
-        Requirement[] requirements = new Requirement[1];
-        requirements[0] = new Requirement(
-                new NewActor(""),
-                new JAFactoryFactory(JAFactoryFactory.TYPE));
-        return requirements;
     }
 
     /**

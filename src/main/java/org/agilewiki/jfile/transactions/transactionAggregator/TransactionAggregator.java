@@ -23,12 +23,8 @@
  */
 package org.agilewiki.jfile.transactions.transactionAggregator;
 
-import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.factory.ActorFactory;
-import org.agilewiki.jactor.factory.JAFactoryFactory;
-import org.agilewiki.jactor.factory.NewActor;
-import org.agilewiki.jactor.factory.Requirement;
 import org.agilewiki.jfile.JFileFactories;
 import org.agilewiki.jfile.UniqueClock;
 import org.agilewiki.jfile.UniqueTimestamp;
@@ -52,20 +48,6 @@ public class TransactionAggregator extends BlockSource {
      */
     protected Block newBlock() {
         return new LTA32Block();
-    }
-
-    /**
-     * Returns the actor's requirements.
-     *
-     * @return The actor's requirents.
-     */
-    @Override
-    final protected Requirement[] requirements() throws Exception {
-        Requirement[] requirements = new Requirement[1];
-        requirements[0] = new Requirement(
-                new NewActor(""),
-                new JAFactoryFactory(JAFactoryFactory.TYPE));
-        return requirements;
     }
 
     public void aggregateTransaction(String actorType, ActorFactory actorFactory, byte[] bytes, final RP rp)
