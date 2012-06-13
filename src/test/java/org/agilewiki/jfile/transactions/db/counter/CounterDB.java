@@ -27,4 +27,8 @@ public class CounterDB extends DB {
     public int getCounter() {
         return value;
     }
+
+    protected boolean generateCheckpoints() {
+        return false;
+    }
 }

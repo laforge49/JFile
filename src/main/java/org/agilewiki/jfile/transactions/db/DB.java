@@ -77,7 +77,7 @@ abstract public class DB extends JLPCActor {
 
         TransactionProcessor transactionProcessor = new TransactionProcessor();
         transactionProcessor.initialize(getMailbox(), this);
-        transactionProcessor.generateCheckpoints = false;
+        transactionProcessor.generateCheckpoints = generateCheckpoints();
 
         Deserializer deserializer = new Deserializer();
         deserializer.initialize(getMailboxFactory().createAsyncMailbox(), this);
@@ -89,6 +89,10 @@ abstract public class DB extends JLPCActor {
         logReader.maxSize = maxSize;
 
         return logReader;
+    }
+
+    protected boolean generateCheckpoints() {
+        return true;
     }
 
     /**
