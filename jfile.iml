@@ -11,7 +11,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: org.agilewiki.jactor:jactor:3.2.0" level="project" />
-    <orderEntry type="library" name="Maven: org.agilewiki.jid:jid:1.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.agilewiki.jid:jid:1.2.1-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.8.2" level="project" />
   </component>
 </module>
