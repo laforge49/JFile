@@ -55,10 +55,15 @@ public class JFile extends JLPCActor {
         block.setCurrentPosition(currentPosition);
     }
 
+    public void force()
+            throws Exception {
+        fileChannel.force(metaData);
+    }
+
     public void forcedWriteRootJid(Block block, int maxSize)
             throws Exception {
         writeRootJid(block, maxSize);
-        fileChannel.force(metaData);
+        force();
     }
 
     public void readRootJid(Block block, int maxSize) {
