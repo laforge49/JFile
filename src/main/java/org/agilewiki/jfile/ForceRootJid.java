@@ -8,13 +8,13 @@ import org.agilewiki.jactor.lpc.Request;
 /**
  * Performs a force (fsync) operation.
  */
-public class Force extends Request<Object, JFile> {
-    public final static Force req = new Force();
+public class ForceRootJid extends Request<Object, JFile> {
+    public final static ForceRootJid req = new ForceRootJid();
 
     @Override
     public void processRequest(JLPCActor targetActor, RP rp) throws Exception {
         JFile a = (JFile) targetActor;
-        a.force();
+        a.forceRootJid();
         rp.processResponse(null);
     }
 

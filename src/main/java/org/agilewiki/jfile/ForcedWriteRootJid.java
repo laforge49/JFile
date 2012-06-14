@@ -28,12 +28,12 @@ import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.block.Block;
 
 /**
- * Write the contents of a RootJid an then performs a force (fsync) operation.
+ * Write the contents of a RootJid an then performs a forceRootJid (fsync) operation.
  */
 public class ForcedWriteRootJid extends WriteRootJid {
     /**
      * Write a RootJid and its header to the current position,
-     * and then force the operation to complete.
+     * and then forceRootJid the operation to complete.
      *
      * @param block The Block used to manage the operation.
      */
@@ -43,7 +43,7 @@ public class ForcedWriteRootJid extends WriteRootJid {
 
     /**
      * Write a RootJid and its header,
-     * and then force the operation to complete.
+     * and then forceRootJid the operation to complete.
      * An exception is thrown if the total length of the data to be written exceeds maxSize.
      *
      * @param block   The Block used to manage the operation.

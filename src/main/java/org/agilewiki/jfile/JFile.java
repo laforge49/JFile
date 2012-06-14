@@ -23,12 +23,9 @@
  */
 package org.agilewiki.jfile;
 
-import org.agilewiki.jactor.Mailbox;
-import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.block.Block;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
@@ -38,9 +35,11 @@ import java.nio.channels.FileChannel;
 public class JFile extends JLPCActor {
     public FileChannel fileChannel;
     public boolean metaData;
+    private boolean written;
 
     public void writeRootJid(Block block, int maxSize)
             throws Exception {
+        written = true;
         byte[] bytes = block.serialize();
         if (maxSize > -1 && bytes.length > maxSize)
             throw new Exception("" + bytes.length + " exceeds the maxSize of " + maxSize);
@@ -55,15 +54,22 @@ public class JFile extends JLPCActor {
         block.setCurrentPosition(currentPosition);
     }
 
-    public void force()
+    public void forceRootJid()
             throws Exception {
+        written = false;
         fileChannel.force(metaData);
     }
 
     public void forcedWriteRootJid(Block block, int maxSize)
             throws Exception {
         writeRootJid(block, maxSize);
-        force();
+        forceRootJid();
+    }
+
+    public void forceBeforeWriteRootJid(Block block, int maxSize)
+            throws Exception {
+        if (written) writeRootJid(block, maxSize);
+        forceRootJid();
     }
 
     public void readRootJid(Block block, int maxSize) {

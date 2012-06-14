@@ -30,7 +30,7 @@ import org.agilewiki.jactor.lpc.Request;
 import org.agilewiki.jfile.block.Block;
 
 /**
- * Write the contents of a RootJid an then performs a force (flush) operation.
+ * Write the contents of a RootJid an then performs a forceRootJid (flush) operation.
  */
 public class WriteRootJid extends Request<Object, JFile> {
     public final Block block;
