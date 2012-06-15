@@ -40,7 +40,7 @@ public class TransactionProcessorTest extends TestCase {
         jFile.initialize(mailbox, factory);
         Path path = FileSystems.getDefault().getPath("TransactionProcessorTest.jf");
         System.out.println(path.toAbsolutePath());
-        jFile.fileChannel = FileChannel.open(
+        jFile.open(
                 path,
                 StandardOpenOption.READ,
                 StandardOpenOption.WRITE,
@@ -57,7 +57,7 @@ public class TransactionProcessorTest extends TestCase {
 
         (new ProcessBlock(block)).send(future, transactionProcessor);
 
-        jFile.fileChannel.close();
+        jFile.close();
         mailboxFactory.close();
     }
 }

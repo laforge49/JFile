@@ -37,7 +37,7 @@ public class CounterTest extends TestCase {
         DurableTransactionLogger durableTransactionLogger = db.getDurableTransactionLogger();
         Path path = FileSystems.getDefault().getPath("CounterTest.jf");
         System.out.println(path.toAbsolutePath());
-        durableTransactionLogger.fileChannel = FileChannel.open(
+        durableTransactionLogger.open(
                 path,
                 StandardOpenOption.WRITE,
                 StandardOpenOption.CREATE);
@@ -54,7 +54,7 @@ public class CounterTest extends TestCase {
         int total = (Integer) (new AggregateTransaction("get")).send(future, transactionAggregator);
         assertEquals(6, total);
 
-        durableTransactionLogger.fileChannel.close();
+        durableTransactionLogger.close();
         mailboxFactory.close();
     }
 }

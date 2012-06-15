@@ -38,7 +38,7 @@ public class TransactionLoggerTimingTest extends TestCase {
         DurableTransactionLogger durableTransactionLogger = db.getDurableTransactionLogger();
         Path path = FileSystems.getDefault().getPath("TransactionLoggerTimingTest.jf");
         System.out.println(path.toAbsolutePath());
-        durableTransactionLogger.fileChannel = FileChannel.open(
+        durableTransactionLogger.open(
                 path,
                 StandardOpenOption.READ,
                 StandardOpenOption.WRITE,
@@ -80,7 +80,7 @@ public class TransactionLoggerTimingTest extends TestCase {
         //time = 9.953 seconds
         //throughput = 1,004,722 tps
 
-        durableTransactionLogger.fileChannel.close();
+        durableTransactionLogger.close();
         mailboxFactory.close();
     }
 }

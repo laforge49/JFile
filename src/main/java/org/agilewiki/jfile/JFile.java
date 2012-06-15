@@ -26,14 +26,19 @@ package org.agilewiki.jfile;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.block.Block;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.file.OpenOption;
+import java.nio.file.Path;
+import java.nio.file.attribute.FileAttribute;
+import java.util.Set;
 
 /**
  * Reads or writes a RootJid with just the length for a header.
  */
 public class JFile extends JLPCActor {
-    public FileChannel fileChannel;
+    protected FileChannel fileChannel;
     public boolean metaData;
     private boolean written;
 
@@ -126,5 +131,20 @@ public class JFile extends JLPCActor {
             return;
         }
         return;
+    }
+
+    public void open(Path path, Set<? extends OpenOption> options, FileAttribute<?>... attrs)
+            throws IOException {
+        fileChannel = FileChannel.open(path, options, attrs);
+    }
+
+    public void open(Path path, OpenOption... options) throws IOException {
+        fileChannel = FileChannel.open(path, options);
+    }
+
+    public void close() {
+        try {
+            fileChannel.close();
+        } catch (Exception ex) {}
     }
 }

@@ -35,7 +35,7 @@ public class CounterRecoveryTest extends TestCase {
         LogReader logReader = db.getLogReader(10000);
         Path path = FileSystems.getDefault().getPath("CounterTest.jf");
         System.out.println(path.toAbsolutePath());
-        logReader.fileChannel = FileChannel.open(
+        logReader.open(
                 path,
                 StandardOpenOption.READ);
         logReader.currentPosition = 0;
@@ -43,7 +43,7 @@ public class CounterRecoveryTest extends TestCase {
         long rem = ReadLog.req.send(future, logReader);
         System.out.println("unprocessed bytes remaining: " + rem);
         Finish.req.send(future, logReader);
-        logReader.fileChannel.close();
+        logReader.close();
         
         int total = db.getCounter();
         assertEquals(6, total);

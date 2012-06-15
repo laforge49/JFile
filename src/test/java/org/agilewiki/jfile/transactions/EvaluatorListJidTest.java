@@ -42,7 +42,7 @@ public class EvaluatorListJidTest extends TestCase {
         jFile.initialize(mailbox, factory);
         Path path = FileSystems.getDefault().getPath("TransactionListJidTest.jf");
         System.out.println(path.toAbsolutePath());
-        jFile.fileChannel = FileChannel.open(
+        jFile.open(
                 path,
                 StandardOpenOption.READ,
                 StandardOpenOption.WRITE,
@@ -68,7 +68,7 @@ public class EvaluatorListJidTest extends TestCase {
 
         (new ProcessBlock(block)).send(future, transactionProcessor);
 
-        jFile.fileChannel.close();
+        jFile.close();
         mailboxFactory.close();
     }
 }

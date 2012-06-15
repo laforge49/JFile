@@ -35,7 +35,7 @@ public class RecoveryTimingTest extends TestCase {
         Path path = FileSystems.getDefault().getPath("TransactionLoggerTimingTest.jf");
         System.out.println(path.toAbsolutePath());
         try {
-        logReader.fileChannel = FileChannel.open(
+        logReader.open(
                 path,
                 StandardOpenOption.READ);
         } catch (Exception ex) {
@@ -50,7 +50,7 @@ public class RecoveryTimingTest extends TestCase {
         long t1 = System.currentTimeMillis();
         Finish.req.send(future, logReader);
         System.out.println("unprocessed bytes remaining: " + rem);
-        logReader.fileChannel.close();
+        logReader.close();
 
         int transactions = db.getCounter();
         System.out.println("milliseconds: " + (t1 - t0));
