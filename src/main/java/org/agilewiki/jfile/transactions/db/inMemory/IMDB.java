@@ -12,6 +12,7 @@ import org.agilewiki.jid.collection.vlenc.map.StringMapJid;
 import org.agilewiki.jid.scalar.flens.lng.LongJid;
 import org.agilewiki.jid.scalar.vlens.actor.ActorJid;
 import org.agilewiki.jid.scalar.vlens.actor.RootJid;
+import org.agilewiki.jid.scalar.vlens.string.StringJid;
 
 /**
  * In-memory database.
@@ -78,11 +79,24 @@ public class IMDB extends DB {
         return longJid;
     }
 
+    protected StringJid makeStringJid(String key) throws Exception {
+        ActorJid aj = makeActorJid(key);
+        StringJid stringJid = (StringJid) aj.getValue();
+        if (stringJid == null) {
+            aj.setValue(JidFactories.STRING_JID_TYPE);
+            stringJid = (StringJid) aj.getValue();
+        }
+        return stringJid;
+    }
+
     public static final String LOG_POSITION = "$$LOG_POSITION";
+    public static final String LOG_FILE_NAME = "$$LOG_FILE_NAME";
 
     public void checkpoint(long logPosition, long timestamp, String logFileName, RP rp)
             throws Exception {
         if (!pendingWrite) {
+            StringJid sj = makeStringJid(LOG_FILE_NAME);
+            sj.setValue(logFileName);
             LongJid lj = makeLongJid(LOG_POSITION);
             lj.setValue(logPosition);
             pendingWrite = true;
