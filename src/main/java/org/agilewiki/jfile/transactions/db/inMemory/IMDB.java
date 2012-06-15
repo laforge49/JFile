@@ -92,6 +92,10 @@ public class IMDB extends DB {
         return (IntegerJid) makeJid(key, JidFactories.INTEGER_JID_TYPE);
     }
 
+    public Integer getInteger(String key) throws Exception {
+        return makeIntegerJid(key).getValue();
+    }
+
     public LongJid makeLongJid(String key) throws Exception {
         return (LongJid) makeJid(key, JidFactories.LONG_JID_TYPE);
     }
