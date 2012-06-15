@@ -6,12 +6,18 @@ import org.agilewiki.jfile.JFile;
 import org.agilewiki.jfile.block.Block;
 import org.agilewiki.jfile.block.LTA32Block;
 import org.agilewiki.jfile.transactions.db.DB;
+import org.agilewiki.jid.Jid;
 import org.agilewiki.jid.JidFactories;
 import org.agilewiki.jid._Jid;
 import org.agilewiki.jid.collection.vlenc.map.StringMapJid;
+import org.agilewiki.jid.scalar.flens.bool.BooleanJid;
+import org.agilewiki.jid.scalar.flens.dbl.DoubleJid;
+import org.agilewiki.jid.scalar.flens.flt.FloatJid;
+import org.agilewiki.jid.scalar.flens.integer.IntegerJid;
 import org.agilewiki.jid.scalar.flens.lng.LongJid;
 import org.agilewiki.jid.scalar.vlens.actor.ActorJid;
 import org.agilewiki.jid.scalar.vlens.actor.RootJid;
+import org.agilewiki.jid.scalar.vlens.bytes.BytesJid;
 import org.agilewiki.jid.scalar.vlens.string.StringJid;
 
 /**
@@ -47,7 +53,7 @@ public class IMDB extends DB {
         return rootJid;
     }
 
-    protected StringMapJid makeStringMapJid() throws Exception {
+    public StringMapJid makeStringMapJid() throws Exception {
         if (stringMapJid == null) {
             RootJid rj = makeRootJid();
             stringMapJid = (StringMapJid) rj.getValue();
@@ -59,7 +65,7 @@ public class IMDB extends DB {
         return stringMapJid;
     }
 
-    protected ActorJid makeActorJid(String key) throws Exception {
+    public ActorJid makeActorJid(String key) throws Exception {
         StringMapJid smj = makeStringMapJid();
         ActorJid actorJid = (ActorJid) smj.kGet(key);
         if (actorJid == null) {
@@ -69,24 +75,42 @@ public class IMDB extends DB {
         return actorJid;
     }
 
-    protected LongJid makeLongJid(String key) throws Exception {
+    public _Jid makeJid(String key, String factoryName) throws Exception {
         ActorJid aj = makeActorJid(key);
-        LongJid longJid = (LongJid) aj.getValue();
-        if (longJid == null) {
-            aj.setValue(JidFactories.LONG_JID_TYPE);
-            longJid = (LongJid) aj.getValue();
+        _Jid jid = aj.getValue();
+        if (jid == null) {
+            aj.setValue(factoryName);
+            jid = aj.getValue();
         }
-        return longJid;
+        return jid;
     }
 
-    protected StringJid makeStringJid(String key) throws Exception {
-        ActorJid aj = makeActorJid(key);
-        StringJid stringJid = (StringJid) aj.getValue();
-        if (stringJid == null) {
-            aj.setValue(JidFactories.STRING_JID_TYPE);
-            stringJid = (StringJid) aj.getValue();
-        }
-        return stringJid;
+    public BooleanJid makeBooleanJid(String key) throws Exception {
+        return (BooleanJid) makeJid(key, JidFactories.BOOLEAN_JID_TYPE);
+    }
+
+    public IntegerJid makeIntegerJid(String key) throws Exception {
+        return (IntegerJid) makeJid(key, JidFactories.INTEGER_JID_TYPE);
+    }
+
+    public LongJid makeLongJid(String key) throws Exception {
+        return (LongJid) makeJid(key, JidFactories.LONG_JID_TYPE);
+    }
+
+    public FloatJid makeFloatJid(String key) throws Exception {
+        return (FloatJid) makeJid(key, JidFactories.FLOAT_JID_TYPE);
+    }
+
+    public DoubleJid makeDoubleJid(String key) throws Exception {
+        return (DoubleJid) makeJid(key, JidFactories.DOUBLE_JID_TYPE);
+    }
+
+    public StringJid makeStringJid(String key) throws Exception {
+        return (StringJid) makeJid(key, JidFactories.STRING_JID_TYPE);
+    }
+
+    public BytesJid makeBytesJid(String key) throws Exception {
+        return (BytesJid) makeJid(key, JidFactories.BYTES_JID_TYPE);
     }
 
     public static final String LOG_POSITION = "$$LOG_POSITION";
