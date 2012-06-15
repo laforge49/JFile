@@ -110,7 +110,7 @@ public class IMDB extends DB {
                 block.setCurrentPosition(0L);
             }
             block.setRootJid((RootJid) rootJid.copyJID(getMailboxFactory().createMailbox()));
-            (new ForceBeforeWriteRootJid(block)).send(this, dbFile, new RP<Object>() {
+            (new ForceBeforeWriteRootJid(block, maxSize)).send(this, dbFile, new RP<Object>() {
                 @Override
                 public void processResponse(Object response) throws Exception {
                     pendingWrite = false;
