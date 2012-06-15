@@ -26,6 +26,7 @@ package org.agilewiki.jfile;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.block.Block;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -41,6 +42,7 @@ public class JFile extends JLPCActor {
     protected FileChannel fileChannel;
     public boolean metaData;
     private boolean written;
+    private Path path;
 
     public void writeRootJid(Block block, int maxSize)
             throws Exception {
@@ -140,11 +142,17 @@ public class JFile extends JLPCActor {
 
     public void open(Path path, OpenOption... options) throws IOException {
         fileChannel = FileChannel.open(path, options);
+        this.path = path;
     }
 
     public void close() {
+        path = null;
         try {
             fileChannel.close();
         } catch (Exception ex) {}
+    }
+
+    public String getFileName() {
+        return path.getFileName().toString();
     }
 }

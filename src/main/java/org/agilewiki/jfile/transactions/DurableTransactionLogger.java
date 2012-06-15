@@ -55,6 +55,7 @@ final public class DurableTransactionLogger extends JFile implements BlockProces
 
     public void processBlock(ProcessBlock req, RP rp) throws Exception {
         Block block = req.block;
+        block.setFileName(getFileName());
         block.setCurrentPosition(currentPosition);
         forcedWriteRootJid(block, -1);
         currentPosition = block.getCurrentPosition();

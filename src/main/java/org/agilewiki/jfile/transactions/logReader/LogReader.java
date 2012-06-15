@@ -78,7 +78,7 @@ public class LogReader extends JFile implements Finisher {
             throws Exception {
         while (true) {
             Block block = newBlock();
-            //block.setFileName(this.fileChannel);
+            block.setFileName(getFileName());
             block.setCurrentPosition(currentPosition);
             readRootJid(block, maxSize);
             currentPosition = block.getCurrentPosition();
