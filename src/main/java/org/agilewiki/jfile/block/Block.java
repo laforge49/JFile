@@ -56,6 +56,18 @@ public interface Block {
     public int headerLength();
 
     /**
+     * Returns the file name.
+     *
+     * @return The file name.
+     */
+    public String getFileName();
+
+    /**
+     * Assigns the file's name.
+     */
+    public void setFileName(String fileName);
+
+    /**
      * Returns the file position.
      *
      * @return The file position.
@@ -63,7 +75,7 @@ public interface Block {
     public long getCurrentPosition();
 
     /**
-     * Assigns the files current position.
+     * Assigns the file's current position.
      */
     public void setCurrentPosition(long position);
 

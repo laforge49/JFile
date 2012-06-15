@@ -35,6 +35,7 @@ import org.agilewiki.jid.scalar.vlens.actor.RootJid;
  * --A minimal block implementation.
  */
 public class LBlock implements Block {
+    private String fileName;
     private long currentPosition;
     protected ReadableBytes rb;
     int l;
@@ -92,6 +93,22 @@ public class LBlock implements Block {
     @Override
     public int headerLength() {
         return Util.INT_LENGTH;
+    }
+
+    /**
+     * Returns the file name.
+     *
+     * @return The file name.
+     */
+    public String getFileName() {
+        return fileName;
+    }
+
+    /**
+     * Assigns the file's name.
+     */
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     /**
