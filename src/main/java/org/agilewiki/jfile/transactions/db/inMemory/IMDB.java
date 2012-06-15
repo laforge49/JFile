@@ -1,5 +1,6 @@
 package org.agilewiki.jfile.transactions.db.inMemory;
 
+import org.agilewiki.jactor.ExceptionHandler;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.ForceBeforeWriteRootJid;
@@ -131,6 +132,12 @@ public class IMDB extends DB {
 
     public void checkpoint(long logPosition, long timestamp, String logFileName, RP rp)
             throws Exception {
+        setExceptionHandler(new ExceptionHandler() {
+            @Override
+            public void process(Exception exception) throws Exception {
+                System.err.println("Checkpoint Exception: " + exception);
+            }
+        });
         if (!pendingWrite) {
             StringJid sj = makeStringJid(LOG_FILE_NAME);
             sj.setValue(logFileName);
