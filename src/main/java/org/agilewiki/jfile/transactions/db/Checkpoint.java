@@ -34,6 +34,7 @@ import org.agilewiki.jactor.lpc.Request;
 public class Checkpoint extends Request<Object, DB> {
     public final long logPosition;
     public final long timestamp;
+    public final String logFileName;
 
     /**
      * Create a Checkpoint request.
@@ -41,15 +42,16 @@ public class Checkpoint extends Request<Object, DB> {
      * @param logPosition Current position of the log file.
      * @param timestamp   Timestamp of the last batch of transactions.
      */
-    public Checkpoint(long logPosition, long timestamp) {
+    public Checkpoint(long logPosition, long timestamp, String logFileName) {
         this.logPosition = logPosition;
         this.timestamp = timestamp;
+        this.logFileName = logFileName;
     }
 
     @Override
     public void processRequest(JLPCActor targetActor, RP rp) throws Exception {
         DB a = (DB) targetActor;
-        a.checkpoint(logPosition, timestamp, rp);
+        a.checkpoint(logPosition, timestamp, logFileName, rp);
     }
 
     /**

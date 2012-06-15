@@ -80,7 +80,7 @@ public class IMDB extends DB {
 
     public static final String LOG_POSITION = "$$LOG_POSITION";
 
-    public void checkpoint(long logPosition, long timestamp, RP rp)
+    public void checkpoint(long logPosition, long timestamp, String logFileName, RP rp)
             throws Exception {
         if (!pendingWrite) {
             LongJid lj = makeLongJid(LOG_POSITION);

@@ -144,7 +144,7 @@ abstract public class DB extends JLPCActor {
         return durableTransactionLogger;
     }
 
-    public void checkpoint(long logPosition, long timestamp, RP rp)
+    public void checkpoint(long logPosition, long timestamp, String logFileName, RP rp)
             throws Exception {
         rp.processResponse(null);
     }
