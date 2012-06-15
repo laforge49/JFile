@@ -1,6 +1,7 @@
 package org.agilewiki.jfile.transactions.db.inMemory;
 
 import org.agilewiki.jactor.RP;
+import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.ForceBeforeWriteRootJid;
 import org.agilewiki.jfile.JFile;
 import org.agilewiki.jfile.block.Block;
@@ -26,7 +27,6 @@ public class IMDB extends DB {
     private JFile dbFile;
     private RootJid rootJid;
     private StringMapJid stringMapJid;
-    private LongJid logPositionJid;
     private boolean pendingWrite;
     private boolean isFirstRootJid;
     public int maxSize;
@@ -46,8 +46,11 @@ public class IMDB extends DB {
 
     protected RootJid makeRootJid() throws Exception {
         if (rootJid == null) {
-            rootJid = new RootJid();
-            rootJid.initialize(getMailboxFactory().createMailbox(), getParent());
+            JAFactory factory = (JAFactory) getAncestor(JAFactory.class);
+            rootJid = (RootJid) factory.newActor(
+                    JidFactories.ROOT_JID_TYPE,
+                    getMailboxFactory().createMailbox(),
+                    getParent());
         }
         return rootJid;
     }
@@ -135,6 +138,8 @@ public class IMDB extends DB {
             lj.setValue(logPosition);
             pendingWrite = true;
             Block block = newDbBlock();
+            RootJid rj = (RootJid) rootJid.copyJID(getMailboxFactory().createMailbox());
+            block.setRootJid(rj);
             block.setTimestamp(timestamp);
             if (isFirstRootJid) {
                 isFirstRootJid = false;
@@ -143,7 +148,6 @@ public class IMDB extends DB {
                 isFirstRootJid = true;
                 block.setCurrentPosition(0L);
             }
-            block.setRootJid((RootJid) rootJid.copyJID(getMailboxFactory().createMailbox()));
             (new ForceBeforeWriteRootJid(block, maxSize)).send(this, dbFile, new RP<Object>() {
                 @Override
                 public void processResponse(Object response) throws Exception {

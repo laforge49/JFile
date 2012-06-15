@@ -26,7 +26,6 @@ package org.agilewiki.jfile;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.block.Block;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -48,8 +47,9 @@ public class JFile extends JLPCActor {
             throws Exception {
         written = true;
         byte[] bytes = block.serialize();
-        if (maxSize > -1 && bytes.length > maxSize)
+        if (maxSize > -1 && bytes.length > maxSize) {
             throw new Exception("" + bytes.length + " exceeds the maxSize of " + maxSize);
+        }
         ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
         int rem = bytes.length;
         long currentPosition = block.getCurrentPosition();
@@ -75,8 +75,10 @@ public class JFile extends JLPCActor {
 
     public void forceBeforeWriteRootJid(Block block, int maxSize)
             throws Exception {
-        if (written) writeRootJid(block, maxSize);
-        forceRootJid();
+        if (written) {
+            forceRootJid();
+        }
+        writeRootJid(block, maxSize);
     }
 
     public void readRootJid(Block block, int maxSize) {
@@ -149,7 +151,8 @@ public class JFile extends JLPCActor {
         path = null;
         try {
             fileChannel.close();
-        } catch (Exception ex) {}
+        } catch (Exception ex) {
+        }
     }
 
     public String getFileName() {

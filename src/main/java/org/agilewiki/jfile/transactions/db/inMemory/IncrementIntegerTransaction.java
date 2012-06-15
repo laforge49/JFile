@@ -10,6 +10,7 @@ public class IncrementIntegerTransaction extends _StringTransactionJid {
     @Override
     protected void eval(long blockTimestamp, RP rp) throws Exception {
         IMDB imdb = (IMDB) getAncestor(IMDB.class);
-        rp.processResponse(imdb.incrementInteger(getValue()));
+        Integer nv = imdb.incrementInteger(getValue());
+        rp.processResponse(nv);
     }
 }
