@@ -96,6 +96,13 @@ public class IMDB extends DB {
         return makeIntegerJid(key).getValue();
     }
 
+    public Integer incrementInteger(String key) throws Exception {
+        IntegerJid ij = makeIntegerJid(key);
+        int nv = ij.getValue() + 1;
+        ij.setValue(nv);
+        return nv;
+    }
+
     public LongJid makeLongJid(String key) throws Exception {
         return (LongJid) makeJid(key, JidFactories.LONG_JID_TYPE);
     }

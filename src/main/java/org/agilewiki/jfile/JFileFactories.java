@@ -31,6 +31,7 @@ import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.transactions.EvaluatorActerJidFactory;
 import org.agilewiki.jfile.transactions.EvaluatorListJidFactory;
 import org.agilewiki.jfile.transactions.db.inMemory.GetIntegerTransactionFactory;
+import org.agilewiki.jfile.transactions.db.inMemory.IncrementIntegerTransactionFactory;
 
 /**
  * Defines JFactory actor types and registers the factories.
@@ -40,6 +41,7 @@ public class JFileFactories extends JLPCActor {
     public final static String EVALUATER_ACTOR_JID_TYPE = "EVALUATER_ACTOR_JID";
     public final static String EVALUATER_LIST_JID_TYPE = "EVALUATER_LIST_JID";
     public final static String GET_INTEGER_TRANSACTION = "GET_INTEGER_TRANSACTION";
+    public final static String INCREMENT_INTEGER_TRANSACTION = "INCREMENT_INTEGER_TRANSACTION";
 
     /**
      * Process the requirements and assign the parent actor.
@@ -65,5 +67,6 @@ public class JFileFactories extends JLPCActor {
         factory.registerActorFactory(EvaluatorActerJidFactory.fac);
         factory.registerActorFactory(new EvaluatorListJidFactory(EVALUATER_LIST_JID_TYPE));
         factory.registerActorFactory(GetIntegerTransactionFactory.fac);
+        factory.registerActorFactory(IncrementIntegerTransactionFactory.fac);
     }
 }
