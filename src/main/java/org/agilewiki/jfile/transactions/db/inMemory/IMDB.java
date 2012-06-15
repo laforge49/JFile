@@ -6,7 +6,6 @@ import org.agilewiki.jfile.JFile;
 import org.agilewiki.jfile.block.Block;
 import org.agilewiki.jfile.block.LTA32Block;
 import org.agilewiki.jfile.transactions.db.DB;
-import org.agilewiki.jid.Jid;
 import org.agilewiki.jid.JidFactories;
 import org.agilewiki.jid._Jid;
 import org.agilewiki.jid.collection.vlenc.map.StringMapJid;
