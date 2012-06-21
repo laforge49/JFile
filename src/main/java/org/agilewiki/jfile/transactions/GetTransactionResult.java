@@ -29,15 +29,15 @@ import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jactor.lpc.Request;
 
 /**
- * A transaction result request is used to request the results of a transaction.
+ * A get transaction result request is used to request the results of a transaction.
  */
-public class TransactionResult extends Request<Object, Transaction> {
-    public final static TransactionResult req = new TransactionResult();
+public class GetTransactionResult extends Request<Object, Transaction> {
+    public final static GetTransactionResult req = new GetTransactionResult();
 
     @Override
     public void processRequest(JLPCActor targetActor, RP rp) throws Exception {
         Transaction a = (Transaction) targetActor;
-        a.transactionResult(rp);
+        a.getTransactionResult(rp);
     }
 
     /**

@@ -69,7 +69,7 @@ public class TransactionAggregator extends BlockSource {
             }
         }
         if (!rp.isEvent()) {
-            TransactionResult.req.send(this, transactionActorJid.getValue(), rp);
+            GetTransactionResult.req.send(this, transactionActorJid.getValue(), rp);
             getMailbox().sendPendingMessages();
         }
         if (!writePending) {

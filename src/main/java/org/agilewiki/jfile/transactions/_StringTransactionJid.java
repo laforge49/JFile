@@ -9,7 +9,7 @@ import org.agilewiki.jid.scalar.vlens.string.StringJid;
 abstract public class _StringTransactionJid extends StringJid implements Transaction {
     private RP requestReturn;
 
-    public void transactionResult(RP rp)
+    public void getTransactionResult(RP rp)
             throws Exception {
         requestReturn = rp;
     }

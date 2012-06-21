@@ -32,7 +32,7 @@ import org.agilewiki.jid.Jid;
 public abstract class _TransactionJid extends Jid implements Transaction {
     private RP requestReturn;
 
-    public void transactionResult(RP rp)
+    public void getTransactionResult(RP rp)
             throws Exception {
         requestReturn = rp;
     }
