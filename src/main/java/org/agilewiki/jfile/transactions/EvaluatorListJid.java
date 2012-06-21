@@ -57,9 +57,9 @@ public class EvaluatorListJid extends ListJid implements Evaluator {
             ndx += 1;
             sync = false;
             async = false;
-            req.send(this, evaluater, new RP<Object>() {
+            req.send(this, evaluater, new RP<Boolean>() {
                 @Override
-                public void processResponse(Object response) throws Exception {
+                public void processResponse(Boolean response) throws Exception {
                     if (!async)
                         sync = true;
                     else

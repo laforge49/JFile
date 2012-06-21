@@ -15,22 +15,20 @@ abstract public class _StringTransactionJid extends StringJid implements Transac
     }
 
     public void eval(Eval req, final RP rp) throws Exception {
-        if (requestReturn == null) {
-            eval(req.blockTimestamp, rp);
-        } else {
-            eval(req.blockTimestamp, new RP<Integer>() {
-                @Override
-                public void processResponse(Integer response) throws Exception {
-                    rp.processResponse(null);
-                    requestReturn.processResponse(response);
-                }
-            });
-        }
+        eval(req.blockTimestamp, new RP<Integer>() {
+            @Override
+            public void processResponse(Integer response) throws Exception {
+                boolean have = requestReturn != null;
+                rp.processResponse(have);
+                if (have) requestReturn.processResponse(response);
+            }
+        });
     }
 
     /**
      * Evaluate the transaction.
-     * @param rp      The response processor.
+     *
+     * @param rp The response processor.
      */
     abstract protected void eval(long blockTimestamp, RP rp)
             throws Exception;

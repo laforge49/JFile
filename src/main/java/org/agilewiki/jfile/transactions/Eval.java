@@ -31,8 +31,9 @@ import org.agilewiki.jfile.transactions.db.DB;
 
 /**
  * A TransactionEval request is used to execute a transaction.
+ * The returned result is true if a response was requested.
  */
-public class Eval extends Request<Object, Evaluator> {
+public class Eval extends Request<Boolean, Evaluator> {
     public final long blockTimestamp;
 
     /**

@@ -72,9 +72,9 @@ final public class TransactionProcessor extends JLPCActor implements BlockProces
                 Evaluator evaluator = (Evaluator) response;
                 Eval eval = new Eval(block.getTimestamp());
                 if (generateCheckpoints) {
-                    eval.send(TransactionProcessor.this, evaluator, new RP<Object>() {
+                    eval.send(TransactionProcessor.this, evaluator, new RP<Boolean>() {
                         @Override
-                        public void processResponse(Object response) throws Exception {
+                        public void processResponse(Boolean response) throws Exception {
                             Checkpoint checkpoint = new Checkpoint(
                                     block.getCurrentPosition(),
                                     block.getTimestamp(), block.getFileName());

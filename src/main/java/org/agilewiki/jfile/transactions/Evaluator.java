@@ -7,6 +7,6 @@ import org.agilewiki.jid._Jid;
  * Supports Eval requests.
  */
 public interface Evaluator extends _Jid {
-    public void eval(Eval req, RP<Object> rp)
+    public void eval(Eval req, RP<Boolean> rp)
             throws Exception ;
 }
