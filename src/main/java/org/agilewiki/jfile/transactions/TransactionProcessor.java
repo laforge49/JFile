@@ -61,6 +61,9 @@ final public class TransactionProcessor extends JLPCActor implements BlockProces
         setExceptionHandler(new ExceptionHandler() {
             @Override
             public void process(Exception exception) throws Exception {
+                System.err.println();
+                System.err.println("Log file: " + block.getFileName());
+                System.err.println("block position: " + block.getCurrentPosition());
                 exception.printStackTrace();
                 System.exit(1);
             }
