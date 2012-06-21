@@ -31,6 +31,7 @@ import org.agilewiki.jid.Jid;
  */
 public abstract class _TransactionJid extends Jid implements Transaction {
     private RP requestReturn;
+    private Object response;
 
     public void getTransactionResult(RP rp)
             throws Exception {
@@ -38,14 +39,18 @@ public abstract class _TransactionJid extends Jid implements Transaction {
     }
 
     public void eval(Eval req, final RP rp) throws Exception {
-        eval(req.blockTimestamp, new RP<Integer>() {
+        eval(req.blockTimestamp, new RP<Object>() {
             @Override
-            public void processResponse(Integer response) throws Exception {
-                boolean have = requestReturn != null;
-                rp.processResponse(have);
-                if (have) requestReturn.processResponse(response);
+            public void processResponse(Object response) throws Exception {
+                _TransactionJid.this.response = response;
+                rp.processResponse(requestReturn != null);
             }
         });
+    }
+
+    public void sendTransactionResult()
+            throws Exception {
+        requestReturn.processResponse(response);
     }
 
     /**

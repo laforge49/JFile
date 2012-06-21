@@ -27,6 +27,8 @@ import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jid.collection.vlenc.ListJid;
 
+import java.util.ArrayList;
+
 /**
  * A list of transaction actor's.
  */
@@ -46,20 +48,27 @@ public class EvaluatorListJid extends ListJid implements Evaluator {
 
     private void eval(final Eval req)
             throws Exception {
+        final ArrayList<Evaluator> evaluators = new ArrayList<Evaluator>(size());
         while (true) {
             if (ndx == size()) {
                 RP rp = _rp;
                 _rp = null;
                 rp.processResponse(null);
+                int i = 0;
+                while (i < evaluators.size()) {
+                    evaluators.get(i).sendTransactionResult();
+                    i += 1;
+                }
                 return;
             }
-            Evaluator evaluater = (Evaluator) iGet(ndx);
+            final Evaluator evaluator = (Evaluator) iGet(ndx);
             ndx += 1;
             sync = false;
             async = false;
-            req.send(this, evaluater, new RP<Boolean>() {
+            req.send(this, evaluator, new RP<Boolean>() {
                 @Override
                 public void processResponse(Boolean response) throws Exception {
+                    if (response) evaluators.add(evaluator);
                     if (!async)
                         sync = true;
                     else
@@ -71,5 +80,9 @@ public class EvaluatorListJid extends ListJid implements Evaluator {
                 return;
             }
         }
+    }
+
+    public void sendTransactionResult()
+            throws Exception {
     }
 }

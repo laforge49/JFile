@@ -8,6 +8,7 @@ import org.agilewiki.jid.scalar.vlens.string.StringJid;
  */
 abstract public class _StringTransactionJid extends StringJid implements Transaction {
     private RP requestReturn;
+    private Object response;
 
     public void getTransactionResult(RP rp)
             throws Exception {
@@ -15,14 +16,18 @@ abstract public class _StringTransactionJid extends StringJid implements Transac
     }
 
     public void eval(Eval req, final RP rp) throws Exception {
-        eval(req.blockTimestamp, new RP<Integer>() {
+        eval(req.blockTimestamp, new RP<Object>() {
             @Override
-            public void processResponse(Integer response) throws Exception {
-                boolean have = requestReturn != null;
-                rp.processResponse(have);
-                if (have) requestReturn.processResponse(response);
+            public void processResponse(Object response) throws Exception {
+                _StringTransactionJid.this.response = response;
+                rp.processResponse(requestReturn != null);
             }
         });
+    }
+
+    public void sendTransactionResult()
+            throws Exception {
+        requestReturn.processResponse(response);
     }
 
     /**

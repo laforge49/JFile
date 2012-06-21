@@ -35,4 +35,10 @@ public class EvaluatorActorJid extends ActorJid implements Evaluator {
         Transaction transaction = (Transaction) getValue();
         req.send(this, transaction, rp);
     }
+
+    public void sendTransactionResult()
+            throws Exception {
+        Transaction transaction = (Transaction) getValue();
+        transaction.sendTransactionResult();
+    }
 }
