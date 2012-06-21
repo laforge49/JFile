@@ -24,6 +24,7 @@
 package org.agilewiki.jfile.transactions;
 
 import org.agilewiki.jactor.Actor;
+import org.agilewiki.jactor.ExceptionHandler;
 import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
@@ -57,6 +58,13 @@ final public class TransactionProcessor extends JLPCActor implements BlockProces
      * @param rp    The RP used to signal completion.
      */
     private void processBlock(final Block block, final RP rp) throws Exception {
+        setExceptionHandler(new ExceptionHandler() {
+            @Override
+            public void process(Exception exception) throws Exception {
+                exception.printStackTrace();
+                System.exit(1);
+            }
+        });
         RootJid rootJid = block.getRootJid();
         GetActor.req.send(this, rootJid, new RP<Actor>() {
             @Override

@@ -44,7 +44,6 @@ public class CounterTest extends TestCase {
         durableTransactionLogger.currentPosition = 0L;
 
         TransactionAggregator transactionAggregator = db.getTransactionAggregator();
-
         (new AggregateTransaction("inc")).sendEvent(transactionAggregator);
         (new AggregateTransaction("inc")).sendEvent(transactionAggregator);
         (new AggregateTransaction("inc")).sendEvent(transactionAggregator);
