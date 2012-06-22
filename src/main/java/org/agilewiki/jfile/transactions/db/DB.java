@@ -33,6 +33,8 @@ import org.agilewiki.jfile.transactions.TransactionProcessor;
 import org.agilewiki.jfile.transactions.logReader.LogReader;
 import org.agilewiki.jfile.transactions.transactionAggregator.TransactionAggregator;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 
 /**
@@ -43,6 +45,7 @@ abstract public class DB extends JLPCActor {
     private TransactionAggregator transactionAggregator;
     private DurableTransactionLogger durableTransactionLogger;
     private LogReader logReader;
+    private Path directoryPath;
 
     /**
      * Create a transaction log reader.
@@ -147,5 +150,25 @@ abstract public class DB extends JLPCActor {
     public void checkpoint(long logPosition, long timestamp, String logFileName, RP rp)
             throws Exception {
         rp.processResponse(null);
+    }
+
+    public void setDirectoryPath(Path path)
+            throws Exception {
+        directoryPath = path;
+        File directoryFile = path.toFile();
+        if (!directoryFile.exists())
+            directoryFile.mkdir();
+    }
+
+    public void clearDirectory()
+            throws Exception {
+        File[] files = directoryPath.toFile().listFiles();
+        int i = 0;
+        while (i < files.length) {
+            File file = files[i];
+            if (!file.delete())
+                throw new IOException("unable to delete " + file);
+            i += 1;
+        }
     }
 }
