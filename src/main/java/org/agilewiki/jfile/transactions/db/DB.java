@@ -47,7 +47,7 @@ abstract public class DB extends JLPCActor {
     private LogReader logReader;
     protected Path directoryPath;
 
-    public void openDbFile(int logReaderMaxSize)
+    public void openDbFile(int logReaderMaxSize, RP rp)
             throws Exception {
         String[] fileNames = directoryPath.toFile().list();
         if (fileNames == null)
@@ -68,6 +68,7 @@ abstract public class DB extends JLPCActor {
             i += 1;
         }
         System.out.println(logReader);
+        rp.processResponse(null);
     }
 
     public void closeDbFile() {

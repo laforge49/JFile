@@ -36,7 +36,7 @@ public class IMDB extends DB {
     public int maxSize;
 
     @Override
-    public void openDbFile(int logReaderMaxSize)
+    public void openDbFile(int logReaderMaxSize, RP rp)
             throws Exception {
         if (dbFile == null) {
             dbFile = new JFile();
@@ -48,6 +48,7 @@ public class IMDB extends DB {
                 StandardOpenOption.READ,
                 StandardOpenOption.WRITE,
                 StandardOpenOption.CREATE);
+        rp.processResponse(null);
     }
 
     @Override

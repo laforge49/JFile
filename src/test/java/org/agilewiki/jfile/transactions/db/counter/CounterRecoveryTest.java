@@ -8,6 +8,7 @@ import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.JFileFactories;
 import org.agilewiki.jfile.transactions.Finish;
+import org.agilewiki.jfile.transactions.db.OpenDbFile;
 import org.agilewiki.jfile.transactions.logReader.LogReader;
 import org.agilewiki.jfile.transactions.logReader.ReadLog;
 
@@ -32,7 +33,7 @@ public class CounterRecoveryTest extends TestCase {
         db.initialize(dbMailbox, factory);
         Path directoryPath = FileSystems.getDefault().getPath("CounterTest");
         db.setDirectoryPath(directoryPath);
-        db.openDbFile(10000);
+        (new OpenDbFile(10000)).send(future, db);
 
         LogReader logReader = db.getLogReader(10000);
 
