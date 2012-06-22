@@ -8,12 +8,9 @@ import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.JFileFactories;
 import org.agilewiki.jfile.transactions.DurableTransactionLogger;
-import org.agilewiki.jfile.transactions.Serializer;
-import org.agilewiki.jfile.transactions.TransactionProcessor;
 import org.agilewiki.jfile.transactions.transactionAggregator.AggregateTransaction;
 import org.agilewiki.jfile.transactions.transactionAggregator.TransactionAggregator;
 
-import java.nio.channels.FileChannel;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -29,13 +26,16 @@ public class CounterTest extends TestCase {
         factory.defineActorType("inc", IncrementCounterTransaction.class);
         factory.defineActorType("get", GetCounterTransaction.class);
         JAFuture future = new JAFuture();
-        
+
         Mailbox dbMailbox = mailboxFactory.createAsyncMailbox();
         CounterDB db = new CounterDB();
         db.initialize(dbMailbox, factory);
+        Path directoryPath = FileSystems.getDefault().getPath("CounterTest");
+        db.setDirectoryPath(directoryPath);
+        db.clearDirectory();
 
         DurableTransactionLogger durableTransactionLogger = db.getDurableTransactionLogger();
-        Path path = FileSystems.getDefault().getPath("CounterTest.jf");
+        Path path = directoryPath.resolve("CounterTest.jf");
         System.out.println(path.toAbsolutePath());
         durableTransactionLogger.open(
                 path,

@@ -8,12 +8,10 @@ import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.JFileFactories;
 import org.agilewiki.jfile.transactions.*;
-import org.agilewiki.jfile.transactions.db.StatelessDB;
 import org.agilewiki.jfile.transactions.db.counter.CounterDB;
 import org.agilewiki.jfile.transactions.db.counter.IncrementCounterFactory;
 import org.agilewiki.jfile.transactions.transactionAggregator.TransactionAggregator;
 
-import java.nio.channels.FileChannel;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -34,9 +32,12 @@ public class TransactionLoggerTimingTest extends TestCase {
         CounterDB db = new CounterDB();
         db.initialize(dbMailbox, factory);
         db.initialCapacity = 10000;
+        Path directoryPath = FileSystems.getDefault().getPath("TransactionLoggerTimingTest");
+        db.setDirectoryPath(directoryPath);
+        db.clearDirectory();
 
         DurableTransactionLogger durableTransactionLogger = db.getDurableTransactionLogger();
-        Path path = FileSystems.getDefault().getPath("TransactionLoggerTimingTest.jf");
+        Path path = directoryPath.resolve("TransactionLoggerTimingTest.jf");
         System.out.println(path.toAbsolutePath());
         durableTransactionLogger.open(
                 path,
@@ -53,10 +54,10 @@ public class TransactionLoggerTimingTest extends TestCase {
         transactionLoggerDriver.setInitialBufferCapacity(10000);
         transactionLoggerDriver.win = 3;
 
-       transactionLoggerDriver.batch = 10;
-       transactionLoggerDriver.count = 10;
-    //   transactionLoggerDriver.batch = 10000;
-    //   transactionLoggerDriver.count = 1000;
+        transactionLoggerDriver.batch = 10;
+        transactionLoggerDriver.count = 10;
+        //   transactionLoggerDriver.batch = 10000;
+        //   transactionLoggerDriver.count = 1000;
 
         Go.req.send(future, transactionLoggerDriver);
         Finish.req.send(future, durableTransactionLogger);

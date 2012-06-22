@@ -11,7 +11,6 @@ import org.agilewiki.jfile.transactions.Finish;
 import org.agilewiki.jfile.transactions.logReader.LogReader;
 import org.agilewiki.jfile.transactions.logReader.ReadLog;
 
-import java.nio.channels.FileChannel;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -30,16 +29,18 @@ public class RecoveryTimingTest extends TestCase {
         Mailbox dbMailbox = mailboxFactory.createAsyncMailbox();
         CounterDB db = new CounterDB();
         db.initialize(dbMailbox, factory);
+        Path directoryPath = FileSystems.getDefault().getPath("TransactionLoggerTimingTest");
+        db.setDirectoryPath(directoryPath);
 
         LogReader logReader = db.getLogReader(1000000);
-        Path path = FileSystems.getDefault().getPath("TransactionLoggerTimingTest.jf");
+        Path path = directoryPath.resolve("TransactionLoggerTimingTest.jf");
         System.out.println(path.toAbsolutePath());
         try {
-        logReader.open(
-                path,
-                StandardOpenOption.READ);
+            logReader.open(
+                    path,
+                    StandardOpenOption.READ);
         } catch (Exception ex) {
-            System.out.println("unable to open log file");
+            System.out.println("-------------> unable to open log file");
             mailboxFactory.close();
             return;
         }

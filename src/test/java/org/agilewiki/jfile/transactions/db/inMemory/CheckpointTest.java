@@ -9,9 +9,6 @@ import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.JFile;
 import org.agilewiki.jfile.JFileFactories;
 import org.agilewiki.jfile.transactions.DurableTransactionLogger;
-import org.agilewiki.jfile.transactions.db.counter.CounterDB;
-import org.agilewiki.jfile.transactions.db.counter.GetCounterTransaction;
-import org.agilewiki.jfile.transactions.db.counter.IncrementCounterTransaction;
 import org.agilewiki.jfile.transactions.transactionAggregator.AggregateTransaction;
 import org.agilewiki.jfile.transactions.transactionAggregator.TransactionAggregator;
 import org.agilewiki.jid.JidFactories;
@@ -35,7 +32,10 @@ public class CheckpointTest extends TestCase {
         IMDB db = new IMDB();
         db.initialize(dbMailbox, factory);
         db.maxSize = 10240;
-        Path dbPath = FileSystems.getDefault().getPath("CheckpointTestDB.jf");
+        Path directoryPath = FileSystems.getDefault().getPath("CheckpointTest");
+        db.setDirectoryPath(directoryPath);
+        db.clearDirectory();
+        Path dbPath = directoryPath.resolve("CheckpointTestDB.jf");
         System.out.println(dbPath);
         JFile dbFile = db.getDbFile();
         dbFile.open(
@@ -45,7 +45,7 @@ public class CheckpointTest extends TestCase {
                 StandardOpenOption.CREATE);
 
         DurableTransactionLogger durableTransactionLogger = db.getDurableTransactionLogger();
-        Path logPath = FileSystems.getDefault().getPath("CheckpointTestLog.jf");
+        Path logPath = directoryPath.resolve("CheckpointTestLog.jf");
         System.out.println(logPath);
         durableTransactionLogger.open(
                 logPath,

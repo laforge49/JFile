@@ -11,7 +11,6 @@ import org.agilewiki.jfile.transactions.Finish;
 import org.agilewiki.jfile.transactions.logReader.LogReader;
 import org.agilewiki.jfile.transactions.logReader.ReadLog;
 
-import java.nio.channels.FileChannel;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -31,9 +30,11 @@ public class CounterRecoveryTest extends TestCase {
         Mailbox dbMailbox = mailboxFactory.createAsyncMailbox();
         CounterDB db = new CounterDB();
         db.initialize(dbMailbox, factory);
+        Path directoryPath = FileSystems.getDefault().getPath("CounterTest");
+        db.setDirectoryPath(directoryPath);
 
         LogReader logReader = db.getLogReader(10000);
-        Path path = FileSystems.getDefault().getPath("CounterTest.jf");
+        Path path = directoryPath.resolve("CounterTest.jf");
         System.out.println(path.toAbsolutePath());
         logReader.open(
                 path,
@@ -44,7 +45,7 @@ public class CounterRecoveryTest extends TestCase {
         System.out.println("unprocessed bytes remaining: " + rem);
         Finish.req.send(future, logReader);
         logReader.close();
-        
+
         int total = db.getCounter();
         assertEquals(6, total);
 

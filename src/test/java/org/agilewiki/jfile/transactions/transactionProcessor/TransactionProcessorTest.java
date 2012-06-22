@@ -17,7 +17,6 @@ import org.agilewiki.jfile.transactions.db.StatelessDB;
 import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 import org.agilewiki.jid.scalar.vlens.actor.SetActor;
 
-import java.nio.channels.FileChannel;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -33,12 +32,15 @@ public class TransactionProcessorTest extends TestCase {
         JAFuture future = new JAFuture();
         StatelessDB db = new StatelessDB();
         db.initialize(mailbox, factory);
+        Path directoryPath = FileSystems.getDefault().getPath("TransactionProcessorTest");
+        db.setDirectoryPath(directoryPath);
+        db.clearDirectory();
         TransactionProcessor transactionProcessor = new TransactionProcessor();
         transactionProcessor.initialize(mailbox, db);
 
         JFile jFile = new JFile();
         jFile.initialize(mailbox, factory);
-        Path path = FileSystems.getDefault().getPath("TransactionProcessorTest.jf");
+        Path path = directoryPath.resolve("TransactionProcessorTest.jf");
         System.out.println(path.toAbsolutePath());
         jFile.open(
                 path,
