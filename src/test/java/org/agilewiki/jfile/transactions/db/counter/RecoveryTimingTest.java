@@ -7,13 +7,10 @@ import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.JFileFactories;
-import org.agilewiki.jfile.transactions.Finish;
-import org.agilewiki.jfile.transactions.logReader.LogReader;
-import org.agilewiki.jfile.transactions.logReader.ReadLog;
+import org.agilewiki.jfile.transactions.db.OpenDbFile;
 
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 
 public class RecoveryTimingTest extends TestCase {
     public void test()
@@ -32,26 +29,9 @@ public class RecoveryTimingTest extends TestCase {
         Path directoryPath = FileSystems.getDefault().getPath("TransactionLoggerTimingTest");
         db.setDirectoryPath(directoryPath);
 
-        LogReader logReader = db.getLogReader(1000000);
-        Path path = directoryPath.resolve("TransactionLoggerTimingTest.jalog");
-        System.out.println(path.toAbsolutePath());
-        try {
-            logReader.open(
-                    path,
-                    StandardOpenOption.READ);
-        } catch (Exception ex) {
-            System.out.println("-------------> unable to open log file");
-            mailboxFactory.close();
-            return;
-        }
-        logReader.currentPosition = 0;
-
         long t0 = System.currentTimeMillis();
-        long rem = ReadLog.req.send(future, logReader);
+        (new OpenDbFile(10000)).send(future, db);
         long t1 = System.currentTimeMillis();
-        Finish.req.send(future, logReader);
-        System.out.println("unprocessed bytes remaining: " + rem);
-        logReader.close();
 
         int transactions = db.getCounter();
         System.out.println("milliseconds: " + (t1 - t0));
