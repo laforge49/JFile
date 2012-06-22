@@ -21,6 +21,9 @@ import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 import org.agilewiki.jid.scalar.vlens.bytes.BytesJid;
 import org.agilewiki.jid.scalar.vlens.string.StringJid;
 
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+
 /**
  * In-memory database.
  */
@@ -32,13 +35,22 @@ public class IMDB extends DB {
     private boolean isFirstRootJid;
     public int maxSize;
 
-    public JFile getDbFile()
+    public void openDbFile()
             throws Exception {
         if (dbFile == null) {
             dbFile = new JFile();
             dbFile.initialize(getMailboxFactory().createAsyncMailbox());
         }
-        return dbFile;
+        Path dbPath = directoryPath.resolve("imdb.jadb");
+        dbFile.open(
+                dbPath,
+                StandardOpenOption.READ,
+                StandardOpenOption.WRITE,
+                StandardOpenOption.CREATE);
+    }
+
+    public void closeDbFile() {
+        dbFile.close();
     }
 
     protected Block newDbBlock() {

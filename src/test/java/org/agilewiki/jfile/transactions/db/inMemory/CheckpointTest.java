@@ -6,7 +6,6 @@ import org.agilewiki.jactor.JAMailboxFactory;
 import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.factory.JAFactory;
-import org.agilewiki.jfile.JFile;
 import org.agilewiki.jfile.JFileFactories;
 import org.agilewiki.jfile.transactions.DurableTransactionLogger;
 import org.agilewiki.jfile.transactions.transactionAggregator.AggregateTransaction;
@@ -35,14 +34,7 @@ public class CheckpointTest extends TestCase {
         Path directoryPath = FileSystems.getDefault().getPath("CheckpointTest");
         db.setDirectoryPath(directoryPath);
         db.clearDirectory();
-        Path dbPath = directoryPath.resolve("CheckpointTestDB.jf");
-        System.out.println(dbPath);
-        JFile dbFile = db.getDbFile();
-        dbFile.open(
-                dbPath,
-                StandardOpenOption.READ,
-                StandardOpenOption.WRITE,
-                StandardOpenOption.CREATE);
+        db.openDbFile();
 
         DurableTransactionLogger durableTransactionLogger = db.getDurableTransactionLogger();
         Path logPath = directoryPath.resolve("CheckpointTestLog.jf");
@@ -81,7 +73,7 @@ public class CheckpointTest extends TestCase {
         assertEquals(6, total);
 
         durableTransactionLogger.close();
-        dbFile.close();
+        db.closeDbFile();
         mailboxFactory.close();
     }
 }

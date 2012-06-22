@@ -45,7 +45,7 @@ abstract public class DB extends JLPCActor {
     private TransactionAggregator transactionAggregator;
     private DurableTransactionLogger durableTransactionLogger;
     private LogReader logReader;
-    private Path directoryPath;
+    protected Path directoryPath;
 
     /**
      * Create a transaction log reader.
