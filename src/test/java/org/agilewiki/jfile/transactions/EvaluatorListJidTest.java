@@ -35,12 +35,15 @@ public class EvaluatorListJidTest extends TestCase {
         JAFuture future = new JAFuture();
         StatelessDB db = new StatelessDB();
         db.initialize(mailbox, factory);
+        Path directoryPath = FileSystems.getDefault().getPath("EvaluatorListJidTest");
+        db.setDirectoryPath(directoryPath);
+        db.clearDirectory();
         TransactionProcessor transactionProcessor = new TransactionProcessor();
         transactionProcessor.initialize(mailbox, db);
 
         JFile jFile = new JFile();
         jFile.initialize(mailbox, factory);
-        Path path = FileSystems.getDefault().getPath("TransactionListJidTest.jf");
+        Path path = directoryPath.resolve("EvaluatorListJidTest.jf");
         System.out.println(path.toAbsolutePath());
         jFile.open(
                 path,
