@@ -7,10 +7,7 @@ import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.JFileFactories;
-import org.agilewiki.jfile.transactions.Finish;
 import org.agilewiki.jfile.transactions.db.OpenDbFile;
-import org.agilewiki.jfile.transactions.logReader.LogReader;
-import org.agilewiki.jfile.transactions.logReader.ReadLog;
 
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -33,13 +30,6 @@ public class CounterRecoveryTest extends TestCase {
         Path directoryPath = FileSystems.getDefault().getPath("CounterTest");
         db.setDirectoryPath(directoryPath);
         (new OpenDbFile(10000)).send(future, db);
-
-        LogReader logReader = db.getLogReader(10000);
-
-        long rem = ReadLog.req.send(future, logReader);
-        System.out.println("unprocessed bytes remaining: " + rem);
-        Finish.req.send(future, logReader);
-        logReader.close();
 
         int total = db.getCounter();
         assertEquals(6, total);

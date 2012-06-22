@@ -70,16 +70,28 @@ abstract public class DB extends JLPCActor {
     public void closeDbFile() {
     }
 
-    public void processLogFile(String logFileName, long position, RP rp)
+    public void processLogFile(String logFileName, long position, final RP rp)
             throws Exception {
-        LogReader logReader = getLogReader(logReaderMaxSize);
+        getLogReader(logReaderMaxSize);
         Path path = directoryPath.resolve(logFileName);
         System.out.println("processing " + path);
         logReader.open(
                 path,
                 StandardOpenOption.READ);
         logReader.currentPosition = position;
-        rp.processResponse(null);
+        ReadLog.req.send(this, logReader, new RP<Long>() {
+            public void processResponse(Long response)
+                    throws Exception {
+                System.out.println("unprocessed bytes remaining: " + response);
+                Finish.req.send(DB.this, logReader, new RP<Object>() {
+                    @Override
+                    public void processResponse(Object response) throws Exception {
+                        logReader.close();
+                        rp.processResponse(null);
+                    }
+                });
+            }
+        });
     }
 
     /**
