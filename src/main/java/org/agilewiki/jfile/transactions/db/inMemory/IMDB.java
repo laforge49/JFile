@@ -35,6 +35,7 @@ public class IMDB extends DB {
     private boolean isFirstRootJid;
     public int maxSize;
 
+    @Override
     public void openDbFile()
             throws Exception {
         if (dbFile == null) {
@@ -49,6 +50,7 @@ public class IMDB extends DB {
                 StandardOpenOption.CREATE);
     }
 
+    @Override
     public void closeDbFile() {
         dbFile.close();
     }

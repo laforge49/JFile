@@ -47,6 +47,14 @@ abstract public class DB extends JLPCActor {
     private LogReader logReader;
     protected Path directoryPath;
 
+    public void openDbFile()
+            throws Exception {
+
+    }
+
+    public void closeDbFile() {
+    }
+
     /**
      * Create a transaction log reader.
      * @return A LogReader.
