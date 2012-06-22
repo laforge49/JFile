@@ -14,7 +14,6 @@ import org.agilewiki.jfile.transactions.logReader.ReadLog;
 
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 
 public class CounterRecoveryTest extends TestCase {
     public void test()

@@ -46,9 +46,11 @@ abstract public class DB extends JLPCActor {
     private DurableTransactionLogger durableTransactionLogger;
     private LogReader logReader;
     protected Path directoryPath;
+    private int logReaderMaxSize;
 
     public void openDbFile(int logReaderMaxSize, RP rp)
             throws Exception {
+        this.logReaderMaxSize = logReaderMaxSize;
         String[] fileNames = directoryPath.toFile().list();
         if (fileNames == null)
             return;
@@ -57,21 +59,27 @@ abstract public class DB extends JLPCActor {
         while (i < fileNames.length) {
             String fileName = fileNames[i];
             if (fileName.endsWith(".jalog")) {
-                LogReader logReader = getLogReader(logReaderMaxSize);
-                Path path = directoryPath.resolve(fileName);
-                System.out.println("processing " + path);
-                logReader.open(
-                        path,
-                        StandardOpenOption.READ);
-                logReader.currentPosition = 0;
+                (new ProcessLogFile(fileName, 0L)).send(this, this, rp);
+                return;
             }
             i += 1;
         }
-        System.out.println(logReader);
         rp.processResponse(null);
     }
 
     public void closeDbFile() {
+    }
+
+    public void processLogFile(String logFileName, long position, RP rp)
+            throws Exception {
+        LogReader logReader = getLogReader(logReaderMaxSize);
+        Path path = directoryPath.resolve(logFileName);
+        System.out.println("processing " + path);
+        logReader.open(
+                path,
+                StandardOpenOption.READ);
+        logReader.currentPosition = position;
+        rp.processResponse(null);
     }
 
     /**
