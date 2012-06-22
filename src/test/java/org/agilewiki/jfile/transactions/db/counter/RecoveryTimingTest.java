@@ -33,7 +33,7 @@ public class RecoveryTimingTest extends TestCase {
         db.setDirectoryPath(directoryPath);
 
         LogReader logReader = db.getLogReader(1000000);
-        Path path = directoryPath.resolve("TransactionLoggerTimingTest.jf");
+        Path path = directoryPath.resolve("TransactionLoggerTimingTest.jalog");
         System.out.println(path.toAbsolutePath());
         try {
             logReader.open(

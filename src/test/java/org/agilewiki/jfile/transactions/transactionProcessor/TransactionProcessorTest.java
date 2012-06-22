@@ -40,7 +40,7 @@ public class TransactionProcessorTest extends TestCase {
 
         JFile jFile = new JFile();
         jFile.initialize(mailbox, factory);
-        Path path = directoryPath.resolve("TransactionProcessorTest.jf");
+        Path path = directoryPath.resolve("TransactionProcessorTest.jalog");
         System.out.println(path.toAbsolutePath());
         jFile.open(
                 path,

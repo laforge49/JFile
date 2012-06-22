@@ -37,7 +37,7 @@ public class TransactionLoggerTimingTest extends TestCase {
         db.clearDirectory();
 
         DurableTransactionLogger durableTransactionLogger = db.getDurableTransactionLogger();
-        Path path = directoryPath.resolve("TransactionLoggerTimingTest.jf");
+        Path path = directoryPath.resolve("TransactionLoggerTimingTest.jalog");
         System.out.println(path.toAbsolutePath());
         durableTransactionLogger.open(
                 path,

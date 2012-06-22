@@ -42,7 +42,7 @@ public class EvaluatorListJidTest extends TestCase {
 
         JFile jFile = new JFile();
         jFile.initialize(mailbox, factory);
-        Path path = directoryPath.resolve("EvaluatorListJidTest.jf");
+        Path path = directoryPath.resolve("EvaluatorListJidTest.jalog");
         System.out.println(path.toAbsolutePath());
         jFile.open(
                 path,

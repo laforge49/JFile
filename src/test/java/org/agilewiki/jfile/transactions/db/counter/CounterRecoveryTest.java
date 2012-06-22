@@ -34,7 +34,7 @@ public class CounterRecoveryTest extends TestCase {
         db.setDirectoryPath(directoryPath);
 
         LogReader logReader = db.getLogReader(10000);
-        Path path = directoryPath.resolve("CounterTest.jf");
+        Path path = directoryPath.resolve("CounterTest.jalog");
         System.out.println(path.toAbsolutePath());
         logReader.open(
                 path,

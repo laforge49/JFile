@@ -37,7 +37,7 @@ public class CheckpointTest extends TestCase {
         db.openDbFile();
 
         DurableTransactionLogger durableTransactionLogger = db.getDurableTransactionLogger();
-        Path logPath = directoryPath.resolve("CheckpointTestLog.jf");
+        Path logPath = directoryPath.resolve("CheckpointTestLog.jalog");
         System.out.println(logPath);
         durableTransactionLogger.open(
                 logPath,

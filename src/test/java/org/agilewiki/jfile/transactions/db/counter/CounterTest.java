@@ -35,7 +35,7 @@ public class CounterTest extends TestCase {
         db.clearDirectory();
 
         DurableTransactionLogger durableTransactionLogger = db.getDurableTransactionLogger();
-        Path path = directoryPath.resolve("CounterTest.jf");
+        Path path = directoryPath.resolve("CounterTest.jalog");
         System.out.println(path.toAbsolutePath());
         durableTransactionLogger.open(
                 path,
