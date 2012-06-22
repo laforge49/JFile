@@ -26,16 +26,16 @@ package org.agilewiki.jfile.transactions.db;
 import org.agilewiki.jactor.Actor;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
-import org.agilewiki.jfile.transactions.Deserializer;
-import org.agilewiki.jfile.transactions.DurableTransactionLogger;
-import org.agilewiki.jfile.transactions.Serializer;
-import org.agilewiki.jfile.transactions.TransactionProcessor;
+import org.agilewiki.jfile.transactions.*;
 import org.agilewiki.jfile.transactions.logReader.LogReader;
+import org.agilewiki.jfile.transactions.logReader.ReadLog;
 import org.agilewiki.jfile.transactions.transactionAggregator.TransactionAggregator;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.util.Arrays;
 
 /**
  * A database must handle checkpoint requests.
@@ -47,9 +47,27 @@ abstract public class DB extends JLPCActor {
     private LogReader logReader;
     protected Path directoryPath;
 
-    public void openDbFile()
+    public void openDbFile(int logReaderMaxSize)
             throws Exception {
-
+        String[] fileNames = directoryPath.toFile().list();
+        if (fileNames == null)
+            return;
+        Arrays.sort(fileNames);
+        int i = 0;
+        while (i < fileNames.length) {
+            String fileName = fileNames[i];
+            if (fileName.endsWith(".jalog")) {
+                LogReader logReader = getLogReader(logReaderMaxSize);
+                Path path = directoryPath.resolve(fileName);
+                System.out.println("processing " + path);
+                logReader.open(
+                        path,
+                        StandardOpenOption.READ);
+                logReader.currentPosition = 0;
+            }
+            i += 1;
+        }
+        System.out.println(logReader);
     }
 
     public void closeDbFile() {
@@ -94,7 +112,7 @@ abstract public class DB extends JLPCActor {
         deserializer.initialize(getMailboxFactory().createAsyncMailbox(), this);
         deserializer.setNext(transactionProcessor);
 
-        LogReader logReader = newLogReader();
+        logReader = newLogReader();
         logReader.initialize(getMailboxFactory().createAsyncMailbox(), parent);
         logReader.setNext(deserializer);
         logReader.maxSize = maxSize;

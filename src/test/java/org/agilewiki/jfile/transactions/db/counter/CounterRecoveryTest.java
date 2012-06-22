@@ -32,14 +32,9 @@ public class CounterRecoveryTest extends TestCase {
         db.initialize(dbMailbox, factory);
         Path directoryPath = FileSystems.getDefault().getPath("CounterTest");
         db.setDirectoryPath(directoryPath);
+        db.openDbFile(10000);
 
         LogReader logReader = db.getLogReader(10000);
-        Path path = directoryPath.resolve("CounterTest.jalog");
-        System.out.println(path.toAbsolutePath());
-        logReader.open(
-                path,
-                StandardOpenOption.READ);
-        logReader.currentPosition = 0;
 
         long rem = ReadLog.req.send(future, logReader);
         System.out.println("unprocessed bytes remaining: " + rem);
