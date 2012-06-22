@@ -73,7 +73,6 @@ public class CheckpointTest extends TestCase {
                 send(future, transactionAggregator);
         assertEquals(6, total);
 
-        durableTransactionLogger.close();
         db.closeDbFile();
         mailboxFactory.close();
     }

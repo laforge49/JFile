@@ -53,7 +53,7 @@ public class CounterTest extends TestCase {
         int total = (Integer) (new AggregateTransaction("get")).send(future, transactionAggregator);
         assertEquals(6, total);
 
-        durableTransactionLogger.close();
+        db.closeDbFile();
         mailboxFactory.close();
     }
 }

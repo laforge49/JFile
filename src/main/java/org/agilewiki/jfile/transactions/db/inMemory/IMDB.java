@@ -53,6 +53,7 @@ public class IMDB extends DB {
 
     @Override
     public void closeDbFile() {
+        super.closeDbFile();
         dbFile.close();
     }
 

@@ -60,10 +60,10 @@ public class TransactionLoggerTimingTest extends TestCase {
         //   transactionLoggerDriver.count = 1000;
 
         Go.req.send(future, transactionLoggerDriver);
-        Finish.req.send(future, durableTransactionLogger);
+        Finish.req.send(future, transactionAggregator);
         long t0 = System.currentTimeMillis();
         Go.req.send(future, transactionLoggerDriver);
-        Finish.req.send(future, durableTransactionLogger);
+        Finish.req.send(future, transactionAggregator);
         long t1 = System.currentTimeMillis();
 
         int transactions = transactionLoggerDriver.batch * transactionLoggerDriver.count;
@@ -81,7 +81,7 @@ public class TransactionLoggerTimingTest extends TestCase {
         //time = 9.953 seconds
         //throughput = 1,004,722 tps
 
-        durableTransactionLogger.close();
+        db.closeDbFile();
         mailboxFactory.close();
     }
 }

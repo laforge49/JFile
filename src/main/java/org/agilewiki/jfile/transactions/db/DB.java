@@ -68,6 +68,10 @@ abstract public class DB extends JLPCActor {
     }
 
     public void closeDbFile() {
+        if (durableTransactionLogger != null) {
+            durableTransactionLogger.close();
+            durableTransactionLogger = null;
+        }
     }
 
     public void processLogFile(String logFileName, long position, final RP rp)
