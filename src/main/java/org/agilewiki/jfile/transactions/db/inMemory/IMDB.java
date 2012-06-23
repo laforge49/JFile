@@ -8,6 +8,7 @@ import org.agilewiki.jfile.JFile;
 import org.agilewiki.jfile.block.Block;
 import org.agilewiki.jfile.block.LTA32Block;
 import org.agilewiki.jfile.transactions.db.DB;
+import org.agilewiki.jfile.transactions.db.ProcessLogFile;
 import org.agilewiki.jid.JidFactories;
 import org.agilewiki.jid._Jid;
 import org.agilewiki.jid.collection.vlenc.map.StringMapJid;
@@ -48,7 +49,8 @@ public class IMDB extends DB {
                 StandardOpenOption.READ,
                 StandardOpenOption.WRITE,
                 StandardOpenOption.CREATE);
-        super.openDbFile(logReaderMaxSize, rp);
+        initializeDb(logReaderMaxSize);
+        (new ProcessLogFile(0L, 0)).send(this, this, rp);
     }
 
     @Override

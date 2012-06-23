@@ -48,16 +48,20 @@ abstract public class DB extends JLPCActor {
     private LogReader logReader;
     protected Path directoryPath;
     private int logReaderMaxSize;
-    private String[] fileNames = null;
+    protected String[] fileNames = null;
 
     public void openDbFile(int logReaderMaxSize, RP rp)
             throws Exception {
+        initializeDb(logReaderMaxSize);
+        (new ProcessLogFile(0L, 0)).send(this, this, rp);
+    }
+
+    protected void initializeDb(int logReaderMaxSize) {
         this.logReaderMaxSize = logReaderMaxSize;
         fileNames = directoryPath.toFile().list();
         if (fileNames == null)
             return;
         Arrays.sort(fileNames);
-        (new ProcessLogFile(0L, 0)).send(this, this, rp);
     }
 
     public void processLogFile(long position, int fileIndex, final RP rp)
@@ -73,7 +77,7 @@ abstract public class DB extends JLPCActor {
         String logFileName = fileNames[fileIndex];
         getLogReader(logReaderMaxSize);
         Path path = directoryPath.resolve(logFileName);
-        System.out.println("processing " + path);
+        System.out.println("processing " + fi + " " + path);
         logReader.open(
                 path,
                 StandardOpenOption.READ);
@@ -176,7 +180,6 @@ abstract public class DB extends JLPCActor {
         durableTransactionLogger.setNext(transactionProcessor);
         String ts = (new DateTime()).toString("yyyy-MM-dd_HH-mm-ss_SSS");
         Path path = directoryPath.resolve(ts + ".jalog");
-        System.out.println(path.toAbsolutePath());
         durableTransactionLogger.open(
                 path,
                 StandardOpenOption.WRITE,

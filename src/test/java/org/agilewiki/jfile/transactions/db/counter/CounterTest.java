@@ -27,6 +27,7 @@ public class CounterTest extends TestCase {
         Path directoryPath = FileSystems.getDefault().getPath("CounterTest");
         JAFuture future = new JAFuture();
 
+        System.out.println("db1");
         Mailbox dbMailbox1 = mailboxFactory.createAsyncMailbox();
         CounterDB db1 = new CounterDB();
         db1.initialize(dbMailbox1, factory);
@@ -39,6 +40,7 @@ public class CounterTest extends TestCase {
         assertEquals(1, total1);
         db1.closeDbFile();
 
+        System.out.println("db2");
         Mailbox dbMailbox2 = mailboxFactory.createAsyncMailbox();
         CounterDB db2 = new CounterDB();
         db2.initialize(dbMailbox2, factory);
@@ -51,6 +53,7 @@ public class CounterTest extends TestCase {
         assertEquals(3, total2);
         db2.closeDbFile();
 
+        System.out.println("db3");
         Mailbox dbMailbox3 = mailboxFactory.createAsyncMailbox();
         CounterDB db3 = new CounterDB();
         db3.initialize(dbMailbox3, factory);
