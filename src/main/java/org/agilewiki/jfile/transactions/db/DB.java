@@ -48,35 +48,29 @@ abstract public class DB extends JLPCActor {
     private LogReader logReader;
     protected Path directoryPath;
     private int logReaderMaxSize;
+    private String[] fileNames = null;
 
     public void openDbFile(int logReaderMaxSize, RP rp)
             throws Exception {
         this.logReaderMaxSize = logReaderMaxSize;
-        String[] fileNames = directoryPath.toFile().list();
+        fileNames = directoryPath.toFile().list();
         if (fileNames == null)
             return;
         Arrays.sort(fileNames);
-        int i = 0;
-        while (i < fileNames.length) {
-            String fileName = fileNames[i];
-            if (fileName.endsWith(".jalog")) {
-                (new ProcessLogFile(fileName, 0L)).send(this, this, rp);
-                return;
-            }
-            i += 1;
-        }
-        rp.processResponse(null);
+        (new ProcessLogFile(0L, 0)).send(this, this, rp);
     }
 
-    public void closeDbFile() {
-        if (durableTransactionLogger != null) {
-            durableTransactionLogger.close();
-            durableTransactionLogger = null;
-        }
-    }
-
-    public void processLogFile(String logFileName, long position, final RP rp)
+    public void processLogFile(long position, int fileIndex, final RP rp)
             throws Exception {
+        while (fileIndex < fileNames.length && !fileNames[fileIndex].endsWith(".jalog")) {
+            fileIndex += 1;
+        }
+        if (fileIndex == fileNames.length) {
+            rp.processResponse(null);
+            return;
+        }
+        final int fi = fileIndex;
+        String logFileName = fileNames[fileIndex];
         getLogReader(logReaderMaxSize);
         Path path = directoryPath.resolve(logFileName);
         System.out.println("processing " + path);
@@ -92,11 +86,18 @@ abstract public class DB extends JLPCActor {
                     @Override
                     public void processResponse(Object response) throws Exception {
                         logReader.close();
-                        rp.processResponse(null);
+                        processLogFile(0L, fi + 1, rp);
                     }
                 });
             }
         });
+    }
+
+    public void closeDbFile() {
+        if (durableTransactionLogger != null) {
+            durableTransactionLogger.close();
+            durableTransactionLogger = null;
+        }
     }
 
     /**
