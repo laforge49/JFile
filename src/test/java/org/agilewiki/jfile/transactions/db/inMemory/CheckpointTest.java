@@ -37,15 +37,6 @@ public class CheckpointTest extends TestCase {
         db.clearDirectory();
         (new OpenDbFile(10000)).send(future, db);
 
-        DurableTransactionLogger durableTransactionLogger = db.getDurableTransactionLogger();
-        Path logPath = directoryPath.resolve("CheckpointTestLog.jalog");
-        System.out.println(logPath);
-        durableTransactionLogger.open(
-                logPath,
-                StandardOpenOption.WRITE,
-                StandardOpenOption.CREATE);
-        durableTransactionLogger.currentPosition = 0L;
-
         TransactionAggregator transactionAggregator = db.getTransactionAggregator();
 
         IncrementIntegerTransaction iit = new IncrementIntegerTransaction();

@@ -30,6 +30,7 @@ import org.agilewiki.jfile.transactions.*;
 import org.agilewiki.jfile.transactions.logReader.LogReader;
 import org.agilewiki.jfile.transactions.logReader.ReadLog;
 import org.agilewiki.jfile.transactions.transactionAggregator.TransactionAggregator;
+import org.joda.time.DateTime;
 
 import java.io.File;
 import java.io.IOException;
@@ -172,6 +173,14 @@ abstract public class DB extends JLPCActor {
         durableTransactionLogger = new DurableTransactionLogger();
         durableTransactionLogger.initialize(getMailboxFactory().createAsyncMailbox(), parent);
         durableTransactionLogger.setNext(transactionProcessor);
+        String ts = (new DateTime()).toString("yyyy-MM-dd_HH-mm-ss_SSS");
+        Path path = directoryPath.resolve(ts + ".jalog");
+        System.out.println(path.toAbsolutePath());
+        durableTransactionLogger.open(
+                path,
+                StandardOpenOption.WRITE,
+                StandardOpenOption.CREATE);
+        durableTransactionLogger.currentPosition = 0L;
 
         Serializer serializer = new Serializer();
         serializer.initialize(getMailboxFactory().createAsyncMailbox(), parent);

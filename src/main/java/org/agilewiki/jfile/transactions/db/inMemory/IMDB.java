@@ -48,7 +48,7 @@ public class IMDB extends DB {
                 StandardOpenOption.READ,
                 StandardOpenOption.WRITE,
                 StandardOpenOption.CREATE);
-        rp.processResponse(null);
+        super.openDbFile(logReaderMaxSize, rp);
     }
 
     @Override

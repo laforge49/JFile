@@ -16,6 +16,7 @@ import org.agilewiki.jfile.transactions.TransactionProcessor;
 import org.agilewiki.jfile.transactions.db.StatelessDB;
 import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 import org.agilewiki.jid.scalar.vlens.actor.SetActor;
+import org.joda.time.DateTime;
 
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -40,7 +41,8 @@ public class TransactionProcessorTest extends TestCase {
 
         JFile jFile = new JFile();
         jFile.initialize(mailbox, factory);
-        Path path = directoryPath.resolve("TransactionProcessorTest.jalog");
+        String ts = (new DateTime()).toString("yyyy-MM-dd_HH-mm-ss_SSS");
+        Path path = directoryPath.resolve(ts + ".jalog");
         System.out.println(path.toAbsolutePath());
         jFile.open(
                 path,

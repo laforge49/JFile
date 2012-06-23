@@ -8,6 +8,7 @@ import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.JFileFactories;
 import org.agilewiki.jfile.transactions.*;
+import org.agilewiki.jfile.transactions.db.OpenDbFile;
 import org.agilewiki.jfile.transactions.db.counter.CounterDB;
 import org.agilewiki.jfile.transactions.db.counter.IncrementCounterFactory;
 import org.agilewiki.jfile.transactions.transactionAggregator.TransactionAggregator;
@@ -35,16 +36,7 @@ public class TransactionLoggerTimingTest extends TestCase {
         Path directoryPath = FileSystems.getDefault().getPath("TransactionLoggerTimingTest");
         db.setDirectoryPath(directoryPath);
         db.clearDirectory();
-
-        DurableTransactionLogger durableTransactionLogger = db.getDurableTransactionLogger();
-        Path path = directoryPath.resolve("TransactionLoggerTimingTest.jalog");
-        System.out.println(path.toAbsolutePath());
-        durableTransactionLogger.open(
-                path,
-                StandardOpenOption.READ,
-                StandardOpenOption.WRITE,
-                StandardOpenOption.CREATE);
-        durableTransactionLogger.currentPosition = 0L;
+        (new OpenDbFile(10000)).send(future, db);
 
         TransactionAggregator transactionAggregator = db.getTransactionAggregator();
 

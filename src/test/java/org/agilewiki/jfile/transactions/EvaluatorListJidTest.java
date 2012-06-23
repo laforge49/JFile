@@ -17,6 +17,7 @@ import org.agilewiki.jid.collection.vlenc.IAdd;
 import org.agilewiki.jid.scalar.vlens.actor.GetActor;
 import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 import org.agilewiki.jid.scalar.vlens.actor.SetActor;
+import org.joda.time.DateTime;
 
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -42,7 +43,8 @@ public class EvaluatorListJidTest extends TestCase {
 
         JFile jFile = new JFile();
         jFile.initialize(mailbox, factory);
-        Path path = directoryPath.resolve("EvaluatorListJidTest.jalog");
+        String ts = (new DateTime()).toString("yyyy-MM-dd_HH-mm-ss_SSS");
+        Path path = directoryPath.resolve(ts + ".jalog");
         System.out.println(path.toAbsolutePath());
         jFile.open(
                 path,

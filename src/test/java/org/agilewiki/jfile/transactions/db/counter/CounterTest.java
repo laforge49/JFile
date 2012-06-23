@@ -8,6 +8,7 @@ import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.JFileFactories;
 import org.agilewiki.jfile.transactions.DurableTransactionLogger;
+import org.agilewiki.jfile.transactions.db.OpenDbFile;
 import org.agilewiki.jfile.transactions.transactionAggregator.AggregateTransaction;
 import org.agilewiki.jfile.transactions.transactionAggregator.TransactionAggregator;
 
@@ -33,15 +34,7 @@ public class CounterTest extends TestCase {
         Path directoryPath = FileSystems.getDefault().getPath("CounterTest");
         db.setDirectoryPath(directoryPath);
         db.clearDirectory();
-
-        DurableTransactionLogger durableTransactionLogger = db.getDurableTransactionLogger();
-        Path path = directoryPath.resolve("CounterTest.jalog");
-        System.out.println(path.toAbsolutePath());
-        durableTransactionLogger.open(
-                path,
-                StandardOpenOption.WRITE,
-                StandardOpenOption.CREATE);
-        durableTransactionLogger.currentPosition = 0L;
+        (new OpenDbFile(10000)).send(future, db);
 
         TransactionAggregator transactionAggregator = db.getTransactionAggregator();
         (new AggregateTransaction("inc")).sendEvent(transactionAggregator);
