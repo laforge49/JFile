@@ -48,33 +48,33 @@ abstract public class DB extends JLPCActor {
     private LogReader logReader;
     protected Path directoryPath;
     private int logReaderMaxSize;
-    protected String[] fileNames = null;
+    protected String[] logFileNames = null;
 
     public void openDbFile(int logReaderMaxSize, RP rp)
             throws Exception {
         initializeDb(logReaderMaxSize);
-        (new ProcessLogFile(0L, 0)).send(this, this, rp);
+        processLogFile(0L, 0, rp);
     }
 
     protected void initializeDb(int logReaderMaxSize) {
         this.logReaderMaxSize = logReaderMaxSize;
-        fileNames = directoryPath.toFile().list();
-        if (fileNames == null)
+        logFileNames = directoryPath.toFile().list();
+        if (logFileNames == null)
             return;
-        Arrays.sort(fileNames);
+        Arrays.sort(logFileNames);
     }
 
     public void processLogFile(long position, int fileIndex, final RP rp)
             throws Exception {
-        while (fileIndex < fileNames.length && !fileNames[fileIndex].endsWith(".jalog")) {
+        while (fileIndex < logFileNames.length && !logFileNames[fileIndex].endsWith(".jalog")) {
             fileIndex += 1;
         }
-        if (fileIndex == fileNames.length) {
+        if (fileIndex == logFileNames.length) {
             rp.processResponse(null);
             return;
         }
         final int fi = fileIndex;
-        String logFileName = fileNames[fileIndex];
+        String logFileName = logFileNames[fileIndex];
         getLogReader(logReaderMaxSize);
         Path path = directoryPath.resolve(logFileName);
         System.out.println("processing " + fi + " " + path);

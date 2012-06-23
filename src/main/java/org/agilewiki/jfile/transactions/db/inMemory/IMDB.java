@@ -8,7 +8,6 @@ import org.agilewiki.jfile.JFile;
 import org.agilewiki.jfile.block.Block;
 import org.agilewiki.jfile.block.LTA32Block;
 import org.agilewiki.jfile.transactions.db.DB;
-import org.agilewiki.jfile.transactions.db.ProcessLogFile;
 import org.agilewiki.jid.JidFactories;
 import org.agilewiki.jid._Jid;
 import org.agilewiki.jid.collection.vlenc.map.StringMapJid;
@@ -29,6 +28,10 @@ import java.nio.file.StandardOpenOption;
  * In-memory database.
  */
 public class IMDB extends DB {
+
+    public static final String LOG_POSITION = "$$LOG_POSITION";
+    public static final String LOG_FILE_NAME = "$$LOG_FILE_NAME";
+
     private JFile dbFile;
     private RootJid rootJid;
     private StringMapJid stringMapJid;
@@ -77,7 +80,18 @@ public class IMDB extends DB {
             rootJid = rootJid0;
             isFirstRootJid = true;
         }
-        (new ProcessLogFile(0L, 0)).send(this, this, rp);
+        Long position = getLong(LOG_POSITION);
+        if (position == null) {
+            processLogFile(0L, 0, rp);
+            return;
+        }
+        String logFileName = getString(LOG_FILE_NAME);
+        int fileIndex = 0;
+        while (fileIndex < logFileNames.length && !logFileNames[fileIndex].equals(logFileName))
+            fileIndex += 1;
+        if (fileIndex == logFileNames.length)
+            throw new IllegalStateException("Missing log file: " + logFileName);
+        processLogFile(position, fileIndex, rp);
     }
 
     @Override
@@ -101,7 +115,18 @@ public class IMDB extends DB {
         return rootJid;
     }
 
-    public StringMapJid makeStringMapJid() throws Exception {
+    public StringMapJid getStringMapJid()
+            throws Exception {
+        if (rootJid == null)
+            return null;
+        if (stringMapJid == null) {
+            stringMapJid = (StringMapJid) rootJid.getValue();
+        }
+        return stringMapJid;
+    }
+
+    public StringMapJid makeStringMapJid()
+            throws Exception {
         if (stringMapJid == null) {
             RootJid rj = makeRootJid();
             stringMapJid = (StringMapJid) rj.getValue();
@@ -113,7 +138,16 @@ public class IMDB extends DB {
         return stringMapJid;
     }
 
-    public ActorJid makeActorJid(String key) throws Exception {
+    public ActorJid getActorJid(String key)
+            throws Exception {
+        StringMapJid smj = getStringMapJid();
+        if (smj == null)
+            return null;
+        return (ActorJid) smj.kGet(key);
+    }
+
+    public ActorJid makeActorJid(String key)
+            throws Exception {
         StringMapJid smj = makeStringMapJid();
         ActorJid actorJid = (ActorJid) smj.kGet(key);
         if (actorJid == null) {
@@ -123,7 +157,17 @@ public class IMDB extends DB {
         return actorJid;
     }
 
-    public _Jid makeJid(String key, String factoryName) throws Exception {
+    public _Jid getJid(String key)
+            throws Exception {
+        ActorJid aj = getActorJid(key);
+        if (aj == null)
+            return null;
+        _Jid jid = aj.getValue();
+        return jid;
+    }
+
+    public _Jid makeJid(String key, String factoryName)
+            throws Exception {
         ActorJid aj = makeActorJid(key);
         _Jid jid = aj.getValue();
         if (jid == null) {
@@ -133,47 +177,139 @@ public class IMDB extends DB {
         return jid;
     }
 
-    public BooleanJid makeBooleanJid(String key) throws Exception {
+    public BooleanJid getBooleanJid(String key)
+            throws Exception {
+        return (BooleanJid) getJid(key);
+    }
+
+    public Boolean getBoolean(String key)
+            throws Exception {
+        BooleanJid ij = getBooleanJid(key);
+        if (ij == null)
+            return null;
+        return ij.getValue();
+    }
+
+    public BooleanJid makeBooleanJid(String key)
+            throws Exception {
         return (BooleanJid) makeJid(key, JidFactories.BOOLEAN_JID_TYPE);
     }
 
-    public IntegerJid makeIntegerJid(String key) throws Exception {
+    public IntegerJid getIntegerJid(String key)
+            throws Exception {
+        return (IntegerJid) getJid(key);
+    }
+
+    public Integer getInteger(String key)
+            throws Exception {
+        IntegerJid ij = getIntegerJid(key);
+        if (ij == null)
+            return null;
+        return ij.getValue();
+    }
+
+    public IntegerJid makeIntegerJid(String key)
+            throws Exception {
         return (IntegerJid) makeJid(key, JidFactories.INTEGER_JID_TYPE);
     }
 
-    public Integer getInteger(String key) throws Exception {
-        return makeIntegerJid(key).getValue();
-    }
-
-    public Integer incrementInteger(String key) throws Exception {
+    public Integer incrementInteger(String key)
+            throws Exception {
         IntegerJid ij = makeIntegerJid(key);
         int nv = ij.getValue() + 1;
         ij.setValue(nv);
         return nv;
     }
 
-    public LongJid makeLongJid(String key) throws Exception {
+    public LongJid getLongJid(String key)
+            throws Exception {
+        return (LongJid) getJid(key);
+    }
+
+    public Long getLong(String key)
+            throws Exception {
+        LongJid ij = getLongJid(key);
+        if (ij == null)
+            return null;
+        return ij.getValue();
+    }
+
+    public LongJid makeLongJid(String key)
+            throws Exception {
         return (LongJid) makeJid(key, JidFactories.LONG_JID_TYPE);
     }
 
-    public FloatJid makeFloatJid(String key) throws Exception {
+    public FloatJid getFloatJid(String key)
+            throws Exception {
+        return (FloatJid) getJid(key);
+    }
+
+    public Float getFloat(String key)
+            throws Exception {
+        FloatJid ij = getFloatJid(key);
+        if (ij == null)
+            return null;
+        return ij.getValue();
+    }
+
+    public FloatJid makeFloatJid(String key)
+            throws Exception {
         return (FloatJid) makeJid(key, JidFactories.FLOAT_JID_TYPE);
     }
 
-    public DoubleJid makeDoubleJid(String key) throws Exception {
+    public DoubleJid getDoubleJid(String key)
+            throws Exception {
+        return (DoubleJid) getJid(key);
+    }
+
+    public Double getDouble(String key)
+            throws Exception {
+        DoubleJid ij = getDoubleJid(key);
+        if (ij == null)
+            return null;
+        return ij.getValue();
+    }
+
+    public DoubleJid makeDoubleJid(String key)
+            throws Exception {
         return (DoubleJid) makeJid(key, JidFactories.DOUBLE_JID_TYPE);
     }
 
-    public StringJid makeStringJid(String key) throws Exception {
+    public StringJid getStringJid(String key)
+            throws Exception {
+        return (StringJid) getJid(key);
+    }
+
+    public String getString(String key)
+            throws Exception {
+        StringJid sj = getStringJid(key);
+        if (sj == null)
+            return null;
+        return sj.getValue();
+    }
+
+    public StringJid makeStringJid(String key)
+            throws Exception {
         return (StringJid) makeJid(key, JidFactories.STRING_JID_TYPE);
     }
 
-    public BytesJid makeBytesJid(String key) throws Exception {
-        return (BytesJid) makeJid(key, JidFactories.BYTES_JID_TYPE);
+    public BytesJid getBytesJid(String key)
+            throws Exception {
+        return (BytesJid) getJid(key);
     }
 
-    public static final String LOG_POSITION = "$$LOG_POSITION";
-    public static final String LOG_FILE_NAME = "$$LOG_FILE_NAME";
+    public byte[] getBytes(String key)
+            throws Exception {
+        BytesJid ij = getBytesJid(key);
+        if (ij == null)
+            return null;
+        return ij.getValue();
+    }
+
+    public BytesJid makeBytesJid(String key)
+            throws Exception {
+        return (BytesJid) makeJid(key, JidFactories.BYTES_JID_TYPE);
+    }
 
     public void checkpoint(long logPosition, long timestamp, String logFileName, RP rp)
             throws Exception {
