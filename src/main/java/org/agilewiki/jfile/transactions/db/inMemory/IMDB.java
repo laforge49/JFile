@@ -50,6 +50,33 @@ public class IMDB extends DB {
                 StandardOpenOption.WRITE,
                 StandardOpenOption.CREATE);
         initializeDb(logReaderMaxSize);
+        Block block0 = newDbBlock();
+        block0.setCurrentPosition(0L);
+        block0.setFileName(dbPath.toString());
+        dbFile.readRootJid(block0, maxSize);
+        RootJid rootJid0 = block0.getRootJid(getMailboxFactory().createMailbox(), getParent());
+        long timestamp0 = block0.getTimestamp();
+        System.out.println("rootJid0 " + rootJid0);
+        Block block1 = newDbBlock();
+        block1.setCurrentPosition(maxSize);
+        block1.setFileName(dbPath.toString());
+        dbFile.readRootJid(block1, maxSize);
+        RootJid rootJid1 = block1.getRootJid(getMailboxFactory().createMailbox(), getParent());
+        long timestamp1 = block0.getTimestamp();
+        System.out.println("rootJid1 " + rootJid1);
+        if (rootJid0 == null) {
+            rootJid = rootJid1;
+            isFirstRootJid = false;
+        } else if (rootJid1 == null) {
+            rootJid = rootJid0;
+            isFirstRootJid = true;
+        } else if (timestamp0 < timestamp1) {
+            rootJid = rootJid1;
+            isFirstRootJid = false;
+        } else {
+            rootJid = rootJid0;
+            isFirstRootJid = true;
+        }
         (new ProcessLogFile(0L, 0)).send(this, this, rp);
     }
 
