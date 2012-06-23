@@ -7,7 +7,6 @@ import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.JFileFactories;
-import org.agilewiki.jfile.transactions.DurableTransactionLogger;
 import org.agilewiki.jfile.transactions.db.OpenDbFile;
 import org.agilewiki.jfile.transactions.transactionAggregator.AggregateTransaction;
 import org.agilewiki.jfile.transactions.transactionAggregator.TransactionAggregator;
@@ -15,7 +14,6 @@ import org.agilewiki.jid.JidFactories;
 
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 
 public class CheckpointTest extends TestCase {
     public void test()
