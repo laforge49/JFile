@@ -80,10 +80,8 @@ public class LogReader extends JFile implements Finisher {
             Block block = newBlock();
             block.setFileName(getFileName());
             block.setCurrentPosition(currentPosition);
-            long oldPosition = currentPosition;
             readRootJid(block, maxSize);
             currentPosition = block.getCurrentPosition();
-            //block.setCurrentPosition(oldPosition);
             if (block.isEmpty()) {
                 long position = block.getCurrentPosition();
                 long size = fileChannel.size();

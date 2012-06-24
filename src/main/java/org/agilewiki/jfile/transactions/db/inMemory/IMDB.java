@@ -328,6 +328,8 @@ public class IMDB extends DB {
             lj.setValue(logPosition);
             pendingWrite = true;
             Block block = newDbBlock();
+            rootJid = (RootJid) rootJid.copyJID(getMailboxFactory().createMailbox());
+            stringMapJid = null;
             RootJid rj = (RootJid) rootJid.copyJID(getMailboxFactory().createMailbox());
             block.setRootJid(rj);
             block.setTimestamp(timestamp);
