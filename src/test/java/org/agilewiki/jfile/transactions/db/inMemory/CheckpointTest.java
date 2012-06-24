@@ -25,44 +25,64 @@ public class CheckpointTest extends TestCase {
         (new JidFactories()).initialize(factoryMailbox, factory);
         (new JFileFactories()).initialize(factoryMailbox, factory);
         JAFuture future = new JAFuture();
-
-        Mailbox dbMailbox = mailboxFactory.createAsyncMailbox();
-        IMDB db = new IMDB();
-        db.initialize(dbMailbox, factory);
-        db.maxSize = 10240;
         Path directoryPath = FileSystems.getDefault().getPath("CheckpointTest");
-        db.setDirectoryPath(directoryPath);
-        db.clearDirectory();
-        (new OpenDbFile(10000)).send(future, db);
-
-        TransactionAggregator transactionAggregator = db.getTransactionAggregator();
-
+        OpenDbFile openDbFile = new OpenDbFile(10000);
         IncrementIntegerTransaction iit = new IncrementIntegerTransaction();
         iit.initialize(factoryMailbox);
         iit.setValue("counter");
         byte[] iitBytes = iit.getBytes();
-        (new AggregateTransaction(JFileFactories.INCREMENT_INTEGER_TRANSACTION, iitBytes)).
-                sendEvent(transactionAggregator);
-        (new AggregateTransaction(JFileFactories.INCREMENT_INTEGER_TRANSACTION, iitBytes)).
-                sendEvent(transactionAggregator);
-        (new AggregateTransaction(JFileFactories.INCREMENT_INTEGER_TRANSACTION, iitBytes)).
-                sendEvent(transactionAggregator);
-        (new AggregateTransaction(JFileFactories.INCREMENT_INTEGER_TRANSACTION, iitBytes)).
-                sendEvent(transactionAggregator);
-        (new AggregateTransaction(JFileFactories.INCREMENT_INTEGER_TRANSACTION, iitBytes)).
-                sendEvent(transactionAggregator);
-        (new AggregateTransaction(JFileFactories.INCREMENT_INTEGER_TRANSACTION, iitBytes)).
-                sendEvent(transactionAggregator);
-
+        AggregateTransaction aggregateIncrementTransaction =
+                new AggregateTransaction(JFileFactories.INCREMENT_INTEGER_TRANSACTION, iitBytes);
         GetIntegerTransaction git = new GetIntegerTransaction();
         git.initialize(factoryMailbox);
         git.setValue("counter");
         byte[] gitBytes = git.getBytes();
-        int total = (Integer) (new AggregateTransaction(JFileFactories.GET_INTEGER_TRANSACTION, gitBytes)).
-                send(future, transactionAggregator);
-        assertEquals(6, total);
+        AggregateTransaction aggregateGetTransaction =
+                new AggregateTransaction(JFileFactories.GET_INTEGER_TRANSACTION, gitBytes);
 
-        db.closeDbFile();
+        System.out.println("db1");
+        Mailbox dbMailbox1 = mailboxFactory.createAsyncMailbox();
+        IMDB db1 = new IMDB();
+        db1.initialize(dbMailbox1, factory);
+        db1.maxSize = 10240;
+        db1.setDirectoryPath(directoryPath);
+        db1.clearDirectory();
+        openDbFile.send(future, db1);
+        TransactionAggregator transactionAggregator1 = db1.getTransactionAggregator();
+        aggregateIncrementTransaction.sendEvent(transactionAggregator1);
+        int total1 = (Integer) aggregateGetTransaction.send(future, transactionAggregator1);
+        assertEquals(1, total1);
+        db1.closeDbFile();
+
+        System.out.println("db2");
+        Mailbox dbMailbox2 = mailboxFactory.createAsyncMailbox();
+        IMDB db2 = new IMDB();
+        db2.initialize(dbMailbox2, factory);
+        db2.maxSize = 10240;
+        db2.setDirectoryPath(directoryPath);
+        openDbFile.send(future, db2);
+        TransactionAggregator transactionAggregator2 = db2.getTransactionAggregator();
+        aggregateIncrementTransaction.sendEvent(transactionAggregator2);
+        aggregateIncrementTransaction.sendEvent(transactionAggregator2);
+        int total2 = (Integer) aggregateGetTransaction.send(future, transactionAggregator2);
+        assertEquals(3, total2);
+        db2.closeDbFile();
+
+        System.out.println("db3");
+        Mailbox dbMailbox3 = mailboxFactory.createAsyncMailbox();
+        IMDB db3 = new IMDB();
+        db3.initialize(dbMailbox3, factory);
+        db3.maxSize = 10240;
+        db3.setDirectoryPath(directoryPath);
+        openDbFile.send(future, db3);
+        TransactionAggregator transactionAggregator3 = db3.getTransactionAggregator();
+        aggregateIncrementTransaction.sendEvent(transactionAggregator3);
+        aggregateIncrementTransaction.sendEvent(transactionAggregator3);
+        aggregateIncrementTransaction.sendEvent(transactionAggregator3);
+        int total3 = (Integer) aggregateGetTransaction.send(future, transactionAggregator3);
+        assertEquals(6, total3);
+        db3.closeDbFile();
+
         mailboxFactory.close();
     }
 }

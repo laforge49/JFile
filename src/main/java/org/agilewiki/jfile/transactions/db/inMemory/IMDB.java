@@ -38,6 +38,7 @@ public class IMDB extends DB {
     private boolean pendingWrite;
     private boolean isFirstRootJid;
     public int maxSize;
+    private boolean closed;
 
     @Override
     public void openDbFile(int logReaderMaxSize, RP rp)
@@ -59,14 +60,12 @@ public class IMDB extends DB {
         dbFile.readRootJid(block0, maxSize);
         RootJid rootJid0 = block0.getRootJid(getMailboxFactory().createMailbox(), getParent());
         long timestamp0 = block0.getTimestamp();
-        System.out.println("rootJid0 " + rootJid0);
         Block block1 = newDbBlock();
         block1.setCurrentPosition(maxSize);
         block1.setFileName(dbPath.toString());
         dbFile.readRootJid(block1, maxSize);
         RootJid rootJid1 = block1.getRootJid(getMailboxFactory().createMailbox(), getParent());
         long timestamp1 = block0.getTimestamp();
-        System.out.println("rootJid1 " + rootJid1);
         if (rootJid0 == null) {
             rootJid = rootJid1;
             isFirstRootJid = false;
@@ -91,12 +90,14 @@ public class IMDB extends DB {
             fileIndex += 1;
         if (fileIndex == logFileNames.length)
             throw new IllegalStateException("Missing log file: " + logFileName);
+        System.out.println("load position "+position);
         processLogFile(position, fileIndex, rp);
     }
 
     @Override
     public void closeDbFile() {
         super.closeDbFile();
+        closed = true;
         dbFile.close();
     }
 
@@ -316,7 +317,8 @@ public class IMDB extends DB {
         setExceptionHandler(new ExceptionHandler() {
             @Override
             public void process(Exception exception) throws Exception {
-                System.err.println("Checkpoint Exception: " + exception);
+                if (!closed)
+                    System.out.println("----> Checkpoint Exception: " + exception);
             }
         });
         if (!pendingWrite) {

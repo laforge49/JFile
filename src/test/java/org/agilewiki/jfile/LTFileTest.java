@@ -8,6 +8,7 @@ import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.block.Block;
 import org.agilewiki.jfile.block.LTBlock;
+import org.agilewiki.jid.JidFactories;
 import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 
 import java.nio.channels.FileChannel;
@@ -22,6 +23,7 @@ public class LTFileTest extends TestCase {
         Mailbox mailbox = mailboxFactory.createMailbox();
         JAFactory factory = new JAFactory();
         factory.initialize(mailbox);
+        (new JidFactories()).initialize(mailbox, factory);
         JAFuture future = new JAFuture();
 
         JFile jFile = new JFile();

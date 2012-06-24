@@ -25,7 +25,9 @@ package org.agilewiki.jfile.block;
 
 import org.agilewiki.jactor.Actor;
 import org.agilewiki.jactor.Mailbox;
+import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jid.AppendableBytes;
+import org.agilewiki.jid.JidFactories;
 import org.agilewiki.jid.ReadableBytes;
 import org.agilewiki.jid.Util;
 import org.agilewiki.jid.scalar.vlens.actor.RootJid;
@@ -187,14 +189,19 @@ public class LBlock implements Block {
         rb = null;
         if (rootJidBytes == null)
             return null;
-        rootJid = new RootJid();
-        rootJid.initialize(mailbox, parent);
+        JAFactory factory = null;
+        if (parent instanceof JAFactory)
+            factory = (JAFactory) parent;
+        else
+            factory = (JAFactory) parent.getAncestor(JAFactory.class);
+        rootJid = (RootJid) factory.newActor(JidFactories.ROOT_JID_TYPE, mailbox, parent);
         rootJid.load(new ReadableBytes(rootJidBytes, 0));
         return rootJid;
     }
 
     /**
      * Indicates the abscense of a root jic.
+     *
      * @return True when a root jit is not present.
      */
     public boolean isEmpty() {

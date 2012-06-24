@@ -8,6 +8,7 @@ import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.JFileFactories;
 import org.agilewiki.jfile.transactions.db.OpenDbFile;
+import org.agilewiki.jid.JidFactories;
 
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -19,6 +20,7 @@ public class RecoveryTimingTest extends TestCase {
         Mailbox factoryMailbox = mailboxFactory.createMailbox();
         JAFactory factory = new JAFactory();
         factory.initialize(factoryMailbox);
+        (new JidFactories()).initialize(factoryMailbox, factory);
         (new JFileFactories()).initialize(factoryMailbox, factory);
         factory.defineActorType("n", IncrementCounterTransaction.class);
         JAFuture future = new JAFuture();

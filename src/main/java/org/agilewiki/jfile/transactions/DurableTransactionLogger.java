@@ -60,7 +60,7 @@ final public class DurableTransactionLogger extends JFile implements BlockProces
         block.setCurrentPosition(currentPosition);
         forcedWriteRootJid(block, -1);
         currentPosition = block.getCurrentPosition();
-        block.setCurrentPosition(oldPosition);
+        //block.setCurrentPosition(oldPosition);
         req.send(DurableTransactionLogger.this, blockFlowBuffer, rp);
     }
 }

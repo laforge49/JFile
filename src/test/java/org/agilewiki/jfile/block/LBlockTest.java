@@ -5,6 +5,7 @@ import org.agilewiki.jactor.JAMailboxFactory;
 import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.factory.JAFactory;
+import org.agilewiki.jid.JidFactories;
 import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 
 public class LBlockTest extends TestCase {
@@ -14,6 +15,7 @@ public class LBlockTest extends TestCase {
         Mailbox mailbox = mailboxFactory.createMailbox();
         JAFactory factory = new JAFactory();
         factory.initialize(mailbox);
+        (new JidFactories()).initialize(mailbox, factory);
 
         RootJid rj = new RootJid();
         rj.initialize(mailbox, factory);
