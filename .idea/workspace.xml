@@ -58,19 +58,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="23" selection-start="385" selection-end="385" vertical-scroll-proportion="0.0">
+            <state line="6" column="23" selection-start="385" selection-end="385" vertical-scroll-proportion="0.0927835">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="release.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="release.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/release.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="93" selection-start="701" selection-end="701" vertical-scroll-proportion="0.17010309">
+            <state line="16" column="93" selection-start="701" selection-end="701" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -1087,16 +1087,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
+    <entry file="file://$PROJECT_DIR$/release.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="23" selection-start="385" selection-end="385" vertical-scroll-proportion="0.0">
+        <state line="16" column="93" selection-start="701" selection-end="701" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/release.xml">
+    <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="93" selection-start="701" selection-end="701" vertical-scroll-proportion="0.17010309">
+        <state line="6" column="23" selection-start="385" selection-end="385" vertical-scroll-proportion="0.0927835">
           <folding />
         </state>
       </provider>
