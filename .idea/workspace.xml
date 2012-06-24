@@ -61,27 +61,16 @@
       <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="84" selection-start="914" selection-end="914" vertical-scroll-proportion="0.0">
+            <state line="6" column="23" selection-start="385" selection-end="385" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="OpenDbFile.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/org/agilewiki/jfile/transactions/db/OpenDbFile.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="39" selection-start="932" selection-end="932" vertical-scroll-proportion="0.5171103">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="release.xml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="release.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/release.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="22" selection-start="384" selection-end="384" vertical-scroll-proportion="0.0">
+            <state line="16" column="93" selection-start="701" selection-end="701" vertical-scroll-proportion="0.17010309">
               <folding />
             </state>
           </provider>
@@ -110,9 +99,9 @@
         <option value="$PROJECT_DIR$/src/main/java/org/agilewiki/jfile/transactions/logReader/LogReader.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/agilewiki/jfile/transactions/DurableTransactionLogger.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/agilewiki/jfile/transactions/db/inMemory/IMDB.java" />
+        <option value="$PROJECT_DIR$/src/main/java/org/agilewiki/jfile/transactions/db/OpenDbFile.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/release.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/org/agilewiki/jfile/transactions/db/OpenDbFile.java" />
       </list>
     </option>
   </component>
@@ -1089,26 +1078,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/release.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="22" selection-start="384" selection-end="384" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="84" selection-start="914" selection-end="914" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/agilewiki/jfile/transactions/db/OpenDbFile.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="34" column="39" selection-start="932" selection-end="932" vertical-scroll-proportion="0.5171103">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="23" selection-start="385" selection-end="385" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/release.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="93" selection-start="701" selection-end="701" vertical-scroll-proportion="0.17010309">
+          <folding />
         </state>
       </provider>
     </entry>
