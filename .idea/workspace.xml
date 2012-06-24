@@ -901,7 +901,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="466" y="32" width="1332" height="976" extended-state="0" />
+    <frame x="466" y="32" width="1332" height="976" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
