@@ -1,0 +1,7 @@
+org.agilewiki.jfile
+org.agilewiki.jfile.block
+org.agilewiki.jfile.transactions
+org.agilewiki.jfile.transactions.db
+org.agilewiki.jfile.transactions.db.inMemory
+org.agilewiki.jfile.transactions.logReader
+org.agilewiki.jfile.transactions.transactionAggregator
