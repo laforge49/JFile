@@ -2,16 +2,15 @@ package org.agilewiki.jfile.transactions.transactionLoggerTiming;
 
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
-import org.agilewiki.jfile.transactions.db.counter.IncrementCounterFactory;
 import org.agilewiki.jfile.transactions.transactionAggregator.AggregateTransaction;
 
-public class TransactionLoggerDriver extends JLPCActor {
+public class TransactionAggregator extends JLPCActor {
     PendingManager pendingManager;
     public int batch;
     public int count;
     public int win;
     int ndx;
-    final IncrementCounterFactory ntf = new IncrementCounterFactory("n");
+    public AggregateTransaction aggregateTransaction;
 
     protected void go(RP rp)
             throws Exception {
@@ -30,14 +29,14 @@ public class TransactionLoggerDriver extends JLPCActor {
         int i = 0;
         int l = batch - 1;
         while (i < l) {
-            (new AggregateTransaction(ntf)).sendEvent(this, getParent());
+            aggregateTransaction.sendEvent(this, getParent());
             i += 1;
         }
         pendingManager.pending += 1;
         ndx += 1;
         if (ndx == count)
             pendingManager.fin = true;
-        (new AggregateTransaction(ntf)).send(this, getParent(), pendingManager);
+        aggregateTransaction.send(this, getParent(), pendingManager);
         //System.out.println("" + ndx + " " + pendingManager.fin + " " + pendingManager.pending);
     }
 

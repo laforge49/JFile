@@ -11,7 +11,7 @@ import org.agilewiki.jfile.transactions.Finish;
 import org.agilewiki.jfile.transactions.db.OpenDbFile;
 import org.agilewiki.jfile.transactions.db.counter.CounterDB;
 import org.agilewiki.jfile.transactions.db.counter.IncrementCounterFactory;
-import org.agilewiki.jfile.transactions.transactionAggregator.TransactionAggregator;
+import org.agilewiki.jfile.transactions.transactionAggregator.AggregateTransaction;
 
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -27,6 +27,7 @@ public class TransactionLoggerTimingTest extends TestCase {
         IncrementCounterFactory ntf = new IncrementCounterFactory("n");
         factory.registerActorFactory(ntf);
         JAFuture future = new JAFuture();
+        AggregateTransaction aggregateTransaction = new AggregateTransaction(ntf);
 
         Mailbox dbMailbox = mailboxFactory.createAsyncMailbox();
         CounterDB db = new CounterDB();
@@ -37,13 +38,14 @@ public class TransactionLoggerTimingTest extends TestCase {
         db.clearDirectory();
         (new OpenDbFile(10000)).send(future, db);
 
-        TransactionAggregator transactionAggregator = db.getTransactionAggregator();
+        org.agilewiki.jfile.transactions.transactionAggregator.TransactionAggregator transactionAggregator = db.getTransactionAggregator();
 
-        TransactionLoggerDriver transactionLoggerDriver =
-                new TransactionLoggerDriver();
+        TransactionAggregator transactionLoggerDriver =
+                new TransactionAggregator();
         transactionLoggerDriver.initialize(mailboxFactory.createAsyncMailbox(), transactionAggregator);
         transactionLoggerDriver.setInitialBufferCapacity(10000);
         transactionLoggerDriver.win = 3;
+        transactionLoggerDriver.aggregateTransaction = aggregateTransaction;
 
         transactionLoggerDriver.batch = 10;
         transactionLoggerDriver.count = 10;
