@@ -1,4 +1,4 @@
-package org.agilewiki.jfile.transactions.transactionLoggerTiming;
+package org.agilewiki.jfile.transactions.db.counter;
 
 import junit.framework.TestCase;
 import org.agilewiki.jactor.JAFuture;
@@ -8,9 +8,9 @@ import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.JFileFactories;
 import org.agilewiki.jfile.transactions.Finish;
+import org.agilewiki.jfile.transactions.Go;
+import org.agilewiki.jfile.transactions.TransactionAggregator;
 import org.agilewiki.jfile.transactions.db.OpenDbFile;
-import org.agilewiki.jfile.transactions.db.counter.CounterDB;
-import org.agilewiki.jfile.transactions.db.counter.IncrementCounterFactory;
 import org.agilewiki.jfile.transactions.transactionAggregator.AggregateTransaction;
 
 import java.nio.file.FileSystems;
