@@ -28,7 +28,7 @@ public class LFileTest extends TestCase {
 
         JFile jFile = new JFile();
         jFile.initialize(mailbox, factory);
-        Path path = FileSystems.getDefault().getPath("LFileTest.jf");
+        Path path = FileSystems.getDefault().getPath("LFileTest.jalog");
         System.out.println(path.toAbsolutePath());
         jFile.fileChannel = FileChannel.open(
                 path,

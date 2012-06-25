@@ -58,19 +58,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
+      <file leaf-file-name="LFileTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LFileTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="23" selection-start="385" selection-end="385" vertical-scroll-proportion="0.0927835">
+            <state line="30" column="69" selection-start="1150" selection-end="1155" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="release.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/release.xml">
+      <file leaf-file-name="LTA32FileTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LTA32FileTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="93" selection-start="701" selection-end="701" vertical-scroll-proportion="0.0">
+            <state line="30" column="72" selection-start="1166" selection-end="1166" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LTFileTest.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LTFileTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="62" column="49" selection-start="2244" selection-end="2244" vertical-scroll-proportion="0.73003805">
               <folding />
             </state>
           </provider>
@@ -91,9 +100,6 @@
         <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/block/LBlockTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/db/counter/CounterTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/db/counter/RecoveryTimingTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LTFileTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LFileTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LTA32FileTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/agilewiki/jfile/block/LBlock.java" />
         <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/db/inMemory/CheckpointTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/org/agilewiki/jfile/transactions/logReader/LogReader.java" />
@@ -102,6 +108,9 @@
         <option value="$PROJECT_DIR$/src/main/java/org/agilewiki/jfile/transactions/db/OpenDbFile.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/release.xml" />
+        <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LFileTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LTA32FileTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LTFileTest.java" />
       </list>
     </option>
   </component>
@@ -159,20 +168,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jfile" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jfile" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -202,6 +197,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="TransactionProcessorTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jfile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="JFile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TransactionLoggerTimingTest" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -739,6 +748,20 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jfile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jfile" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -773,24 +796,6 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method>
-        <option name="AntTarget" enabled="false" />
-        <option name="BuildArtifacts" enabled="false" />
-        <option name="Make" enabled="true" />
-        <option name="Maven.BeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -816,6 +821,24 @@
       <envs />
       <properties />
       <listeners />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
@@ -907,7 +930,6 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32965687" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -917,10 +939,11 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28864354" sideWeight="0.67034316" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28785488" sideWeight="0.67034316" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32965687" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32965687" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -982,121 +1005,90 @@
   <component name="editorHistoryManager">
     <entry file="jar://$MAVEN_REPOSITORY$/org/agilewiki/jactor/jactor/3.2.0/jactor-3.2.0-sources.jar!/org/agilewiki/jactor/factory/JAFactory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="101" column="56" selection-start="3923" selection-end="3923" vertical-scroll-proportion="-0.60963243">
-          <folding>
-            <element signature="e#3956#3978#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="101" column="56" selection-start="3923" selection-end="3923" vertical-scroll-proportion="-0.60963243" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/agilewiki/jfile/JFileFactories.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="13" selection-start="1760" selection-end="1760" vertical-scroll-proportion="0.121673">
-          <folding />
-        </state>
+        <state line="38" column="13" selection-start="1760" selection-end="1760" vertical-scroll-proportion="0.121673" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/db/counter/RecoveryTimingTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="25" selection-start="1840" selection-end="1840" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="45" column="25" selection-start="1840" selection-end="1840" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/db/counter/CounterTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="28" selection-start="1237" selection-end="1237" vertical-scroll-proportion="0.21512386">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LTFileTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="0" selection-start="966" selection-end="966" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LTA32FileTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="89" selection-start="971" selection-end="971" vertical-scroll-proportion="0.17209908">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LFileTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="0" selection-start="964" selection-end="964" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="27" column="28" selection-start="1237" selection-end="1237" vertical-scroll-proportion="0.21512386" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/block/LBlockTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="0" selection-start="652" selection-end="711" vertical-scroll-proportion="0.18250951">
-          <folding />
-        </state>
+        <state line="18" column="0" selection-start="652" selection-end="711" vertical-scroll-proportion="0.18250951" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/agilewiki/jfile/block/LBlock.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="188" column="99" selection-start="5404" selection-end="5404" vertical-scroll-proportion="0.34600762">
-          <folding />
-        </state>
+        <state line="188" column="99" selection-start="5404" selection-end="5404" vertical-scroll-proportion="0.34600762" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/agilewiki/jfile/transactions/logReader/LogReader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="0" selection-start="2894" selection-end="2894" vertical-scroll-proportion="0.52978456">
-          <folding />
-        </state>
+        <state line="84" column="0" selection-start="2894" selection-end="2894" vertical-scroll-proportion="0.52978456" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/agilewiki/jfile/transactions/DurableTransactionLogger.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="0" selection-start="2538" selection-end="2538" vertical-scroll-proportion="0.5171103">
-          <folding />
-        </state>
+        <state line="61" column="0" selection-start="2538" selection-end="2538" vertical-scroll-proportion="0.5171103" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/db/inMemory/CheckpointTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="0" selection-start="4025" selection-end="4025" vertical-scroll-proportion="0.89353615">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
+        <state line="83" column="0" selection-start="4025" selection-end="4025" vertical-scroll-proportion="0.89353615" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/agilewiki/jfile/transactions/db/inMemory/IMDB.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="331" column="32" selection-start="10365" selection-end="10365" vertical-scroll-proportion="0.6692015">
-          <folding>
-            <element signature="e#9702#9957#0" expanded="true" />
-            <element signature="e#9946#9947#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="331" column="32" selection-start="10365" selection-end="10365" vertical-scroll-proportion="0.6692015" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/agilewiki/jfile/transactions/db/OpenDbFile.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="39" selection-start="932" selection-end="932" vertical-scroll-proportion="0.5171103">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
+        <state line="34" column="39" selection-start="932" selection-end="932" vertical-scroll-proportion="0.5171103" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/release.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="93" selection-start="701" selection-end="701" vertical-scroll-proportion="0.0">
+        <state line="6" column="22" selection-start="384" selection-end="384" vertical-scroll-proportion="0.0927835">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="23" selection-start="385" selection-end="385" vertical-scroll-proportion="0.0927835">
+        <state line="6" column="22" selection-start="384" selection-end="384" vertical-scroll-proportion="0.0154639175">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LFileTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="69" selection-start="1150" selection-end="1155" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LTA32FileTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="72" selection-start="1166" selection-end="1166" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LTFileTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="49" selection-start="2244" selection-end="2244" vertical-scroll-proportion="0.73003805">
           <folding />
         </state>
       </provider>
