@@ -15,8 +15,7 @@ public class TransactionLoggerDriver extends JLPCActor {
     int ndx;
     final IncrementCounterFactory ntf = new IncrementCounterFactory("n");
 
-    @Override
-    protected void processRequest(Object request, RP rp)
+    protected void go(RP rp)
             throws Exception {
         pendingManager = new PendingManager();
         pendingManager.rp = rp;

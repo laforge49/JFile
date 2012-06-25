@@ -58,29 +58,40 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="LFileTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LFileTest.java">
+      <file leaf-file-name="TransactionLoggerTimingTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/transactionLoggerTiming/TransactionLoggerTimingTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="69" selection-start="1150" selection-end="1155" vertical-scroll-proportion="0.0">
+            <state line="52" column="9" selection-start="2318" selection-end="2318" vertical-scroll-proportion="-16.538462">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LTA32FileTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LTA32FileTest.java">
+      <file leaf-file-name="Go.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/transactionLoggerTiming/Go.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="72" selection-start="1166" selection-end="1166" vertical-scroll-proportion="0.0">
+            <state line="22" column="30" selection-start="724" selection-end="724" vertical-scroll-proportion="0.27376425">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LTFileTest.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LTFileTest.java">
+      <file leaf-file-name="TransactionLoggerDriver.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/transactionLoggerTiming/TransactionLoggerDriver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="62" column="49" selection-start="2244" selection-end="2244" vertical-scroll-proportion="0.73003805">
+            <state line="17" column="0" selection-start="648" selection-end="648" vertical-scroll-proportion="0.0">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CheckpointTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/db/inMemory/CheckpointTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="83" column="0" selection-start="4025" selection-end="4025" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -95,8 +106,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/db/counter/CounterRecoveryTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/org/agilewiki/jfile/transactions/db/DB.java" />
         <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/block/LBlockTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/db/counter/CounterTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/db/counter/RecoveryTimingTest.java" />
@@ -111,6 +120,8 @@
         <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LFileTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LTA32FileTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LTFileTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/transactionLoggerTiming/TransactionLoggerDriver.java" />
+        <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/transactionLoggerTiming/Go.java" />
       </list>
     </option>
   </component>
@@ -930,6 +941,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32965687" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -939,11 +951,10 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28785488" sideWeight="0.67034316" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32492113" sideWeight="0.67034316" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32965687" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32965687" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1003,31 +1014,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/org/agilewiki/jactor/jactor/3.2.0/jactor-3.2.0-sources.jar!/org/agilewiki/jactor/factory/JAFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="101" column="56" selection-start="3923" selection-end="3923" vertical-scroll-proportion="-0.60963243" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/agilewiki/jfile/JFileFactories.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="13" selection-start="1760" selection-end="1760" vertical-scroll-proportion="0.121673" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/db/counter/RecoveryTimingTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="25" selection-start="1840" selection-end="1840" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/db/counter/CounterTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="28" selection-start="1237" selection-end="1237" vertical-scroll-proportion="0.21512386" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/block/LBlockTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="0" selection-start="652" selection-end="711" vertical-scroll-proportion="0.18250951" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/agilewiki/jfile/block/LBlock.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="188" column="99" selection-start="5404" selection-end="5404" vertical-scroll-proportion="0.34600762" />
@@ -1041,11 +1027,6 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/org/agilewiki/jfile/transactions/DurableTransactionLogger.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="61" column="0" selection-start="2538" selection-end="2538" vertical-scroll-proportion="0.5171103" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/db/inMemory/CheckpointTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="0" selection-start="4025" selection-end="4025" vertical-scroll-proportion="0.89353615" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/agilewiki/jfile/transactions/db/inMemory/IMDB.java">
@@ -1089,6 +1070,48 @@
     <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LTFileTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="62" column="49" selection-start="2244" selection-end="2244" vertical-scroll-proportion="0.73003805">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/db/counter/RecoveryTimingTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="25" selection-start="1840" selection-end="1840" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/db/inMemory/CheckpointTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="83" column="0" selection-start="4025" selection-end="4025" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/transactionLoggerTiming/TransactionLoggerTimingTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="52" column="9" selection-start="2318" selection-end="2318" vertical-scroll-proportion="-16.538462">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/db/counter/GetCounter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="71" selection-start="626" selection-end="626" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/transactionLoggerTiming/TransactionLoggerDriver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="0" selection-start="648" selection-end="648" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/transactionLoggerTiming/Go.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="30" selection-start="724" selection-end="724" vertical-scroll-proportion="0.27376425">
           <folding />
         </state>
       </provider>
