@@ -1,9 +1,6 @@
 package org.agilewiki.jfile.transactions.db.counter;
 
-import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
-import org.agilewiki.jactor.lpc.JLPCActor;
-import org.agilewiki.jfile.transactions.db.Checkpoint;
 import org.agilewiki.jfile.transactions.db.DB;
 
 public class CounterDB extends DB {

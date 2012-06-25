@@ -58,33 +58,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TransactionLoggerTimingTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/transactionLoggerTiming/TransactionLoggerTimingTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="52" column="9" selection-start="2318" selection-end="2318" vertical-scroll-proportion="-16.538462">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Go.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/transactionLoggerTiming/Go.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="30" selection-start="724" selection-end="724" vertical-scroll-proportion="0.27376425">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TransactionLoggerDriver.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/transactionLoggerTiming/TransactionLoggerDriver.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="0" selection-start="648" selection-end="648" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="CheckpointTest.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/db/inMemory/CheckpointTest.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -92,6 +65,37 @@
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Go.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/transactionLoggerTiming/Go.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="21" column="0" selection-start="662" selection-end="662" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TransactionLoggerDriver.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/transactionLoggerTiming/TransactionLoggerDriver.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="0" selection-start="67" selection-end="67" vertical-scroll-proportion="0.029150823">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TransactionLoggerTimingTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/transactionLoggerTiming/TransactionLoggerTimingTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="47" column="8" selection-start="2130" selection-end="2130" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -120,8 +124,8 @@
         <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LFileTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LTA32FileTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/LTFileTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/transactionLoggerTiming/TransactionLoggerDriver.java" />
         <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/transactionLoggerTiming/Go.java" />
+        <option value="$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/transactionLoggerTiming/TransactionLoggerDriver.java" />
       </list>
     </option>
   </component>
@@ -1014,11 +1018,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/org/agilewiki/jfile/block/LBlock.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="188" column="99" selection-start="5404" selection-end="5404" vertical-scroll-proportion="0.34600762" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/org/agilewiki/jfile/transactions/logReader/LogReader.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="84" column="0" selection-start="2894" selection-end="2894" vertical-scroll-proportion="0.52978456" />
@@ -1079,6 +1078,20 @@
         <state line="45" column="25" selection-start="1840" selection-end="1840" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/db/counter/GetCounter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="71" selection-start="626" selection-end="626" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/transactionProcessor/TransactionProcessorTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="13" selection-start="962" selection-end="962" vertical-scroll-proportion="0.0608365">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/db/inMemory/CheckpointTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="83" column="0" selection-start="4025" selection-end="4025" vertical-scroll-proportion="0.0">
@@ -1088,31 +1101,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/transactionLoggerTiming/TransactionLoggerTimingTest.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/transactionLoggerTiming/Go.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="9" selection-start="2318" selection-end="2318" vertical-scroll-proportion="-16.538462">
-          <folding />
+        <state line="21" column="0" selection-start="662" selection-end="662" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/db/counter/GetCounter.java">
+    <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/transactionLoggerTiming/TransactionLoggerTimingTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="71" selection-start="626" selection-end="626" vertical-scroll-proportion="0.0">
+        <state line="47" column="8" selection-start="2130" selection-end="2130" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/transactionLoggerTiming/TransactionLoggerDriver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="0" selection-start="648" selection-end="648" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/org/agilewiki/jfile/transactions/transactionLoggerTiming/Go.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="30" selection-start="724" selection-end="724" vertical-scroll-proportion="0.27376425">
-          <folding />
+        <state line="2" column="0" selection-start="67" selection-end="67" vertical-scroll-proportion="0.029150823">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

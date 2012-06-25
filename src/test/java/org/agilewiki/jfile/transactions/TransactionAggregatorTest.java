@@ -7,8 +7,6 @@ import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.JFileFactories;
-import org.agilewiki.jfile.transactions.HelloWorldTransaction;
-import org.agilewiki.jfile.transactions.TransactionProcessor;
 import org.agilewiki.jfile.transactions.db.StatelessDB;
 import org.agilewiki.jfile.transactions.transactionAggregator.AggregateTransaction;
 import org.agilewiki.jfile.transactions.transactionAggregator.TransactionAggregator;

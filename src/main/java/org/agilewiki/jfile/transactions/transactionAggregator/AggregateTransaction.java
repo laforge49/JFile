@@ -28,7 +28,6 @@ import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.factory.ActorFactory;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jactor.lpc.Request;
-import org.agilewiki.jfile.transactions.logReader.LogReader;
 
 /**
  * Adds a transaction to a Block for subsequent logging and processing.

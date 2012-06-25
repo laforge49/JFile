@@ -23,7 +23,6 @@
  */
 package org.agilewiki.jfile.transactions.logReader;
 
-import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jfile.JFile;
 import org.agilewiki.jfile.block.Block;

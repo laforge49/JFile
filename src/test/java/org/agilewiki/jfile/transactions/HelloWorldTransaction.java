@@ -1,8 +1,6 @@
 package org.agilewiki.jfile.transactions;
 
-import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
-import org.agilewiki.jid.Jid;
 
 public class HelloWorldTransaction extends _TransactionJid {
     @Override

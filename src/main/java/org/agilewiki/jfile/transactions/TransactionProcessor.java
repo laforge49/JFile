@@ -25,11 +25,9 @@ package org.agilewiki.jfile.transactions;
 
 import org.agilewiki.jactor.Actor;
 import org.agilewiki.jactor.ExceptionHandler;
-import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.block.Block;
-import org.agilewiki.jfile.block.FBlock;
 import org.agilewiki.jfile.transactions.db.Checkpoint;
 import org.agilewiki.jid.scalar.vlens.actor.GetActor;
 import org.agilewiki.jid.scalar.vlens.actor.RootJid;

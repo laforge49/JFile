@@ -25,8 +25,8 @@ package org.agilewiki.jfile;
 
 import org.agilewiki.jactor.Actor;
 import org.agilewiki.jactor.Mailbox;
-import org.agilewiki.jactor.RP;
-import org.agilewiki.jactor.factory.*;
+import org.agilewiki.jactor.factory.ActorFactory;
+import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.transactions.EvaluatorActerJidFactory;
 import org.agilewiki.jfile.transactions.EvaluatorListJidFactory;

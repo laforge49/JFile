@@ -4,7 +4,6 @@ import org.agilewiki.jactor.Actor;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jactor.lpc.Request;
-import org.agilewiki.jfile.transactions.Finisher;
 
 /**
  * Read a transaction log file.

@@ -23,7 +23,6 @@
  */
 package org.agilewiki.jfile.transactions;
 
-import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.block.FBlock;

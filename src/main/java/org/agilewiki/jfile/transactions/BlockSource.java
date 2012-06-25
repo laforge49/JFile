@@ -23,11 +23,8 @@
  */
 package org.agilewiki.jfile.transactions;
 
-import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
-import org.agilewiki.jid.scalar.vlens.actor.ActorJid;
-import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 
 /**
  * A source of blocks in a block flow pipeline.

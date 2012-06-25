@@ -1,6 +1,5 @@
 package org.agilewiki.jfile.transactions;
 
-import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.factory.ActorFactory;
 import org.agilewiki.jactor.lpc.JLPCActor;
 

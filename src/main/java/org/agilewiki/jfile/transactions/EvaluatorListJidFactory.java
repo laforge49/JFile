@@ -23,7 +23,6 @@
  */
 package org.agilewiki.jfile.transactions;
 
-import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jid.collection.vlenc.ListJidFactory;
 
 /**

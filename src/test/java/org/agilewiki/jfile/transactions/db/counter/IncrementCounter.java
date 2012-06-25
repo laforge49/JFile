@@ -4,7 +4,6 @@ import org.agilewiki.jactor.Actor;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jactor.lpc.Request;
-import org.agilewiki.jfile.transactions.db.DB;
 
 public class IncrementCounter extends Request<Integer, CounterDB> {
     public final static IncrementCounter req = new IncrementCounter();

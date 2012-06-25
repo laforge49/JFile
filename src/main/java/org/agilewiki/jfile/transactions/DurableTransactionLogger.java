@@ -23,12 +23,9 @@
  */
 package org.agilewiki.jfile.transactions;
 
-import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jfile.JFile;
 import org.agilewiki.jfile.block.Block;
-import org.agilewiki.jid.scalar.vlens.actor.ActorJid;
-import org.agilewiki.jid.scalar.vlens.actor.RootJid;
 
 /**
  * Durably (fsync'd/forced) logs blocks of transactions.
