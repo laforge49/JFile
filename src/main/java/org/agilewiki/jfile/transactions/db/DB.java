@@ -74,7 +74,7 @@ abstract public class DB extends JLPCActor {
             return;
         }
         final int fi = fileIndex;
-        String logFileName = logFileNames[fileIndex];
+        final String logFileName = logFileNames[fileIndex];
         getLogReader(logReaderMaxSize);
         Path path = directoryPath.resolve(logFileName);
         System.out.println("processing " + fi + " " + path);
@@ -90,7 +90,12 @@ abstract public class DB extends JLPCActor {
                     @Override
                     public void processResponse(Object response) throws Exception {
                         logReader.close();
-                        processLogFile(0L, fi + 1, rp);
+                        checkpoint(logReader.currentPosition, logReader.timestamp, logFileName, new RP() {
+                            @Override
+                            public void processResponse(Object response) throws Exception {
+                                processLogFile(0L, fi + 1, rp);
+                            }
+                        });
                     }
                 });
             }

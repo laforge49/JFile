@@ -36,6 +36,7 @@ public class LogReader extends JFile implements Finisher {
     private BlockFlowBuffer blockFlowBuffer;
     public long currentPosition;
     public int maxSize;
+    public long timestamp;
 
     /**
      * Creates a new block.
@@ -90,6 +91,7 @@ public class LogReader extends JFile implements Finisher {
                 rp.processResponse(rem);
                 return;
             }
+            timestamp = block.getTimestamp();
             ProcessBlock req = new ProcessBlock(block);
             sync = false;
             async = false;

@@ -39,6 +39,12 @@ public class IMDB extends DB {
     private boolean isFirstRootJid;
     public int maxSize;
     private boolean closed;
+    private boolean online;
+
+    @Override
+    protected boolean generateCheckpoints() {
+        return online;
+    }
 
     @Override
     public void openDbFile(int logReaderMaxSize, RP rp)
@@ -92,6 +98,7 @@ public class IMDB extends DB {
             throw new IllegalStateException("Missing log file: " + logFileName);
         System.out.println("load position "+position);
         processLogFile(position, fileIndex, rp);
+        online = true;
     }
 
     @Override
