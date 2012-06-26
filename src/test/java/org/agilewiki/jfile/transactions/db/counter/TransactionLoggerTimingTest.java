@@ -9,9 +9,10 @@ import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.JFileFactories;
 import org.agilewiki.jfile.transactions.Finish;
 import org.agilewiki.jfile.transactions.Go;
-import org.agilewiki.jfile.transactions.TransactionAggregator;
+import org.agilewiki.jfile.transactions.TransactionAggregatorDriver;
 import org.agilewiki.jfile.transactions.db.OpenDbFile;
 import org.agilewiki.jfile.transactions.transactionAggregator.AggregateTransaction;
+import org.agilewiki.jfile.transactions.transactionAggregator.TransactionAggregator;
 
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -38,28 +39,28 @@ public class TransactionLoggerTimingTest extends TestCase {
         db.clearDirectory();
         (new OpenDbFile(10000)).send(future, db);
 
-        org.agilewiki.jfile.transactions.transactionAggregator.TransactionAggregator transactionAggregator = db.getTransactionAggregator();
+        TransactionAggregator transactionAggregator = db.getTransactionAggregator();
 
-        TransactionAggregator transactionLoggerDriver =
-                new TransactionAggregator();
-        transactionLoggerDriver.initialize(mailboxFactory.createAsyncMailbox(), transactionAggregator);
-        transactionLoggerDriver.setInitialBufferCapacity(10000);
-        transactionLoggerDriver.win = 3;
-        transactionLoggerDriver.aggregateTransaction = aggregateTransaction;
+        TransactionAggregatorDriver transactionAggregatorDriver =
+                new TransactionAggregatorDriver();
+        transactionAggregatorDriver.initialize(mailboxFactory.createAsyncMailbox(), transactionAggregator);
+        transactionAggregatorDriver.setInitialBufferCapacity(10000);
+        transactionAggregatorDriver.win = 3;
+        transactionAggregatorDriver.aggregateTransaction = aggregateTransaction;
 
-        transactionLoggerDriver.batch = 10;
-        transactionLoggerDriver.count = 10;
+        transactionAggregatorDriver.batch = 10;
+        transactionAggregatorDriver.count = 10;
         //   transactionLoggerDriver.batch = 10000;
         //   transactionLoggerDriver.count = 1000;
 
-        Go.req.send(future, transactionLoggerDriver);
+        Go.req.send(future, transactionAggregatorDriver);
         Finish.req.send(future, transactionAggregator);
         long t0 = System.currentTimeMillis();
-        Go.req.send(future, transactionLoggerDriver);
+        Go.req.send(future, transactionAggregatorDriver);
         Finish.req.send(future, transactionAggregator);
         long t1 = System.currentTimeMillis();
 
-        int transactions = transactionLoggerDriver.batch * transactionLoggerDriver.count;
+        int transactions = transactionAggregatorDriver.batch * transactionAggregatorDriver.count;
         assertEquals(2 * transactions, db.getCounter());
 
         System.out.println("milliseconds: " + (t1 - t0));

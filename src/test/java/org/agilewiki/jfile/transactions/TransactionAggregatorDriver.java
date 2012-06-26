@@ -4,7 +4,7 @@ import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.transactions.transactionAggregator.AggregateTransaction;
 
-public class TransactionAggregator extends JLPCActor {
+public class TransactionAggregatorDriver extends JLPCActor {
     PendingManager pendingManager;
     public int batch;
     public int count;

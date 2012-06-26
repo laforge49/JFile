@@ -48,6 +48,7 @@ public class CheckpointTest extends TestCase {
         db1.setDirectoryPath(directoryPath);
         db1.clearDirectory();
         openDbFile.send(future, db1);
+        System.out.println("online");
         TransactionAggregator transactionAggregator1 = db1.getTransactionAggregator();
         aggregateIncrementTransaction.sendEvent(transactionAggregator1);
         int total1 = (Integer) aggregateGetTransaction.send(future, transactionAggregator1);
@@ -61,6 +62,7 @@ public class CheckpointTest extends TestCase {
         db2.maxSize = 10240;
         db2.setDirectoryPath(directoryPath);
         openDbFile.send(future, db2);
+        System.out.println("online");
         TransactionAggregator transactionAggregator2 = db2.getTransactionAggregator();
         aggregateIncrementTransaction.sendEvent(transactionAggregator2);
         aggregateIncrementTransaction.sendEvent(transactionAggregator2);
@@ -75,6 +77,7 @@ public class CheckpointTest extends TestCase {
         db3.maxSize = 10240;
         db3.setDirectoryPath(directoryPath);
         openDbFile.send(future, db3);
+        System.out.println("online");
         TransactionAggregator transactionAggregator3 = db3.getTransactionAggregator();
         aggregateIncrementTransaction.sendEvent(transactionAggregator3);
         aggregateIncrementTransaction.sendEvent(transactionAggregator3);
