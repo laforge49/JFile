@@ -7,6 +7,9 @@ import org.agilewiki.jactor.Mailbox;
 import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.JFileFactories;
+import org.agilewiki.jfile.transactions.Finish;
+import org.agilewiki.jfile.transactions.Go;
+import org.agilewiki.jfile.transactions.TransactionAggregatorDriver;
 import org.agilewiki.jfile.transactions.db.OpenDbFile;
 import org.agilewiki.jfile.transactions.transactionAggregator.AggregateTransaction;
 import org.agilewiki.jfile.transactions.transactionAggregator.TransactionAggregator;
@@ -25,7 +28,8 @@ public class ImdbTimingTest extends TestCase {
         (new JidFactories()).initialize(factoryMailbox, factory);
         (new JFileFactories()).initialize(factoryMailbox, factory);
         JAFuture future = new JAFuture();
-        Path directoryPath = FileSystems.getDefault().getPath("CheckpointTest");
+
+        Path directoryPath = FileSystems.getDefault().getPath("ImdbTimingTest");
         OpenDbFile openDbFile = new OpenDbFile(10000);
         System.out.println("online");
         IncrementIntegerTransaction iit = new IncrementIntegerTransaction();
@@ -38,14 +42,46 @@ public class ImdbTimingTest extends TestCase {
         Mailbox dbMailbox1 = mailboxFactory.createAsyncMailbox();
         IMDB db1 = new IMDB();
         db1.initialize(dbMailbox1, factory);
-        db1.maxSize = 10240;
+        db1.maxSize = 1024;
         db1.setDirectoryPath(directoryPath);
         db1.clearDirectory();
         openDbFile.send(future, db1);
         TransactionAggregator transactionAggregator1 = db1.getTransactionAggregator();
-        aggregateIncrementTransaction.send(future, transactionAggregator1);
-        db1.closeDbFile();
 
+        TransactionAggregatorDriver transactionAggregatorDriver =
+                new TransactionAggregatorDriver();
+        transactionAggregatorDriver.initialize(mailboxFactory.createAsyncMailbox(), transactionAggregator1);
+        transactionAggregatorDriver.setInitialBufferCapacity(1024);
+        transactionAggregatorDriver.win = 3;
+        transactionAggregatorDriver.aggregateTransaction = aggregateIncrementTransaction;
+
+        transactionAggregatorDriver.batch = 10000;
+        transactionAggregatorDriver.count = 1000;
+        //   transactionLoggerDriver.batch = 10000;
+        //   transactionLoggerDriver.count = 1000;
+
+        Go.req.send(future, transactionAggregatorDriver);
+        Finish.req.send(future, transactionAggregator1);
+        long t0 = System.currentTimeMillis();
+        Go.req.send(future, transactionAggregatorDriver);
+        Finish.req.send(future, transactionAggregator1);
+        long t1 = System.currentTimeMillis();
+
+        int transactions = transactionAggregatorDriver.batch * transactionAggregatorDriver.count;
+
+        System.out.println("milliseconds: " + (t1 - t0));
+        System.out.println("transactions: " + transactions);
+        System.out.println("transactions per second = " + (1000L * transactions / (t1 - t0)));
+
+        //latency = 3 ms
+
+        //batch = 10,000
+        //count = 1,000
+        //transactions = 10,000,000
+        //time = 33.110 seconds
+        //throughput = 302,023 tps
+
+        db1.closeDbFile();
         mailboxFactory.close();
     }
 }
