@@ -55,13 +55,21 @@ public class ImdbTimingTest extends TestCase {
         transactionAggregatorDriver.win = 3;
         transactionAggregatorDriver.aggregateTransaction = aggregateIncrementTransaction;
 
-        transactionAggregatorDriver.batch = 10000;
-        transactionAggregatorDriver.count = 1000;
+        transactionAggregatorDriver.batch = 10;
+        transactionAggregatorDriver.count = 10;
         //   transactionLoggerDriver.batch = 10000;
         //   transactionLoggerDriver.count = 1000;
 
         Go.req.send(future, transactionAggregatorDriver);
-        Finish.req.send(future, transactionAggregator1);
+        GetIntegerTransaction git = new GetIntegerTransaction();
+        git.initialize(factoryMailbox);
+        git.setValue("counter");
+        byte[] gitBytes = git.getBytes();
+        AggregateTransaction aggregateGetTransaction =
+                new AggregateTransaction(JFileFactories.GET_INTEGER_TRANSACTION, gitBytes);
+        int total1 = (Integer) aggregateGetTransaction.send(future, transactionAggregator1);
+        assertEquals(transactionAggregatorDriver.batch * transactionAggregatorDriver.count, total1);
+
         long t0 = System.currentTimeMillis();
         Go.req.send(future, transactionAggregatorDriver);
         Finish.req.send(future, transactionAggregator1);
@@ -78,8 +86,8 @@ public class ImdbTimingTest extends TestCase {
         //batch = 10,000
         //count = 1,000
         //transactions = 10,000,000
-        //time = 33.110 seconds
-        //throughput = 302,023 tps
+        //time = 29.614 seconds
+        //throughput = 337,678 tps
 
         db1.closeDbFile();
         mailboxFactory.close();
