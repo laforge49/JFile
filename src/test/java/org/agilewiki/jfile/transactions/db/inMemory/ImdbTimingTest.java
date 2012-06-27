@@ -55,8 +55,8 @@ public class ImdbTimingTest extends TestCase {
         transactionAggregatorDriver.win = 3;
         transactionAggregatorDriver.aggregateTransaction = aggregateIncrementTransaction;
 
-        transactionAggregatorDriver.batch = 10;
-        transactionAggregatorDriver.count = 10;
+        transactionAggregatorDriver.batch = 10000;
+        transactionAggregatorDriver.count = 1000;
         //   transactionLoggerDriver.batch = 10000;
         //   transactionLoggerDriver.count = 1000;
 
@@ -67,8 +67,16 @@ public class ImdbTimingTest extends TestCase {
         byte[] gitBytes = git.getBytes();
         AggregateTransaction aggregateGetTransaction =
                 new AggregateTransaction(JFileFactories.GET_INTEGER_TRANSACTION, gitBytes);
-        int total1 = (Integer) aggregateGetTransaction.send(future, transactionAggregator1);
+        long t8 = System.currentTimeMillis();
+        int k = 0;
+        int total1 = 0;
+        while (k < 1000) {
+            total1 = (Integer) aggregateGetTransaction.send(future, transactionAggregator1);
+            k += 1;
+        }
+        long t9 = System.currentTimeMillis();
         assertEquals(transactionAggregatorDriver.batch * transactionAggregatorDriver.count, total1);
+        System.out.println("latency = " + (t9 - t8) + " microseconds");
 
         long t0 = System.currentTimeMillis();
         Go.req.send(future, transactionAggregatorDriver);
@@ -81,7 +89,7 @@ public class ImdbTimingTest extends TestCase {
         System.out.println("transactions: " + transactions);
         System.out.println("transactions per second = " + (1000L * transactions / (t1 - t0)));
 
-        //latency = 3 ms
+        //latency = 1.311 ms
 
         //batch = 10,000
         //count = 1,000
