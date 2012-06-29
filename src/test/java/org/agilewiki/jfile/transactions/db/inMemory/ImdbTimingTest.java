@@ -55,8 +55,8 @@ public class ImdbTimingTest extends TestCase {
         transactionAggregatorDriver.win = 3;
         transactionAggregatorDriver.aggregateTransaction = aggregateIncrementTransaction;
 
-        transactionAggregatorDriver.batch = 10000;
-        transactionAggregatorDriver.count = 1000;
+        transactionAggregatorDriver.batch = 1;
+        transactionAggregatorDriver.count = 1;
         //   transactionLoggerDriver.batch = 10000;
         //   transactionLoggerDriver.count = 1000;
 
@@ -89,13 +89,13 @@ public class ImdbTimingTest extends TestCase {
         System.out.println("transactions: " + transactions);
         System.out.println("transactions per second = " + (1000L * transactions / (t1 - t0)));
 
-        //latency = 1.311 ms
+        //latency = 292 microseconds
 
         //batch = 10,000
         //count = 1,000
         //transactions = 10,000,000
-        //time = 29.614 seconds
-        //throughput = 337,678 tps
+        //time = 9.933 seconds
+        //throughput = 1,006,745 tps
 
         db1.closeDbFile();
         mailboxFactory.close();
