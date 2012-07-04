@@ -28,27 +28,12 @@ public class CheckpointTest extends TestCase {
         Path directoryPath = FileSystems.getDefault().getPath("CheckpointTest");
         OpenDbFile openDbFile = new OpenDbFile(10000);
 
-        AddIntegerTransaction ait = new AddIntegerTransaction();
-        ait.initialize(factoryMailbox);
-        ait.getKeyJid().setValue("counter");
-        ait.getIncrementJid().setValue(2);
-        byte[] aitBytes = ait.getBytes();
         AggregateTransaction aggregateAddTransaction =
-                new AggregateTransaction(JFileFactories.ADD_INTEGER_TRANSACTION, aitBytes);
-
-        IncrementIntegerTransaction iit = new IncrementIntegerTransaction();
-        iit.initialize(factoryMailbox);
-        iit.setValue("counter");
-        byte[] iitBytes = iit.getBytes();
+                AddIntegerTransactionFactory.at(factoryMailbox, "counter", 2);
         AggregateTransaction aggregateIncrementTransaction =
-                new AggregateTransaction(JFileFactories.INCREMENT_INTEGER_TRANSACTION, iitBytes);
-
-        GetIntegerTransaction git = new GetIntegerTransaction();
-        git.initialize(factoryMailbox);
-        git.setValue("counter");
-        byte[] gitBytes = git.getBytes();
+                IncrementIntegerTransactionFactory.at(factoryMailbox, "counter");
         AggregateTransaction aggregateGetTransaction =
-                new AggregateTransaction(JFileFactories.GET_INTEGER_TRANSACTION, gitBytes);
+                GetIntegerTransactionFactory.at(factoryMailbox, "counter");
 
         System.out.println("db1");
         Mailbox dbMailbox1 = mailboxFactory.createAsyncMailbox();
