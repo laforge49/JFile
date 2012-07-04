@@ -30,12 +30,9 @@ public class TransactionLoggerTimingTest extends TestCase {
         JAFuture future = new JAFuture();
         AggregateTransaction aggregateTransaction = new AggregateTransaction(ntf);
 
-        Mailbox dbMailbox = mailboxFactory.createAsyncMailbox();
-        CounterDB db = new CounterDB();
-        db.initialize(dbMailbox, factory);
-        db.initialCapacity = 10000;
         Path directoryPath = FileSystems.getDefault().getPath("TransactionLoggerTimingTest");
-        db.setDirectoryPath(directoryPath);
+        CounterDB db = new CounterDB(mailboxFactory, factory, directoryPath);
+        db.initialCapacity = 10000;
         db.clearDirectory();
         (new OpenDbFile(10000)).send(future, db);
 

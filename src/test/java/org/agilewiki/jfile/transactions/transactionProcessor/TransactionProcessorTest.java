@@ -31,10 +31,8 @@ public class TransactionProcessorTest extends TestCase {
         factory.initialize(mailbox);
         factory.defineActorType("helloWorldTransaction", HelloWorldTransaction.class);
         JAFuture future = new JAFuture();
-        StatelessDB db = new StatelessDB();
-        db.initialize(mailbox, factory);
         Path directoryPath = FileSystems.getDefault().getPath("TransactionProcessorTest");
-        db.setDirectoryPath(directoryPath);
+        StatelessDB db = new StatelessDB(mailboxFactory, factory, directoryPath);
         db.clearDirectory();
         TransactionProcessor transactionProcessor = new TransactionProcessor();
         transactionProcessor.initialize(mailbox, db);

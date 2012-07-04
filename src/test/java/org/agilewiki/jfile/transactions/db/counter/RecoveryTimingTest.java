@@ -25,11 +25,8 @@ public class RecoveryTimingTest extends TestCase {
         factory.defineActorType("n", IncrementCounterTransaction.class);
         JAFuture future = new JAFuture();
 
-        Mailbox dbMailbox = mailboxFactory.createAsyncMailbox();
-        CounterDB db = new CounterDB();
-        db.initialize(dbMailbox, factory);
         Path directoryPath = FileSystems.getDefault().getPath("TransactionLoggerTimingTest");
-        db.setDirectoryPath(directoryPath);
+        CounterDB db = new CounterDB(mailboxFactory, factory, directoryPath);
 
         long t0 = System.currentTimeMillis();
         (new OpenDbFile(10000)).send(future, db);

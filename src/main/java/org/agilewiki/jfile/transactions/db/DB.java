@@ -24,6 +24,7 @@
 package org.agilewiki.jfile.transactions.db;
 
 import org.agilewiki.jactor.Actor;
+import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.transactions.*;
@@ -49,6 +50,14 @@ abstract public class DB extends JLPCActor {
     protected Path directoryPath;
     private int logReaderMaxSize;
     protected String[] logFileNames = null;
+
+    public DB() {}
+
+    public DB(MailboxFactory mailboxFactory, Actor parent, Path directoryPath)
+            throws Exception {
+        initialize(mailboxFactory.createAsyncMailbox(), parent);
+        setDirectoryPath(directoryPath);
+    }
 
     public void openDbFile(int logReaderMaxSize, RP rp)
             throws Exception {

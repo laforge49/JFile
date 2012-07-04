@@ -30,10 +30,7 @@ public class CounterTest extends TestCase {
         JAFuture future = new JAFuture();
 
         System.out.println("db1");
-        Mailbox dbMailbox1 = mailboxFactory.createAsyncMailbox();
-        CounterDB db1 = new CounterDB();
-        db1.initialize(dbMailbox1, factory);
-        db1.setDirectoryPath(directoryPath);
+        CounterDB db1 = new CounterDB(mailboxFactory, factory, directoryPath);
         db1.clearDirectory();
         (new OpenDbFile(10000)).send(future, db1);
         TransactionAggregator transactionAggregator1 = db1.getTransactionAggregator();
@@ -43,10 +40,7 @@ public class CounterTest extends TestCase {
         db1.closeDbFile();
 
         System.out.println("db2");
-        Mailbox dbMailbox2 = mailboxFactory.createAsyncMailbox();
-        CounterDB db2 = new CounterDB();
-        db2.initialize(dbMailbox2, factory);
-        db2.setDirectoryPath(directoryPath);
+        CounterDB db2 = new CounterDB(mailboxFactory, factory, directoryPath);
         (new OpenDbFile(10000)).send(future, db2);
         TransactionAggregator transactionAggregator2 = db2.getTransactionAggregator();
         (new AggregateTransaction("inc")).sendEvent(transactionAggregator2);
@@ -56,10 +50,7 @@ public class CounterTest extends TestCase {
         db2.closeDbFile();
 
         System.out.println("db3");
-        Mailbox dbMailbox3 = mailboxFactory.createAsyncMailbox();
-        CounterDB db3 = new CounterDB();
-        db3.initialize(dbMailbox3, factory);
-        db3.setDirectoryPath(directoryPath);
+        CounterDB db3 = new CounterDB(mailboxFactory, factory, directoryPath);
         (new OpenDbFile(10000)).send(future, db3);
         TransactionAggregator transactionAggregator3 = db3.getTransactionAggregator();
         (new AggregateTransaction("inc")).sendEvent(transactionAggregator3);

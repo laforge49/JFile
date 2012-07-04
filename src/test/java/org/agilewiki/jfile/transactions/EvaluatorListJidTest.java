@@ -33,10 +33,8 @@ public class EvaluatorListJidTest extends TestCase {
         (new JFileFactories()).initialize(mailbox, factory);
         factory.defineActorType("helloWorldTransaction", HelloWorldTransaction.class);
         JAFuture future = new JAFuture();
-        StatelessDB db = new StatelessDB();
-        db.initialize(mailbox, factory);
         Path directoryPath = FileSystems.getDefault().getPath("EvaluatorListJidTest");
-        db.setDirectoryPath(directoryPath);
+        StatelessDB db = new StatelessDB(mailboxFactory, factory, directoryPath);
         db.clearDirectory();
         TransactionProcessor transactionProcessor = new TransactionProcessor();
         transactionProcessor.initialize(mailbox, db);

@@ -45,11 +45,10 @@ public class IMDB extends DB {
 
     public IMDB() {}
 
-    public IMDB(MailboxFactory mailboxFactory, Actor parent, int maxSize, Path directoryPath)
+    public IMDB(MailboxFactory mailboxFactory, Actor parent, Path directoryPath, int maxSize)
             throws Exception {
-        initialize(mailboxFactory.createAsyncMailbox(), parent);
+        super(mailboxFactory, parent, directoryPath);
         this.maxSize = maxSize;
-        setDirectoryPath(directoryPath);
     }
 
     @Override
