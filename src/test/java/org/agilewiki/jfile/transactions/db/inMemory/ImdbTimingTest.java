@@ -36,11 +36,7 @@ public class ImdbTimingTest extends TestCase {
         AggregateTransaction aggregateIncrementTransaction =
                 IncrementIntegerTransactionFactory.at(factoryMailbox, "counter");
 
-        Mailbox dbMailbox1 = mailboxFactory.createAsyncMailbox();
-        IMDB db1 = new IMDB();
-        db1.initialize(dbMailbox1, factory);
-        db1.maxSize = 1024;
-        db1.setDirectoryPath(directoryPath);
+        IMDB db1 = new IMDB(mailboxFactory, factory, 1024, directoryPath);
         db1.clearDirectory();
         openDbFile.send(future, db1);
         TransactionAggregator transactionAggregator1 = db1.getTransactionAggregator();

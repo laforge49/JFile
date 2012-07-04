@@ -1,6 +1,8 @@
 package org.agilewiki.jfile.transactions.db.inMemory;
 
+import org.agilewiki.jactor.Actor;
 import org.agilewiki.jactor.ExceptionHandler;
+import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.ForceBeforeWriteRootJid;
@@ -40,6 +42,15 @@ public class IMDB extends DB {
     public int maxSize;
     private boolean closed;
     private boolean online;
+
+    public IMDB() {}
+
+    public IMDB(MailboxFactory mailboxFactory, Actor parent, int maxSize, Path directoryPath)
+            throws Exception {
+        initialize(mailboxFactory.createAsyncMailbox(), parent);
+        this.maxSize = maxSize;
+        setDirectoryPath(directoryPath);
+    }
 
     @Override
     protected boolean generateCheckpoints() {

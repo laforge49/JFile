@@ -36,11 +36,7 @@ public class CheckpointTest extends TestCase {
                 GetIntegerTransactionFactory.at(factoryMailbox, "counter");
 
         System.out.println("db1");
-        Mailbox dbMailbox1 = mailboxFactory.createAsyncMailbox();
-        IMDB db1 = new IMDB();
-        db1.initialize(dbMailbox1, factory);
-        db1.maxSize = 10240;
-        db1.setDirectoryPath(directoryPath);
+        IMDB db1 = new IMDB(mailboxFactory, factory, 10240, directoryPath);
         db1.clearDirectory();
         openDbFile.send(future, db1);
         System.out.println("online");
@@ -51,11 +47,7 @@ public class CheckpointTest extends TestCase {
         db1.closeDbFile();
 
         System.out.println("db2");
-        Mailbox dbMailbox2 = mailboxFactory.createAsyncMailbox();
-        IMDB db2 = new IMDB();
-        db2.initialize(dbMailbox2, factory);
-        db2.maxSize = 10240;
-        db2.setDirectoryPath(directoryPath);
+        IMDB db2 = new IMDB(mailboxFactory, factory, 10240, directoryPath);
         openDbFile.send(future, db2);
         System.out.println("online");
         TransactionAggregator transactionAggregator2 = db2.getTransactionAggregator();
@@ -66,11 +58,7 @@ public class CheckpointTest extends TestCase {
         db2.closeDbFile();
 
         System.out.println("db3");
-        Mailbox dbMailbox3 = mailboxFactory.createAsyncMailbox();
-        IMDB db3 = new IMDB();
-        db3.initialize(dbMailbox3, factory);
-        db3.maxSize = 10240;
-        db3.setDirectoryPath(directoryPath);
+        IMDB db3 = new IMDB(mailboxFactory, factory, 10240, directoryPath);
         openDbFile.send(future, db3);
         System.out.println("online");
         TransactionAggregator transactionAggregator3 = db3.getTransactionAggregator();
