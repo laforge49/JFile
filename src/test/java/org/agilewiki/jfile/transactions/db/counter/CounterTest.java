@@ -28,13 +28,15 @@ public class CounterTest extends TestCase {
         factory.defineActorType("get", GetCounterTransaction.class);
         Path directoryPath = FileSystems.getDefault().getPath("CounterTest");
         JAFuture future = new JAFuture();
+        AggregateTransaction inc = new AggregateTransaction("inc");
+        AggregateTransaction get = new AggregateTransaction("get");
 
         System.out.println("db1");
         CounterDB db1 = new CounterDB(mailboxFactory, factory, directoryPath);
         db1.clearDirectory();
         (new OpenDbFile(10000)).send(future, db1);
         TransactionAggregator transactionAggregator1 = db1.getTransactionAggregator();
-        (new AggregateTransaction("inc")).sendEvent(transactionAggregator1);
+        inc.sendEvent(transactionAggregator1);
         int total1 = (Integer) (new AggregateTransaction("get")).send(future, transactionAggregator1);
         assertEquals(1, total1);
         db1.closeDbFile();
@@ -43,8 +45,8 @@ public class CounterTest extends TestCase {
         CounterDB db2 = new CounterDB(mailboxFactory, factory, directoryPath);
         (new OpenDbFile(10000)).send(future, db2);
         TransactionAggregator transactionAggregator2 = db2.getTransactionAggregator();
-        (new AggregateTransaction("inc")).sendEvent(transactionAggregator2);
-        (new AggregateTransaction("inc")).sendEvent(transactionAggregator2);
+        inc.sendEvent(transactionAggregator2);
+        inc.sendEvent(transactionAggregator2);
         int total2 = (Integer) (new AggregateTransaction("get")).send(future, transactionAggregator2);
         assertEquals(3, total2);
         db2.closeDbFile();
@@ -53,10 +55,10 @@ public class CounterTest extends TestCase {
         CounterDB db3 = new CounterDB(mailboxFactory, factory, directoryPath);
         (new OpenDbFile(10000)).send(future, db3);
         TransactionAggregator transactionAggregator3 = db3.getTransactionAggregator();
-        (new AggregateTransaction("inc")).sendEvent(transactionAggregator3);
-        (new AggregateTransaction("inc")).sendEvent(transactionAggregator3);
-        (new AggregateTransaction("inc")).sendEvent(transactionAggregator3);
-        int total3 = (Integer) (new AggregateTransaction("get")).send(future, transactionAggregator3);
+        inc.sendEvent(transactionAggregator3);
+        inc.sendEvent(transactionAggregator3);
+        inc.sendEvent(transactionAggregator3);
+        int total3 = (Integer) get.send(future, transactionAggregator3);
         assertEquals(6, total3);
         db3.closeDbFile();
 
