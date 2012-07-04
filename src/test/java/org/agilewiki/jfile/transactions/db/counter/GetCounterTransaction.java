@@ -6,6 +6,7 @@ import org.agilewiki.jfile.transactions._TransactionJid;
 public class GetCounterTransaction extends _TransactionJid {
     @Override
     protected void eval(long blockTimestamp, RP rp) throws Exception {
-        GetCounter.req.send(this, getParent(), rp);
+        CounterDB db = (CounterDB) getAncestor(CounterDB.class);
+        rp.processResponse(db.getCounter());
     }
 }
