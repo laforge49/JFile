@@ -27,12 +27,22 @@ public class CheckpointTest extends TestCase {
         JAFuture future = new JAFuture();
         Path directoryPath = FileSystems.getDefault().getPath("CheckpointTest");
         OpenDbFile openDbFile = new OpenDbFile(10000);
+
+        AddIntegerTransaction ait = new AddIntegerTransaction();
+        ait.initialize(factoryMailbox);
+        ait.getKeyJid().setValue("counter");
+        ait.getIncrementJid().setValue(2);
+        byte[] aitBytes = ait.getBytes();
+        AggregateTransaction aggregateAddTransaction =
+                new AggregateTransaction(JFileFactories.ADD_INTEGER_TRANSACTION, aitBytes);
+
         IncrementIntegerTransaction iit = new IncrementIntegerTransaction();
         iit.initialize(factoryMailbox);
         iit.setValue("counter");
         byte[] iitBytes = iit.getBytes();
         AggregateTransaction aggregateIncrementTransaction =
                 new AggregateTransaction(JFileFactories.INCREMENT_INTEGER_TRANSACTION, iitBytes);
+
         GetIntegerTransaction git = new GetIntegerTransaction();
         git.initialize(factoryMailbox);
         git.setValue("counter");
@@ -81,9 +91,9 @@ public class CheckpointTest extends TestCase {
         TransactionAggregator transactionAggregator3 = db3.getTransactionAggregator();
         aggregateIncrementTransaction.sendEvent(transactionAggregator3);
         aggregateIncrementTransaction.sendEvent(transactionAggregator3);
-        aggregateIncrementTransaction.sendEvent(transactionAggregator3);
+        aggregateAddTransaction.sendEvent(transactionAggregator3);
         int total3 = (Integer) aggregateGetTransaction.send(future, transactionAggregator3);
-        assertEquals(6, total3);
+        assertEquals(7, total3);
         db3.closeDbFile();
 
         mailboxFactory.close();

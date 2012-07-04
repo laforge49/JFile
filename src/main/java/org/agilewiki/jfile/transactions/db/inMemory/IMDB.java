@@ -96,7 +96,7 @@ public class IMDB extends DB {
             fileIndex += 1;
         if (fileIndex == logFileNames.length)
             throw new IllegalStateException("Missing log file: " + logFileName);
-        System.out.println("load position "+position);
+        System.out.println("load position " + position);
         processLogFile(position, fileIndex, rp);
         online = true;
     }
@@ -225,6 +225,14 @@ public class IMDB extends DB {
             throws Exception {
         IntegerJid ij = makeIntegerJid(key);
         int nv = ij.getValue() + 1;
+        ij.setValue(nv);
+        return nv;
+    }
+
+    public Integer addInteger(String key, Integer increment)
+            throws Exception {
+        IntegerJid ij = makeIntegerJid(key);
+        int nv = ij.getValue() + increment;
         ij.setValue(nv);
         return nv;
     }
