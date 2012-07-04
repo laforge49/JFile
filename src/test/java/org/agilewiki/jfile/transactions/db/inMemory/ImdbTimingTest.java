@@ -32,12 +32,9 @@ public class ImdbTimingTest extends TestCase {
         Path directoryPath = FileSystems.getDefault().getPath("ImdbTimingTest");
         OpenDbFile openDbFile = new OpenDbFile(10000);
         System.out.println("online");
-        IncrementIntegerTransaction iit = new IncrementIntegerTransaction();
-        iit.initialize(factoryMailbox);
-        iit.setValue("counter");
-        byte[] iitBytes = iit.getBytes();
+
         AggregateTransaction aggregateIncrementTransaction =
-                new AggregateTransaction(JFileFactories.INCREMENT_INTEGER_TRANSACTION, iitBytes);
+                IncrementIntegerTransactionFactory.at(factoryMailbox, "counter");
 
         Mailbox dbMailbox1 = mailboxFactory.createAsyncMailbox();
         IMDB db1 = new IMDB();
