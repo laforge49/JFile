@@ -1,21 +1,12 @@
-File Persistence and High Throughput Durable Logging
+File Persistence and High Throughput In-Memory Database
 
-ACID is a common claim, but the D in ACID stands for durable. Durable means
-that once committed, a transaction will persist even if the system crashes.
-However, there is no assurance that a transaction will persist unless the
-data has been flushed to disk--and this is SLOW.
-
-One approach to improve throughput while still flushing data to disk is to
-    (1) group transactions into batches on one thread,
-    (2) serialize and calculate the checksum of each batch on a second thread,
-    (3) log and fsync each batch of transactions to disk on a third thread and
-    (4) update the database with the logged transactions on a fourth thread.
-Using this approach, we can log and process up to 899,523 durable transactions
-per second.
+JFile builds on JActor and Jid, adding file persistence and an in-memory data base that has
+a throughput of 1 million transactions per second when running on an i7 with SSD.
 
 Downloads:     https://sourceforge.net/projects/jactor/files/
 Blog:          https://sourceforge.net/p/jactor/blog/
 API:           http://jactor.sourceforge.net/
+Documentation: https://github.com/laforge49/JFile/wiki
 VCS:           https://github.com/laforge49/JID/
 Issues:        https://github.com/laforge49/JID/issues/
 Google groups: http://groups.google.com/group/agilewikidevelopers/
@@ -30,6 +21,6 @@ So you just need to add this to your POM file:
     <dependency>
       <groupId>org.agilewiki.jfile</groupId>
       <artifactId>jfile</artifactId>
-      <version>1.0.0</version>
+      <version>2.0.0</version>
     </dependency>
 (Be sure to update the version number appropriately, of course.)
