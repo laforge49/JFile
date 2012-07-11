@@ -16,6 +16,8 @@ Dependencies
  - JID            https://github.com/laforge49/JID
  - joda-time
 
+Required: Java 7
+
 Available on The Central Repository (Maven): http://search.maven.org/#search|ga|1|org.agilewiki
 So you just need to add this to your POM file:
     <dependency>
