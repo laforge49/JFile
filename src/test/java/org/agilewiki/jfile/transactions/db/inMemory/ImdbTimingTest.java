@@ -50,8 +50,10 @@ public class ImdbTimingTest extends TestCase {
 
         transactionAggregatorDriver.batch = 1;
         transactionAggregatorDriver.count = 1;
-        //   transactionLoggerDriver.batch = 10000;
-        //   transactionLoggerDriver.count = 1000;
+
+        //System.out.println("###########################################################");
+        //transactionAggregatorDriver.batch = 10000;
+        //transactionAggregatorDriver.count = 1000;
 
         Go.req.send(future, transactionAggregatorDriver);
         GetIntegerTransaction git = new GetIntegerTransaction();
@@ -82,13 +84,12 @@ public class ImdbTimingTest extends TestCase {
         System.out.println("transactions: " + transactions);
         System.out.println("transactions per second = " + (1000L * transactions / (t1 - t0)));
 
-        //latency = 292 microseconds
+        //latency = 296 microseconds
 
         //batch = 10,000
         //count = 1,000
         //transactions = 10,000,000
-        //time = 9.933 seconds
-        //throughput = 1,006,745 tps
+        //throughput = 1,244,555 tps
 
         db1.closeDbFile();
         mailboxFactory.close();

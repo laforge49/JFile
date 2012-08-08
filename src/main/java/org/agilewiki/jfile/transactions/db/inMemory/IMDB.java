@@ -106,7 +106,6 @@ public class IMDB extends DB {
             fileIndex += 1;
         if (fileIndex == logFileNames.length)
             throw new IllegalStateException("Missing log file: " + logFileName);
-        System.out.println("load position " + position);
         processLogFile(position, fileIndex, rp);
         online = true;
     }

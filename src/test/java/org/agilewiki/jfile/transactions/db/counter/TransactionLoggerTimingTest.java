@@ -47,8 +47,10 @@ public class TransactionLoggerTimingTest extends TestCase {
 
         transactionAggregatorDriver.batch = 10;
         transactionAggregatorDriver.count = 10;
-        //   transactionLoggerDriver.batch = 10000;
-        //   transactionLoggerDriver.count = 1000;
+
+        //System.out.println("###########################################################");
+        //transactionAggregatorDriver.batch = 10000;
+        //transactionAggregatorDriver.count = 1000;
 
         Go.req.send(future, transactionAggregatorDriver);
         Finish.req.send(future, transactionAggregator);
@@ -64,13 +66,12 @@ public class TransactionLoggerTimingTest extends TestCase {
         System.out.println("transactions: " + transactions);
         System.out.println("transactions per second = " + (1000L * transactions / (t1 - t0)));
 
-        //latency = 2 ms
+        //latency = 402 microseconds
 
         //batch = 10000
         //count = 1000
         //transactions = 10,000,000
-        //time = 9.953 seconds
-        //throughput = 1,004,722 tps
+        //throughput = 2,480,774 tps
 
         db.closeDbFile();
         mailboxFactory.close();
