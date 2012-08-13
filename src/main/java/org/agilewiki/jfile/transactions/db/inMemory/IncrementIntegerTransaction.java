@@ -11,7 +11,7 @@ public class IncrementIntegerTransaction extends _StringTransactionJid {
     public static byte[] bytes(Mailbox mailbox, String key)
             throws Exception {
         IncrementIntegerTransaction iit = new IncrementIntegerTransaction(mailbox, key);
-        return iit.getBytes();
+        return iit.getSerializedBytes();
     }
 
     public IncrementIntegerTransaction() {

@@ -59,7 +59,7 @@ public class ImdbTimingTest extends TestCase {
         GetIntegerTransaction git = new GetIntegerTransaction();
         git.initialize(factoryMailbox);
         git.setValue("counter");
-        byte[] gitBytes = git.getBytes();
+        byte[] gitBytes = git.getSerializedBytes();
         AggregateTransaction aggregateGetTransaction =
                 new AggregateTransaction(JFileFactories.GET_INTEGER_TRANSACTION, gitBytes);
         long t8 = System.currentTimeMillis();

@@ -18,7 +18,7 @@ public class AddIntegerTransaction extends _TupleTransactionJid {
     public static byte[] bytes(Mailbox mailbox, String key, Integer increment)
             throws Exception {
         AddIntegerTransaction ait = new AddIntegerTransaction(mailbox, key, increment);
-        return ait.getBytes();
+        return ait.getSerializedBytes();
     }
 
     public AddIntegerTransaction() {}

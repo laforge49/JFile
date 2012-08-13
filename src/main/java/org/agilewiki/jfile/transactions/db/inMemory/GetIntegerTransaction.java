@@ -11,7 +11,7 @@ public class GetIntegerTransaction extends _StringTransactionJid {
     public static byte[] bytes(Mailbox mailbox, String key)
             throws Exception {
         GetIntegerTransaction git = new GetIntegerTransaction(mailbox, key);
-        return git.getBytes();
+        return git.getSerializedBytes();
     }
 
     public GetIntegerTransaction() {
