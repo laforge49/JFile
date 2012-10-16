@@ -57,7 +57,6 @@ public class EvaluatorListJidFactory extends ListJidFactory {
     @Override
     protected EvaluatorListJid instantiateActor() throws Exception {
         EvaluatorListJid transactionListJid = new EvaluatorListJid();
-        assignElementsFactory(transactionListJid);
         return transactionListJid;
     }
 }
