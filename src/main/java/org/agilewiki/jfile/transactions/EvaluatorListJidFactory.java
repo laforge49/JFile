@@ -23,22 +23,12 @@
  */
 package org.agilewiki.jfile.transactions;
 
-import org.agilewiki.jid.collection.vlenc.ListJidFactory;
+import org.agilewiki.jid.collection.vlenc.BListJidFactory;
 
 /**
  * Creates TransactionListJid's.
  */
-public class EvaluatorListJidFactory extends ListJidFactory {
-
-    /**
-     * Create an ActorFactory.
-     *
-     * @param actorType       The actor type.
-     * @param initialCapacity The initial capacity.
-     */
-    public EvaluatorListJidFactory(String actorType, int initialCapacity) {
-        super(actorType, EvaluatorActerJidFactory.fac, initialCapacity);
-    }
+public class EvaluatorListJidFactory extends BListJidFactory {
 
     /**
      * Create an ActorFactory.
@@ -56,7 +46,6 @@ public class EvaluatorListJidFactory extends ListJidFactory {
      */
     @Override
     protected EvaluatorListJid instantiateActor() throws Exception {
-        EvaluatorListJid transactionListJid = new EvaluatorListJid();
-        return transactionListJid;
+        return new EvaluatorListJid();
     }
 }

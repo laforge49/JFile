@@ -18,7 +18,7 @@ public class TransactionAggregatorDriver extends JLPCActor {
         pendingManager.rp = rp;
         ndx = 0;
         int w = 0;
-        while (w < win && w < batch) {
+        while (w < win && w < count) {
             sender();
             w += 1;
         }
@@ -37,7 +37,6 @@ public class TransactionAggregatorDriver extends JLPCActor {
         if (ndx == count)
             pendingManager.fin = true;
         aggregateTransaction.send(this, getParent(), pendingManager);
-        //System.out.println("" + ndx + " " + pendingManager.fin + " " + pendingManager.pending);
     }
 
     class PendingManager extends RP {

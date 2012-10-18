@@ -37,7 +37,6 @@ import org.agilewiki.jid.scalar.vlens.actor.RootJid;
  * Aggregates transactions into blocks.
  */
 public class TransactionAggregator extends BlockSource {
-    public int initialCapacity = 10;
     private RootJid rootJid;
     private EvaluatorListJid transactionListJid;
     private boolean writePending;
@@ -85,7 +84,6 @@ public class TransactionAggregator extends BlockSource {
         rootJid.initialize(getMailboxFactory().createMailbox(), getParent());
         rootJid.setValue(JFileFactories.EVALUATER_LIST_JID_TYPE);
         transactionListJid = (EvaluatorListJid) rootJid.getValue();
-        transactionListJid.initialCapacity = initialCapacity;
     }
 
     private void writeBlock()

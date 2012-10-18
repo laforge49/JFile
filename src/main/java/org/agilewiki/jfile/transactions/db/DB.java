@@ -43,7 +43,6 @@ import java.util.Arrays;
  * A database must handle checkpoint requests.
  */
 abstract public class DB extends JLPCActor {
-    public int initialCapacity;
     private TransactionAggregator transactionAggregator;
     private DurableTransactionLogger durableTransactionLogger;
     private LogReader logReader;
@@ -207,7 +206,6 @@ abstract public class DB extends JLPCActor {
         transactionAggregator = newTransactionAggregator();
         transactionAggregator.initialize(getMailboxFactory().createAsyncMailbox(), this);
         transactionAggregator.setNext(serializer);
-        transactionAggregator.initialCapacity = initialCapacity;
 
         return transactionAggregator;
     }

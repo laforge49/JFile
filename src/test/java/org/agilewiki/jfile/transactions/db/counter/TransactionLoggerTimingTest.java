@@ -32,7 +32,6 @@ public class TransactionLoggerTimingTest extends TestCase {
 
         Path directoryPath = FileSystems.getDefault().getPath("TransactionLoggerTimingTest");
         CounterDB db = new CounterDB(mailboxFactory, factory, directoryPath);
-        db.initialCapacity = 10000;
         db.clearDirectory();
         (new OpenDbFile(10000)).send(future, db);
 
@@ -45,10 +44,10 @@ public class TransactionLoggerTimingTest extends TestCase {
         transactionAggregatorDriver.win = 3;
         transactionAggregatorDriver.aggregateTransaction = aggregateTransaction;
 
-        transactionAggregatorDriver.batch = 10;
-        transactionAggregatorDriver.count = 10;
+        transactionAggregatorDriver.batch = 5;
+        transactionAggregatorDriver.count = 5;
 
-        //System.out.println("###########################################################");
+        System.out.println("###########################################################");
         //transactionAggregatorDriver.batch = 10000;
         //transactionAggregatorDriver.count = 1000;
 
@@ -64,7 +63,8 @@ public class TransactionLoggerTimingTest extends TestCase {
 
         System.out.println("milliseconds: " + (t1 - t0));
         System.out.println("transactions: " + transactions);
-        System.out.println("transactions per second = " + (1000L * transactions / (t1 - t0)));
+        if (t1 != t0)
+            System.out.println("transactions per second = " + (1000L * transactions / (t1 - t0)));
 
         //latency = 402 microseconds
 
