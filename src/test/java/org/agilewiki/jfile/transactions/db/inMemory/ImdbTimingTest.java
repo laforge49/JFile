@@ -65,7 +65,7 @@ public class ImdbTimingTest extends TestCase {
         long t8 = System.currentTimeMillis();
         int k = 0;
         int total1 = 0;
-        while (k < 1000) {
+        while (k < 10) {
             total1 = (Integer) aggregateGetTransaction.send(future, transactionAggregator1);
             k += 1;
         }
@@ -89,7 +89,7 @@ public class ImdbTimingTest extends TestCase {
         //batch = 10,000
         //count = 1,000
         //transactions = 10,000,000
-        //throughput = 1,244,555 tps
+        //throughput = 1,385,041 tps
 
         db1.closeDbFile();
         mailboxFactory.close();

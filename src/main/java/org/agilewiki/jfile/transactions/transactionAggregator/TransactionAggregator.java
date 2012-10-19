@@ -43,6 +43,7 @@ public class TransactionAggregator extends BlockSource {
 
     /**
      * Creates a new block.
+     *
      * @return A new block.
      */
     protected Block newBlock() {

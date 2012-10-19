@@ -44,10 +44,10 @@ public class TransactionLoggerTimingTest extends TestCase {
         transactionAggregatorDriver.win = 3;
         transactionAggregatorDriver.aggregateTransaction = aggregateTransaction;
 
-        transactionAggregatorDriver.batch = 5;
-        transactionAggregatorDriver.count = 5;
+        transactionAggregatorDriver.batch = 10;
+        transactionAggregatorDriver.count = 10;
 
-        System.out.println("###########################################################");
+        //System.out.println("###########################################################");
         //transactionAggregatorDriver.batch = 10000;
         //transactionAggregatorDriver.count = 1000;
 
@@ -71,7 +71,7 @@ public class TransactionLoggerTimingTest extends TestCase {
         //batch = 10000
         //count = 1000
         //transactions = 10,000,000
-        //throughput = 2,480,774 tps
+        //throughput = 4,056,795 tps
 
         db.closeDbFile();
         mailboxFactory.close();

@@ -36,7 +36,8 @@ final public class DurableTransactionLogger extends JFile implements BlockProces
 
     /**
      * Creates a buffered connection to the block processor that is next in the pipeline.
-     * @param nextInPipeline    The next block processor in the pipeline.
+     *
+     * @param nextInPipeline The next block processor in the pipeline.
      */
     public void setNext(BlockProcessor nextInPipeline)
             throws Exception {

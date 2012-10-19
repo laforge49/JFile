@@ -8,7 +8,7 @@ import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.factory.JAFactory;
 import org.agilewiki.jfile.JFileFactories;
 import org.agilewiki.jfile.transactions.db.StatelessDB;
-import org.agilewiki.jfile.transactions.transactionAggregator.*;
+import org.agilewiki.jfile.transactions.transactionAggregator.AggregateTransaction;
 import org.agilewiki.jfile.transactions.transactionAggregator.TransactionAggregator;
 
 public class TransactionAggregatorTest extends TestCase {

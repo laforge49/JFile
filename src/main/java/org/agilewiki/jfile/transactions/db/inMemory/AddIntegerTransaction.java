@@ -44,7 +44,8 @@ public class AddIntegerTransaction extends _TupleTransactionJid {
         return ait.getSerializedBytes();
     }
 
-    public AddIntegerTransaction() {}
+    public AddIntegerTransaction() {
+    }
 
     public AddIntegerTransaction(Mailbox mailbox, String key, Integer increment)
             throws Exception {

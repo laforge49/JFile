@@ -31,7 +31,8 @@ import org.agilewiki.jid._Jid;
  */
 public interface Evaluator extends _Jid {
     public void eval(Eval req, RP<Boolean> rp)
-            throws Exception ;
+            throws Exception;
+
     void sendTransactionResult()
             throws Exception;
 }

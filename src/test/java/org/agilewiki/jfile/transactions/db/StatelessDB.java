@@ -7,7 +7,8 @@ import java.nio.file.Path;
 
 public class StatelessDB extends DB {
 
-    public StatelessDB() {}
+    public StatelessDB() {
+    }
 
     public StatelessDB(MailboxFactory mailboxFactory, Actor parent, Path directoryPath)
             throws Exception {

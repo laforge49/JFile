@@ -66,7 +66,8 @@ public class IMDB extends DB {
     private boolean closed;
     private boolean online;
 
-    public IMDB() {}
+    public IMDB() {
+    }
 
     public IMDB(MailboxFactory mailboxFactory, Actor parent, Path directoryPath, int maxSize)
             throws Exception {

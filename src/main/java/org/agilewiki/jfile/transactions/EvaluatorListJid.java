@@ -24,14 +24,14 @@
 package org.agilewiki.jfile.transactions;
 
 import org.agilewiki.jactor.RP;
-import org.agilewiki.jid.collection.vlenc.BListJid;
+import org.agilewiki.jid.collection.vlenc.ListJid;
 
 import java.util.ArrayList;
 
 /**
  * A list of transaction actor's.
  */
-public class EvaluatorListJid extends BListJid implements Evaluator {
+public class EvaluatorListJid extends ListJid implements Evaluator {
     private int ndx;
     private boolean sync;
     private boolean async;
@@ -67,7 +67,9 @@ public class EvaluatorListJid extends BListJid implements Evaluator {
             req.send(this, evaluator, new RP<Boolean>() {
                 @Override
                 public void processResponse(Boolean response) throws Exception {
-                    if (response) evaluators.add(evaluator);
+                    if (response) {
+                        evaluators.add(evaluator);
+                    }
                     if (!async)
                         sync = true;
                     else

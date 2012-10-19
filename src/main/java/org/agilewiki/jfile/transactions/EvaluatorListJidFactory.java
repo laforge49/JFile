@@ -23,12 +23,12 @@
  */
 package org.agilewiki.jfile.transactions;
 
-import org.agilewiki.jid.collection.vlenc.BListJidFactory;
+import org.agilewiki.jid.collection.vlenc.ListJidFactory;
 
 /**
  * Creates TransactionListJid's.
  */
-public class EvaluatorListJidFactory extends BListJidFactory {
+public class EvaluatorListJidFactory extends ListJidFactory {
 
     /**
      * Create an ActorFactory.

@@ -116,6 +116,7 @@ public interface Block {
 
     /**
      * Indicates the absence of a root jic.
+     *
      * @return True when a root jit is not present.
      */
     public boolean isEmpty();

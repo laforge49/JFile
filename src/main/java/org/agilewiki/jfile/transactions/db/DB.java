@@ -50,7 +50,8 @@ abstract public class DB extends JLPCActor {
     private int logReaderMaxSize;
     protected String[] logFileNames = null;
 
-    public DB() {}
+    public DB() {
+    }
 
     public DB(MailboxFactory mailboxFactory, Actor parent, Path directoryPath)
             throws Exception {
@@ -119,6 +120,7 @@ abstract public class DB extends JLPCActor {
 
     /**
      * Create a transaction log reader.
+     *
      * @return A LogReader.
      */
     protected LogReader newLogReader() {
@@ -127,6 +129,7 @@ abstract public class DB extends JLPCActor {
 
     /**
      * Create a transaction aggregator.
+     *
      * @return A TransactionAggregator.
      */
     protected TransactionAggregator newTransactionAggregator() {
@@ -135,7 +138,8 @@ abstract public class DB extends JLPCActor {
 
     /**
      * Returns the transaction log reader.
-     * @param maxSize    The maximum possible block size.
+     *
+     * @param maxSize The maximum possible block size.
      * @return The LogReader
      */
     public LogReader getLogReader(int maxSize)
@@ -170,6 +174,7 @@ abstract public class DB extends JLPCActor {
 
     /**
      * Returns the transaction aggregator.
+     *
      * @return The transaction aggregator.
      */
     public TransactionAggregator getTransactionAggregator()
@@ -209,7 +214,7 @@ abstract public class DB extends JLPCActor {
 
         return transactionAggregator;
     }
-    
+
     public DurableTransactionLogger getDurableTransactionLogger() throws Exception {
         if (transactionAggregator != null)
             return durableTransactionLogger;

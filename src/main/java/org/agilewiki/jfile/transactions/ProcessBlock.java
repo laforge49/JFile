@@ -38,7 +38,7 @@ public class ProcessBlock extends Request<Object, BlockProcessor> {
     /**
      * Create a request.
      *
-     * @param block     A block to be processed.
+     * @param block A block to be processed.
      */
     public ProcessBlock(Block block) {
         this.block = block;

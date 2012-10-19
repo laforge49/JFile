@@ -46,12 +46,13 @@ public class UniqueClock extends JLPCActor {
     private long oldts;
     private long olduts;
 
-    private UniqueClock() {}
+    private UniqueClock() {
+    }
 
     void uniqueTimestamp(RP rp)
             throws Exception {
         long ts = System.currentTimeMillis();
-        if (ts == oldts) olduts +=1;
+        if (ts == oldts) olduts += 1;
         else {
             oldts = ts;
             olduts = ts << 4;
