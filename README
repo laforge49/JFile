@@ -3,7 +3,7 @@ File Persistence and High Throughput In-Memory Database
 JFile builds on JActor and Jid, adding file persistence and an in-memory data base that has
 a throughput of 1 million transactions per second when running on an i7 with SSD.
 
-Downloads:     https://jactor.sourceforge.net/
+Downloads:     http://jactorconsulting.com/downloads-2/
 Blog:          https://sourceforge.net/p/jactor/blog/
 Documentation: https://github.com/laforge49/JFile/wiki
 VCS:           https://github.com/laforge49/JID/
