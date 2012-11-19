@@ -25,6 +25,7 @@ package org.agilewiki.jfile.transactions;
 
 import org.agilewiki.jactor.Actor;
 import org.agilewiki.jactor.ExceptionHandler;
+import org.agilewiki.jactor.MailboxFactory;
 import org.agilewiki.jactor.RP;
 import org.agilewiki.jactor.lpc.JLPCActor;
 import org.agilewiki.jfile.block.Block;
@@ -62,7 +63,12 @@ final public class TransactionProcessor extends JLPCActor implements BlockProces
                 System.err.println();
                 System.err.println("Log file: " + block.getFileName());
                 System.err.println("block position: " + block.getCurrentPosition());
-                exception.printStackTrace();
+                MailboxFactory mailboxFactory = getMailboxFactory();
+                mailboxFactory.logException(
+                        true,
+                        "Log file: " + block.getFileName() + " block position: " + block.getCurrentPosition(),
+                        exception);
+                mailboxFactory.close();
                 System.exit(1);
             }
         });
