@@ -4,7 +4,7 @@
 
     <groupId>org.agilewiki.jfile</groupId>
     <artifactId>jfile</artifactId>
-    <version>2.0.12-SNAPSHOT</version>
+    <version>2.0.12</version>
     <packaging>jar</packaging>
     <name>JFile</name>
     <description>File Persistence</description>
