@@ -36,7 +36,7 @@ public class CheckpointTest extends TestCase {
                 GetIntegerTransactionFactory.at(factoryMailbox, "counter");
 
         System.out.println("db1");
-        IMDB db1 = new IMDB(mailboxFactory, factory, directoryPath, 10240);
+        IMDB db1 = new IMDB(mailboxFactory, factory, directoryPath);
         db1.clearDirectory();
         openDbFile.send(future, db1);
         System.out.println("online");
@@ -47,7 +47,7 @@ public class CheckpointTest extends TestCase {
         db1.closeDbFile();
 
         System.out.println("db2");
-        IMDB db2 = new IMDB(mailboxFactory, factory, directoryPath, 10240);
+        IMDB db2 = new IMDB(mailboxFactory, factory, directoryPath);
         openDbFile.send(future, db2);
         System.out.println("online");
         TransactionAggregator transactionAggregator2 = db2.getTransactionAggregator();
@@ -58,7 +58,7 @@ public class CheckpointTest extends TestCase {
         db2.closeDbFile();
 
         System.out.println("db3");
-        IMDB db3 = new IMDB(mailboxFactory, factory, directoryPath, 10240);
+        IMDB db3 = new IMDB(mailboxFactory, factory, directoryPath);
         openDbFile.send(future, db3);
         System.out.println("online");
         TransactionAggregator transactionAggregator3 = db3.getTransactionAggregator();

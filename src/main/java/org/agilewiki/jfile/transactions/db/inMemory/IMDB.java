@@ -69,10 +69,9 @@ public class IMDB extends DB {
     public IMDB() {
     }
 
-    public IMDB(MailboxFactory mailboxFactory, Actor parent, Path directoryPath, int maxSize)
+    public IMDB(MailboxFactory mailboxFactory, Actor parent, Path directoryPath)
             throws Exception {
         super(mailboxFactory, parent, directoryPath);
-        this.maxSize = maxSize;
     }
 
     @Override
@@ -83,6 +82,7 @@ public class IMDB extends DB {
     @Override
     public void openDbFile(int logReaderMaxSize, RP rp)
             throws Exception {
+        maxSize = logReaderMaxSize;
         if (dbFile == null) {
             dbFile = new JFile();
             dbFile.initialize(getMailboxFactory().createAsyncMailbox());
