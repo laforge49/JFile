@@ -138,7 +138,8 @@ public class IMDB extends DB {
     public void closeDbFile() {
         super.closeDbFile();
         closed = true;
-        dbFile.close();
+        if (dbFile != null)
+            dbFile.close();
     }
 
     protected Block newDbBlock() {
