@@ -30,7 +30,7 @@ import org.agilewiki.jfile.JFileFactories;
 import org.agilewiki.jfile.transactions.transactionAggregator.AggregateTransaction;
 
 /**
- * Factory for GetIntegerTransaction.
+ * Factory for IncrementIntegerTransaction.
  */
 public class IncrementIntegerTransactionFactory extends ActorFactory {
     final public static IncrementIntegerTransactionFactory fac = new IncrementIntegerTransactionFactory();
